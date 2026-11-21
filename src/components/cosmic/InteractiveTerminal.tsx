@@ -56,9 +56,9 @@ export function InteractiveTerminal() {
     } else if (trimmed === "cat status.json" || trimmed === "status") {
       outputNode = (
         <pre className="text-xs font-mono text-emerald-300 bg-[#060317] p-2.5 rounded-lg border border-emerald-500/20 overflow-x-auto">
-{`{
+          {`{
   "name": "Rajahariharan K",
-  "role": "Assistant Lead – Python Developer",
+  "role": "Assistant Lead – Backend Developer",
   "promoted": "February 2026",
   "company": "The SCM Silk Private Limited",
   "location": "Trichy, Tamil Nadu, IN",
@@ -79,7 +79,7 @@ export function InteractiveTerminal() {
     } else if (trimmed === "whoami") {
       outputNode = (
         <p className="text-xs text-violet-200">
-          Rajahariharan K — Assistant Lead &amp; Python Developer with 3+ years engineering enterprise automation scripts, backend microservices, and database performance tuning.
+          Rajahariharan K — Assistant Lead &amp; Backend  Developer with 4+ years engineering enterprise automation scripts, backend microservices, and database performance tuning.
         </p>
       );
     } else if (trimmed === "contact") {
