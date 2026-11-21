@@ -322,11 +322,10 @@ export function CustomCursor() {
         <button
           type="button"
           onClick={() => setCursorMode("plasma")}
-          className={`p-1.5 rounded-full transition-all flex items-center justify-center cursor-pointer ${
-            cursorMode === "plasma"
-              ? "bg-gradient-to-r from-violet-600 to-cyan-500 text-white shadow-[0_0_12px_rgba(0,240,255,0.5)]"
-              : "text-violet-400 hover:text-white"
-          }`}
+          className={`p-1.5 rounded-full transition-all flex items-center justify-center cursor-pointer ${cursorMode === "plasma"
+            ? "bg-gradient-to-r from-violet-600 to-cyan-500 text-white shadow-[0_0_12px_rgba(0,240,255,0.5)]"
+            : "text-violet-400 hover:text-white"
+            }`}
           title="Fluid Plasma Cursor"
         >
           <Droplets className="w-3.5 h-3.5" />
@@ -335,11 +334,10 @@ export function CustomCursor() {
         <button
           type="button"
           onClick={() => setCursorMode("cyber")}
-          className={`p-1.5 rounded-full transition-all flex items-center justify-center cursor-pointer ${
-            cursorMode === "cyber"
-              ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-[0_0_12px_rgba(0,240,255,0.5)]"
-              : "text-violet-400 hover:text-white"
-          }`}
+          className={`p-1.5 rounded-full transition-all flex items-center justify-center cursor-pointer ${cursorMode === "cyber"
+            ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-[0_0_12px_rgba(0,240,255,0.5)]"
+            : "text-violet-400 hover:text-white"
+            }`}
           title="Cyber Tactical Crosshair Cursor"
         >
           <Crosshair className="w-3.5 h-3.5" />
@@ -348,11 +346,10 @@ export function CustomCursor() {
         <button
           type="button"
           onClick={() => setCursorMode("stardust")}
-          className={`p-1.5 rounded-full transition-all flex items-center justify-center cursor-pointer ${
-            cursorMode === "stardust"
-              ? "bg-gradient-to-r from-amber-500 to-rose-500 text-white shadow-[0_0_12px_rgba(245,158,11,0.5)]"
-              : "text-violet-400 hover:text-white"
-          }`}
+          className={`p-1.5 rounded-full transition-all flex items-center justify-center cursor-pointer ${cursorMode === "stardust"
+            ? "bg-gradient-to-r from-amber-500 to-rose-500 text-white shadow-[0_0_12px_rgba(245,158,11,0.5)]"
+            : "text-violet-400 hover:text-white"
+            }`}
           title="Celestial Stardust Cursor"
         >
           <Sparkles className="w-3.5 h-3.5" />

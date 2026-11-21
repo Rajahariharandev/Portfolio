@@ -14,7 +14,6 @@ import {
   Database,
   Radio,
   Cpu,
-  Layers,
   ChevronDown,
   Clock,
 } from "lucide-react";
@@ -41,10 +40,10 @@ export function Hero() {
     offset: ["start start", "end start"],
   });
 
-  const yBlackHole = useTransform(scrollYProgress, [0, 1], [0, 180]);
-  const yContent = useTransform(scrollYProgress, [0, 1], [0, 80]);
+  const yBlackHole = useTransform(scrollYProgress, [0, 1], [0, 120]);
+  const yContent = useTransform(scrollYProgress, [0, 1], [0, 60]);
   const opacityContent = useTransform(scrollYProgress, [0, 0.75], [1, 0.1]);
-  const scaleHero = useTransform(scrollYProgress, [0, 1], [1, 0.94]);
+  const scaleHero = useTransform(scrollYProgress, [0, 1], [1, 0.95]);
 
   const roles = [
     "Assistant Lead – Python Developer & Backend Automation",
@@ -144,62 +143,15 @@ export function Hero() {
     <motion.section
       ref={sectionRef}
       style={{ scale: shouldReduceMotion ? 1 : scaleHero }}
-      className="relative min-h-[98vh] pt-32 pb-24 md:pt-36 md:pb-32 overflow-hidden flex flex-col items-center justify-center select-none"
+      className="relative min-h-[96vh] pt-32 pb-20 md:pt-36 md:pb-28 overflow-hidden flex flex-col items-center justify-center select-none"
     >
-      {/* 1. Top Cosmic Accretion Flare (Parallax linked to scroll) */}
+      {/* 1. Top Cosmic Accretion Flare (Parallax linked to scroll, framing the navbar) */}
       <motion.div
         style={{ y: shouldReduceMotion ? 0 : yBlackHole }}
         className="absolute inset-0 pointer-events-none"
       >
         <BlackHole />
       </motion.div>
-
-      {/* 2. Floating Design Style Switcher Pill */}
-      <div className="relative z-30 mb-6 flex items-center gap-1.5 p-1 rounded-full bg-[#0a0524]/90 border border-[#7042f8]/40 backdrop-blur-md shadow-[0_0_25px_rgba(112,66,248,0.35)]">
-        <span className="text-[11px] font-mono text-violet-300/80 px-2.5 flex items-center gap-1.5">
-          <Layers className="w-3.5 h-3.5 text-cyan-400" />
-          <span>Design Style:</span>
-        </span>
-
-        <button
-          type="button"
-          onClick={() => setDesignStyle("cosmic")}
-          className={`px-3 py-1 rounded-full text-xs font-medium transition-all flex items-center gap-1.5 cursor-pointer ${
-            designStyle === "cosmic"
-              ? "bg-gradient-to-r from-violet-600 to-[#7042f8] text-white shadow-[0_0_15px_rgba(112,66,248,0.7)]"
-              : "text-[#9E9EB4] hover:text-white"
-          }`}
-        >
-          <Radio className="w-3 h-3 text-cyan-300" />
-          <span>Cosmic Radar</span>
-        </button>
-
-        <button
-          type="button"
-          onClick={() => setDesignStyle("terminal")}
-          className={`px-3 py-1 rounded-full text-xs font-medium transition-all flex items-center gap-1.5 cursor-pointer ${
-            designStyle === "terminal"
-              ? "bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-[0_0_15px_rgba(6,182,212,0.7)]"
-              : "text-[#9E9EB4] hover:text-white"
-          }`}
-        >
-          <TerminalIcon className="w-3 h-3 text-cyan-300" />
-          <span>Live CLI Cockpit</span>
-        </button>
-
-        <button
-          type="button"
-          onClick={() => setDesignStyle("quantum")}
-          className={`px-3 py-1 rounded-full text-xs font-medium transition-all flex items-center gap-1.5 cursor-pointer ${
-            designStyle === "quantum"
-              ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-[0_0_15px_rgba(217,70,239,0.7)]"
-              : "text-[#9E9EB4] hover:text-white"
-          }`}
-        >
-          <Cpu className="w-3 h-3 text-pink-300" />
-          <span>Quantum Matrix</span>
-        </button>
-      </div>
 
       <Container className="relative z-20">
         <motion.div
@@ -214,7 +166,7 @@ export function Hero() {
             animate="visible"
           >
             {/* Live Clock & Promoted Status Pill */}
-            <motion.div variants={itemVariants} className="mb-4 flex flex-wrap items-center gap-2.5">
+            <motion.div variants={itemVariants} className="mb-5 flex flex-wrap items-center gap-2.5">
               <div className="inline-flex items-center gap-2 py-1.5 px-3.5 rounded-full border border-[#7042f8]/60 bg-[#030014]/80 backdrop-blur-md shadow-[0_0_20px_rgba(112,66,248,0.35)]">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
@@ -243,7 +195,7 @@ export function Hero() {
               )}
             </motion.div>
 
-            {/* Primary Headline with Radiant Cosmic Gradient */}
+            {/* Primary Headline with Radiant Cosmic Gradient matching Reference */}
             <motion.h1
               variants={itemVariants}
               className="text-4xl sm:text-5xl lg:text-[58px] font-extrabold tracking-tight text-white leading-[1.08] mb-4"
@@ -363,95 +315,140 @@ export function Hero() {
             </motion.div>
           </motion.div>
 
-          {/* Right Column: Switchable Visual Component based on selected Design Style */}
+          {/* Right Column: Interactive Showcase with Sleek View Switcher Tab */}
           <motion.div
-            className="lg:col-span-5 w-full flex items-center justify-center min-h-[460px]"
+            className="lg:col-span-5 w-full flex flex-col items-center justify-center min-h-[460px]"
             initial={{ opacity: 0, scale: shouldReduceMotion ? 1 : 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
           >
-            <AnimatePresence mode="wait">
-              {designStyle === "cosmic" && (
-                <motion.div
-                  key="cosmic"
-                  initial={{ opacity: 0, rotate: -6, scale: 0.9 }}
-                  animate={{ opacity: 1, rotate: 0, scale: 1 }}
-                  exit={{ opacity: 0, rotate: 6, scale: 0.9 }}
-                  transition={{ duration: 0.45 }}
-                  className="w-full flex items-center justify-center"
-                >
-                  <OrbitalRadar />
-                </motion.div>
-              )}
+            {/* Integrated View/Design Mode Tabs right above the display */}
+            <div className="mb-4 flex items-center gap-1.5 p-1 rounded-full bg-[#0a0524]/90 border border-[#7042f8]/40 backdrop-blur-md shadow-[0_0_20px_rgba(112,66,248,0.3)]">
+              <button
+                type="button"
+                onClick={() => setDesignStyle("cosmic")}
+                className={`px-3 py-1 rounded-full text-xs font-medium transition-all flex items-center gap-1.5 cursor-pointer ${
+                  designStyle === "cosmic"
+                    ? "bg-gradient-to-r from-violet-600 to-[#7042f8] text-white shadow-[0_0_12px_rgba(112,66,248,0.7)]"
+                    : "text-[#9E9EB4] hover:text-white"
+                }`}
+              >
+                <Radio className="w-3 h-3 text-cyan-300" />
+                <span>Cosmic Radar</span>
+              </button>
 
-              {designStyle === "terminal" && (
-                <motion.div
-                  key="terminal"
-                  initial={{ opacity: 0, y: 20, scale: 0.92 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: -20, scale: 0.92 }}
-                  transition={{ duration: 0.45 }}
-                  className="w-full flex items-center justify-center"
-                >
-                  <InteractiveTerminal />
-                </motion.div>
-              )}
+              <button
+                type="button"
+                onClick={() => setDesignStyle("terminal")}
+                className={`px-3 py-1 rounded-full text-xs font-medium transition-all flex items-center gap-1.5 cursor-pointer ${
+                  designStyle === "terminal"
+                    ? "bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-[0_0_12px_rgba(6,182,212,0.7)]"
+                    : "text-[#9E9EB4] hover:text-white"
+                }`}
+              >
+                <TerminalIcon className="w-3 h-3 text-cyan-300" />
+                <span>CLI Terminal</span>
+              </button>
 
-              {designStyle === "quantum" && (
-                <motion.div
-                  key="quantum"
-                  initial={{ opacity: 0, scale: 0.88 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.88 }}
-                  transition={{ duration: 0.45 }}
-                  className="w-full flex flex-col items-center justify-center gap-4 p-6 rounded-3xl bg-gradient-to-b from-[#160b3d]/80 via-[#0d0726]/80 to-[#050212]/90 border border-violet-500/40 backdrop-blur-xl shadow-[0_0_40px_rgba(112,66,248,0.3)] text-left"
-                >
-                  <div className="w-full flex items-center justify-between pb-3 border-b border-violet-500/20">
-                    <span className="text-xs font-mono text-cyan-400 font-bold uppercase tracking-wider flex items-center gap-1.5">
-                      <Cpu className="w-4 h-4 text-cyan-400" />
-                      Quantum Enterprise Matrix
-                    </span>
-                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-mono border border-emerald-500/30">
-                      LEAD STATUS
-                    </span>
-                  </div>
+              <button
+                type="button"
+                onClick={() => setDesignStyle("quantum")}
+                className={`px-3 py-1 rounded-full text-xs font-medium transition-all flex items-center gap-1.5 cursor-pointer ${
+                  designStyle === "quantum"
+                    ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-[0_0_12px_rgba(217,70,239,0.7)]"
+                    : "text-[#9E9EB4] hover:text-white"
+                }`}
+              >
+                <Cpu className="w-3 h-3 text-pink-300" />
+                <span>Metrics</span>
+              </button>
+            </div>
 
-                  <div className="space-y-3 w-full text-xs">
-                    <div className="p-3 rounded-xl bg-[#090422] border border-violet-500/20 flex items-center justify-between">
-                      <div>
-                        <div className="font-semibold text-white">Current Organization</div>
-                        <div className="text-[11px] text-[#9E9EB4]">The SCM Silk Private Limited</div>
-                      </div>
-                      <span className="text-violet-300 font-mono text-[11px]">Feb 2026 – Present</span>
+            {/* Active Display Component */}
+            <div className="w-full flex items-center justify-center">
+              <AnimatePresence mode="wait">
+                {designStyle === "cosmic" && (
+                  <motion.div
+                    key="cosmic"
+                    initial={{ opacity: 0, rotate: -6, scale: 0.9 }}
+                    animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                    exit={{ opacity: 0, rotate: 6, scale: 0.9 }}
+                    transition={{ duration: 0.45 }}
+                    className="w-full flex items-center justify-center"
+                  >
+                    <OrbitalRadar />
+                  </motion.div>
+                )}
+
+                {designStyle === "terminal" && (
+                  <motion.div
+                    key="terminal"
+                    initial={{ opacity: 0, y: 20, scale: 0.92 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -20, scale: 0.92 }}
+                    transition={{ duration: 0.45 }}
+                    className="w-full flex items-center justify-center"
+                  >
+                    <InteractiveTerminal />
+                  </motion.div>
+                )}
+
+                {designStyle === "quantum" && (
+                  <motion.div
+                    key="quantum"
+                    initial={{ opacity: 0, scale: 0.88 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.88 }}
+                    transition={{ duration: 0.45 }}
+                    className="w-full flex flex-col items-center justify-center gap-3.5 p-6 rounded-3xl bg-gradient-to-b from-[#160b3d]/85 via-[#0d0726]/85 to-[#050212]/90 border border-violet-500/40 backdrop-blur-xl shadow-[0_0_40px_rgba(112,66,248,0.3)] text-left"
+                  >
+                    <div className="w-full flex items-center justify-between pb-3 border-b border-violet-500/20">
+                      <span className="text-xs font-mono text-cyan-400 font-bold uppercase tracking-wider flex items-center gap-1.5">
+                        <Cpu className="w-4 h-4 text-cyan-400" />
+                        Quantum Enterprise Matrix
+                      </span>
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-mono border border-emerald-500/30">
+                        LEAD STATUS
+                      </span>
                     </div>
 
-                    <div className="p-3 rounded-xl bg-[#090422] border border-violet-500/20 flex items-center justify-between">
-                      <div>
-                        <div className="font-semibold text-white">Key Architecture</div>
-                        <div className="text-[11px] text-[#9E9EB4]">SOAP to REST Migration &amp; RBAC</div>
+                    <div className="space-y-2.5 w-full text-xs">
+                      <div className="p-3 rounded-xl bg-[#090422] border border-violet-500/20 flex items-center justify-between">
+                        <div>
+                          <div className="font-semibold text-white">Current Organization</div>
+                          <div className="text-[11px] text-[#9E9EB4]">The SCM Silk Private Limited</div>
+                        </div>
+                        <span className="text-violet-300 font-mono text-[11px]">Feb 2026 – Present</span>
                       </div>
-                      <span className="text-emerald-400 font-mono text-[11px] font-bold">5x Faster</span>
-                    </div>
 
-                    <div className="p-3 rounded-xl bg-[#090422] border border-violet-500/20 flex items-center justify-between">
-                      <div>
-                        <div className="font-semibold text-white">CI/CD &amp; Infrastructure</div>
-                        <div className="text-[11px] text-[#9E9EB4]">GitLab CI/CD &amp; Automated Builds</div>
+                      <div className="p-3 rounded-xl bg-[#090422] border border-violet-500/20 flex items-center justify-between">
+                        <div>
+                          <div className="font-semibold text-white">Key Architecture</div>
+                          <div className="text-[11px] text-[#9E9EB4]">SOAP to REST Migration &amp; RBAC</div>
+                        </div>
+                        <span className="text-emerald-400 font-mono text-[11px] font-bold">5x Faster</span>
                       </div>
-                      <span className="text-cyan-400 font-mono text-[11px] font-bold">-70% Time</span>
-                    </div>
 
-                    <div className="p-3 rounded-xl bg-[#090422] border border-violet-500/20 flex items-center justify-between">
-                      <div>
-                        <div className="font-semibold text-white">Database Scale</div>
-                        <div className="text-[11px] text-[#9E9EB4]">Oracle Database &amp; PostgreSQL</div>
+                      <div className="p-3 rounded-xl bg-[#090422] border border-violet-500/20 flex items-center justify-between">
+                        <div>
+                          <div className="font-semibold text-white">CI/CD &amp; Infrastructure</div>
+                          <div className="text-[11px] text-[#9E9EB4]">GitLab CI/CD &amp; Automated Builds</div>
+                        </div>
+                        <span className="text-cyan-400 font-mono text-[11px] font-bold">-70% Time</span>
                       </div>
-                      <span className="text-amber-400 font-mono text-[11px] font-bold">2M+ Events</span>
+
+                      <div className="p-3 rounded-xl bg-[#090422] border border-violet-500/20 flex items-center justify-between">
+                        <div>
+                          <div className="font-semibold text-white">Database Scale</div>
+                          <div className="text-[11px] text-[#9E9EB4]">Oracle Database &amp; PostgreSQL</div>
+                        </div>
+                        <span className="text-amber-400 font-mono text-[11px] font-bold">2M+ Events</span>
+                      </div>
                     </div>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
           </motion.div>
         </motion.div>
       </Container>
