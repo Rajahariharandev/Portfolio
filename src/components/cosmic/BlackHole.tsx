@@ -1,105 +1,132 @@
 "use client";
 
 import React from "react";
-import { motion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
+
+interface AuroraEmber {
+  id: number;
+  x: number;
+  y: number;
+  size: number;
+  duration: number;
+  delay: number;
+  color: string;
+}
+
+const AURORA_COLORS = ["#00f0ff", "#c084fc", "#a855f7", "#38bdf8", "#f4f4f5"];
+
+const AURORA_EMBERS: AuroraEmber[] = Array.from({ length: 18 }, (_, i) => ({
+  id: i,
+  x: (i * 5.5 + 3) % 94 + 3,
+  y: (i * 7 + 10) % 75 + 10,
+  size: (i % 3) * 1.2 + 2,
+  duration: (i % 4) * 1.5 + 4,
+  delay: (i % 5) * 0.8,
+  color: AURORA_COLORS[i % AURORA_COLORS.length],
+}));
 
 export function BlackHole() {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <div
-      className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1600px] h-[340px] pointer-events-none overflow-hidden z-10 flex flex-col items-center select-none"
+      className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1700px] h-[480px] pointer-events-none overflow-hidden z-10 flex flex-col items-center select-none"
       aria-hidden="true"
     >
-      {/* 1. Deep Celestial Nebula Atmospheric Glows (Velvety violet & electric cyan) */}
-      <div className="absolute -top-[140px] left-1/2 -translate-x-1/2 w-[1000px] h-[300px] bg-gradient-to-b from-[#7042f8]/50 via-[#4c1d95]/25 to-transparent blur-[120px] rounded-full" />
-      <div className="absolute -top-[80px] left-1/2 -translate-x-1/2 w-[650px] h-[220px] bg-gradient-to-b from-[#c084fc]/40 via-[#581c87]/20 to-transparent blur-[85px] rounded-full" />
-      <div className="absolute top-[8px] left-1/2 -translate-x-1/2 w-[420px] h-[130px] bg-cyan-400/18 blur-[65px] rounded-full" />
+      {/* 1. Primary Volumetric Atmospheric Nebula (Smooth, seamless aurora horizon without vector hoops) */}
+      <div
+        className="absolute -top-[160px] left-1/2 -translate-x-1/2 w-[1100px] h-[380px] rounded-full blur-[110px] opacity-75 pointer-events-none"
+        style={{
+          background: "radial-gradient(ellipse at center, rgba(112, 66, 248, 0.55) 0%, rgba(76, 29, 149, 0.35) 50%, transparent 75%)",
+        }}
+      />
 
-      {/* 2. Soft Volumetric God-Rays illuminating hero typography */}
-      <div className="absolute top-[20px] left-1/2 -translate-x-1/2 w-[880px] h-[300px] opacity-25 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-violet-300/30 via-purple-900/10 to-transparent blur-3xl" />
+      {/* 2. Secondary Celestial Amethyst & Magenta Glow Curtain */}
+      <div
+        className="absolute -top-[110px] left-1/2 -translate-x-1/2 w-[780px] h-[280px] rounded-full blur-[85px] opacity-70 pointer-events-none"
+        style={{
+          background: "radial-gradient(ellipse at center, rgba(192, 132, 252, 0.4) 0%, rgba(147, 51, 234, 0.25) 55%, transparent 75%)",
+        }}
+      />
 
-      {/* 3. Ethereal Horizontal Photon Flare (Softened edges, bright radiant center) */}
-      <div className="absolute top-[38px] left-1/2 -translate-x-1/2 w-[120%] h-[2px] bg-gradient-to-r from-transparent via-[#ffffff] to-transparent opacity-85 shadow-[0_0_15px_#ffffff,0_0_30px_#c084fc,0_0_60px_#7042f8]" />
-      <div className="absolute top-[36px] left-1/2 -translate-x-1/2 w-[90%] h-[7px] bg-gradient-to-r from-transparent via-[#c084fc] to-transparent blur-[3px] opacity-75" />
-      <div className="absolute top-[32px] left-1/2 -translate-x-1/2 w-[70%] h-[20px] bg-gradient-to-r from-transparent via-[#7042f8]/70 to-transparent blur-[12px]" />
-      <div className="absolute top-[24px] left-1/2 -translate-x-1/2 w-[45%] h-[45px] bg-gradient-to-r from-transparent via-[#38bdf8]/25 to-transparent blur-[22px]" />
+      {/* 3. Electric Cyan Orbit Accent Halo (Subtle cosmic frequency) */}
+      <div
+        className="absolute -top-[70px] left-1/2 -translate-x-1/2 w-[520px] h-[190px] rounded-full blur-[70px] opacity-45 pointer-events-none"
+        style={{
+          background: "radial-gradient(ellipse at center, rgba(0, 240, 255, 0.3) 0%, rgba(56, 189, 248, 0.15) 50%, transparent 75%)",
+        }}
+      />
 
-      {/* 4. Majestic Gravitational Lensing U-Arc (Wider 640px cradle framing the navbar) */}
-      <div className="relative top-0 w-[640px] h-[210px] flex items-center justify-center">
-        <svg
-          className="w-full h-full"
-          viewBox="0 0 640 210"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          {/* Outer Soft Amethyst Halo */}
-          <path
-            d="M 60 0 C 80 148, 200 188, 320 188 C 440 188, 560 148, 580 0"
-            stroke="#7042f8"
-            strokeWidth="34"
-            strokeLinecap="round"
-            className="opacity-65 blur-md"
-          />
+      {/* 4. Silky Atmospheric Horizon Beam (Soft Gaussian glow across the top, no harsh cutoffs) */}
+      <div
+        className="absolute top-[48px] left-1/2 -translate-x-1/2 w-[90%] max-w-[1300px] h-[45px] blur-[24px] opacity-40 pointer-events-none"
+        style={{
+          background: "linear-gradient(90deg, transparent 0%, rgba(168, 85, 247, 0.6) 30%, rgba(255, 255, 255, 0.75) 50%, rgba(0, 240, 255, 0.6) 70%, transparent 100%)",
+        }}
+      />
 
-          {/* Radiant Violet Lensing Ribbon */}
-          <path
-            d="M 85 0 C 105 134, 210 170, 320 170 C 430 170, 535 134, 555 0"
-            stroke="#a855f7"
-            strokeWidth="18"
-            strokeLinecap="round"
-            filter="url(#wide-violet-glow)"
-          />
+      <div
+        className="absolute top-[52px] left-1/2 -translate-x-1/2 w-[70%] max-w-[950px] h-[2px] opacity-60 pointer-events-none"
+        style={{
+          background: "linear-gradient(90deg, transparent 0%, rgba(192, 132, 252, 0.4) 25%, rgba(255, 255, 255, 0.95) 50%, rgba(56, 189, 248, 0.4) 75%, transparent 100%)",
+          boxShadow: "0 0 20px rgba(192, 132, 252, 0.6), 0 0 40px rgba(112, 66, 248, 0.4)",
+        }}
+      />
 
-          {/* Shimmering Ethereal Magenta Ring */}
-          <path
-            d="M 105 0 C 122 120, 218 152, 320 152 C 422 152, 518 120, 535 0"
-            stroke="#c084fc"
-            strokeWidth="9"
-            strokeLinecap="round"
-            filter="url(#wide-magenta-glow)"
-          />
+      {/* 5. Downward Volumetric Light Shaft (Gently bathing the hero typography in cosmic twilight) */}
+      <div
+        className="absolute top-[60px] left-1/2 -translate-x-1/2 w-[850px] h-[340px] opacity-25 blur-3xl pointer-events-none"
+        style={{
+          background: "radial-gradient(ellipse at top, rgba(168, 85, 247, 0.35) 0%, rgba(30, 8, 71, 0.15) 60%, transparent 80%)",
+        }}
+      />
 
-          {/* Diamond-White Relativistic Photon Beam */}
-          <path
-            d="M 120 0 C 135 110, 224 140, 320 140 C 416 140, 505 110, 520 0"
-            stroke="#ffffff"
-            strokeWidth="4"
-            strokeLinecap="round"
-            filter="url(#wide-white-beam)"
-          />
-
-          {/* Pure Light Filament */}
-          <path
-            d="M 128 0 C 142 104, 226 133, 320 133 C 414 133, 498 104, 512 0"
-            stroke="#f8fafc"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            className="opacity-95"
-          />
-
-          <defs>
-            <filter id="wide-violet-glow" x="-30%" y="-30%" width="160%" height="160%">
-              <feGaussianBlur stdDeviation="14" />
-            </filter>
-            <filter id="wide-magenta-glow" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur stdDeviation="7" />
-            </filter>
-            <filter id="wide-white-beam" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur stdDeviation="2.5" />
-            </filter>
-          </defs>
-        </svg>
-
-        {/* Breathing Celestial Accretion Glow */}
+      {/* 6. Subtle Breathing Aurora Pulse */}
+      {!shouldReduceMotion && (
         <motion.div
-          animate={{ opacity: [0.65, 0.95, 0.65], scale: [0.98, 1.02, 0.98] }}
-          transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute -top-8 w-[440px] h-[170px] rounded-full pointer-events-none"
+          animate={{
+            opacity: [0.65, 0.9, 0.65],
+            scale: [0.98, 1.02, 0.98],
+          }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="absolute -top-[90px] left-1/2 -translate-x-1/2 w-[680px] h-[240px] rounded-full blur-[90px] pointer-events-none"
           style={{
-            background: "radial-gradient(circle, rgba(168,85,247,0.2) 0%, rgba(112,66,248,0.06) 60%, transparent 100%)",
-            filter: "blur(24px)",
+            background: "radial-gradient(circle, rgba(112, 66, 248, 0.35) 0%, rgba(0, 240, 255, 0.12) 50%, transparent 75%)",
           }}
         />
-      </div>
+      )}
+
+      {/* 7. Floating Celestial Aurora Embers (Gently drifting through the upper atmosphere) */}
+      {!shouldReduceMotion &&
+        AURORA_EMBERS.map((ember) => (
+          <motion.div
+            key={ember.id}
+            animate={{
+              y: ["0px", "-18px", "0px"],
+              opacity: [0.2, 0.85, 0.2],
+              scale: [0.8, 1.25, 0.8],
+            }}
+            transition={{
+              duration: ember.duration,
+              repeat: Infinity,
+              delay: ember.delay,
+              ease: "easeInOut",
+            }}
+            className="absolute rounded-full pointer-events-none"
+            style={{
+              left: `${ember.x}%`,
+              top: `${ember.y}px`,
+              width: `${ember.size}px`,
+              height: `${ember.size}px`,
+              backgroundColor: ember.color,
+              boxShadow: `0 0 8px ${ember.color}, 0 0 16px ${ember.color}`,
+            }}
+          />
+        ))}
     </div>
   );
 }
