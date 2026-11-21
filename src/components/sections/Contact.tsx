@@ -2,9 +2,11 @@
 
 import React, { useState } from "react";
 import { Mail, Send, CheckCircle2, Copy, Check, MessageSquare, AlertCircle } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
+import { FadeIn } from "@/components/ui/MotionWrapper";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/Icons";
 import { profileData } from "@/data/profile";
 
@@ -71,16 +73,18 @@ export function Contact() {
   return (
     <section id="contact" className="py-20 md:py-28 border-t border-[#1C1C2C] bg-[#08080D]">
       <Container>
-        <SectionHeading
-          tag="Get in Touch"
-          title="Let's Discuss Backend Engineering"
-          description="Interested in collaborating on scalable APIs, database architecture, or exploring backend engineering opportunities? Reach out directly."
-          align="center"
-        />
+        <FadeIn>
+          <SectionHeading
+            tag="Get in Touch"
+            title="Let's Discuss Backend Engineering"
+            description="Interested in collaborating on scalable APIs, database architecture, or exploring backend engineering opportunities? Reach out directly."
+            align="center"
+          />
+        </FadeIn>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 max-w-5xl mx-auto">
           {/* Left Column: Direct Contact Info */}
-          <div className="lg:col-span-5 space-y-6">
+          <FadeIn direction="left" className="lg:col-span-5 space-y-6">
             <div className="rounded-2xl bg-[#11111A] border border-[#222236] p-6 sm:p-7 space-y-6">
               <h3 className="text-lg font-bold text-[#F4F4F7] flex items-center gap-2">
                 <MessageSquare className="w-4 h-4 text-violet-400" />
@@ -152,10 +156,10 @@ export function Contact() {
                 </span>
               </div>
             </div>
-          </div>
+          </FadeIn>
 
           {/* Right Column: Protected Form */}
-          <div className="lg:col-span-7">
+          <FadeIn direction="right" className="lg:col-span-7">
             <div className="rounded-2xl bg-[#11111A] border border-[#222236] p-6 sm:p-8">
               <h3 className="text-lg font-bold text-[#F4F4F7] mb-2">
                 Send a Message
@@ -164,133 +168,149 @@ export function Contact() {
                 All inquiries go directly to my inbox. I usually reply within 24 hours.
               </p>
 
-              {status === "success" ? (
-                <div className="py-12 text-center space-y-4 animate-in fade-in">
-                  <div className="w-12 h-12 rounded-full bg-emerald-950/80 border border-emerald-800/60 text-emerald-400 mx-auto flex items-center justify-center">
-                    <CheckCircle2 className="w-6 h-6" />
-                  </div>
-                  <h4 className="text-lg font-bold text-[#F4F4F7]">
-                    Message Sent Successfully
-                  </h4>
-                  <p className="text-xs sm:text-sm text-[#9E9EB4] max-w-sm mx-auto">
-                    Thank you for reaching out! I have received your note and will get back to you shortly.
-                  </p>
-                  <Button
-                    variant="secondary"
-                    size="sm"
-                    onClick={() => setStatus("idle")}
+              <AnimatePresence mode="wait">
+                {status === "success" ? (
+                  <motion.div
+                    key="success"
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.3 }}
+                    className="py-12 text-center space-y-4"
                   >
-                    Send Another Message
-                  </Button>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  {/* Honeypot field (hidden from users, traps automated bots) */}
-                  <input
-                    type="text"
-                    name="website_honeypot"
-                    tabIndex={-1}
-                    autoComplete="off"
-                    aria-hidden="true"
-                    value={formState.honeypot}
-                    onChange={(e) => setFormState({ ...formState, honeypot: e.target.value })}
-                    className="hidden"
-                  />
-
-                  {status === "error" && (
-                    <div className="p-3 rounded-lg bg-rose-950/40 border border-rose-800/50 text-rose-300 text-xs flex items-center gap-2">
-                      <AlertCircle className="w-4 h-4 shrink-0" />
-                      <span>{errorMessage}</span>
+                    <div className="w-12 h-12 rounded-full bg-emerald-950/80 border border-emerald-800/60 text-emerald-400 mx-auto flex items-center justify-center">
+                      <CheckCircle2 className="w-6 h-6" />
                     </div>
-                  )}
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label
-                        htmlFor="contact-name"
-                        className="block text-xs font-mono text-[#B4B4C8] mb-1.5"
-                      >
-                        Your Name *
-                      </label>
-                      <input
-                        id="contact-name"
-                        type="text"
-                        required
-                        value={formState.name}
-                        onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                        placeholder="Alex Morgan"
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-[#161624] border border-[#222236] text-sm text-[#F4F4F7] placeholder-[#5A5A70] focus:border-violet-500 focus-ring transition-colors"
-                      />
-                    </div>
-                    <div>
-                      <label
-                        htmlFor="contact-email"
-                        className="block text-xs font-mono text-[#B4B4C8] mb-1.5"
-                      >
-                        Your Email *
-                      </label>
-                      <input
-                        id="contact-email"
-                        type="email"
-                        required
-                        value={formState.email}
-                        onChange={(e) => setFormState({ ...formState, email: e.target.value })}
-                        placeholder="alex@company.com"
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-[#161624] border border-[#222236] text-sm text-[#F4F4F7] placeholder-[#5A5A70] focus:border-violet-500 focus-ring transition-colors"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor="contact-subject"
-                      className="block text-xs font-mono text-[#B4B4C8] mb-1.5"
+                    <h4 className="text-lg font-bold text-[#F4F4F7]">
+                      Message Sent Successfully
+                    </h4>
+                    <p className="text-xs sm:text-sm text-[#9E9EB4] max-w-sm mx-auto">
+                      Thank you for reaching out! I have received your note and will get back to you shortly.
+                    </p>
+                    <Button
+                      variant="secondary"
+                      size="sm"
+                      onClick={() => setStatus("idle")}
                     >
-                      Subject
-                    </label>
+                      Send Another Message
+                    </Button>
+                  </motion.div>
+                ) : (
+                  <motion.form
+                    key="form"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    onSubmit={handleSubmit}
+                    className="space-y-4"
+                  >
+                    {/* Honeypot field (hidden from users, traps automated bots) */}
                     <input
-                      id="contact-subject"
                       type="text"
-                      value={formState.subject}
-                      onChange={(e) => setFormState({ ...formState, subject: e.target.value })}
-                      placeholder="Backend Engineering Opportunity / Inquiry"
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-[#161624] border border-[#222236] text-sm text-[#F4F4F7] placeholder-[#5A5A70] focus:border-violet-500 focus-ring transition-colors"
+                      name="website_honeypot"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      aria-hidden="true"
+                      value={formState.honeypot}
+                      onChange={(e) => setFormState({ ...formState, honeypot: e.target.value })}
+                      className="hidden"
                     />
-                  </div>
 
-                  <div>
-                    <label
-                      htmlFor="contact-message"
-                      className="block text-xs font-mono text-[#B4B4C8] mb-1.5"
+                    {status === "error" && (
+                      <div className="p-3 rounded-lg bg-rose-950/40 border border-rose-800/50 text-rose-300 text-xs flex items-center gap-2">
+                        <AlertCircle className="w-4 h-4 shrink-0" />
+                        <span>{errorMessage}</span>
+                      </div>
+                    )}
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label
+                          htmlFor="contact-name"
+                          className="block text-xs font-mono text-[#B4B4C8] mb-1.5"
+                        >
+                          Your Name *
+                        </label>
+                        <input
+                          id="contact-name"
+                          type="text"
+                          required
+                          value={formState.name}
+                          onChange={(e) => setFormState({ ...formState, name: e.target.value })}
+                          placeholder="Alex Morgan"
+                          className="w-full px-3.5 py-2.5 rounded-xl bg-[#161624] border border-[#222236] text-sm text-[#F4F4F7] placeholder-[#5A5A70] focus:border-violet-500 focus-ring transition-colors"
+                        />
+                      </div>
+                      <div>
+                        <label
+                          htmlFor="contact-email"
+                          className="block text-xs font-mono text-[#B4B4C8] mb-1.5"
+                        >
+                          Your Email *
+                        </label>
+                        <input
+                          id="contact-email"
+                          type="email"
+                          required
+                          value={formState.email}
+                          onChange={(e) => setFormState({ ...formState, email: e.target.value })}
+                          placeholder="alex@company.com"
+                          className="w-full px-3.5 py-2.5 rounded-xl bg-[#161624] border border-[#222236] text-sm text-[#F4F4F7] placeholder-[#5A5A70] focus:border-violet-500 focus-ring transition-colors"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="contact-subject"
+                        className="block text-xs font-mono text-[#B4B4C8] mb-1.5"
+                      >
+                        Subject
+                      </label>
+                      <input
+                        id="contact-subject"
+                        type="text"
+                        value={formState.subject}
+                        onChange={(e) => setFormState({ ...formState, subject: e.target.value })}
+                        placeholder="Backend Engineering Opportunity / Inquiry"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-[#161624] border border-[#222236] text-sm text-[#F4F4F7] placeholder-[#5A5A70] focus:border-violet-500 focus-ring transition-colors"
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="contact-message"
+                        className="block text-xs font-mono text-[#B4B4C8] mb-1.5"
+                      >
+                        Message *
+                      </label>
+                      <textarea
+                        id="contact-message"
+                        required
+                        rows={4}
+                        value={formState.message}
+                        onChange={(e) => setFormState({ ...formState, message: e.target.value })}
+                        placeholder="Hi Raja, we'd like to discuss our backend distributed architecture..."
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-[#161624] border border-[#222236] text-sm text-[#F4F4F7] placeholder-[#5A5A70] focus:border-violet-500 focus-ring transition-colors resize-none"
+                      />
+                    </div>
+
+                    <Button
+                      type="submit"
+                      variant="primary"
+                      size="md"
+                      className="w-full justify-center"
+                      icon={<Send className="w-3.5 h-3.5" />}
+                      iconPosition="right"
+                      disabled={status === "submitting"}
                     >
-                      Message *
-                    </label>
-                    <textarea
-                      id="contact-message"
-                      required
-                      rows={4}
-                      value={formState.message}
-                      onChange={(e) => setFormState({ ...formState, message: e.target.value })}
-                      placeholder="Hi Raja, we'd like to discuss our backend distributed architecture..."
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-[#161624] border border-[#222236] text-sm text-[#F4F4F7] placeholder-[#5A5A70] focus:border-violet-500 focus-ring transition-colors resize-none"
-                    />
-                  </div>
-
-                  <Button
-                    type="submit"
-                    variant="primary"
-                    size="md"
-                    className="w-full justify-center"
-                    icon={<Send className="w-3.5 h-3.5" />}
-                    iconPosition="right"
-                    disabled={status === "submitting"}
-                  >
-                    {status === "submitting" ? "Validating & Sending..." : "Send Message"}
-                  </Button>
-                </form>
-              )}
+                      {status === "submitting" ? "Validating & Sending..." : "Send Message"}
+                    </Button>
+                  </motion.form>
+                )}
+              </AnimatePresence>
             </div>
-          </div>
+          </FadeIn>
         </div>
       </Container>
     </section>

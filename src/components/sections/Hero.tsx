@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { ArrowRight, FileText, Mail, CheckCircle2, Copy, Check } from "lucide-react";
+import { motion, useReducedMotion, type Variants } from "motion/react";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { Container } from "@/components/ui/Container";
@@ -10,11 +11,32 @@ import { profileData } from "@/data/profile";
 
 export function Hero() {
   const [copied, setCopied] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   const copyEmail = () => {
     navigator.clipboard.writeText(profileData.contact.email);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, ease: "easeOut" },
+    },
   };
 
   return (
@@ -25,25 +47,36 @@ export function Hero() {
       <Container>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left Column: Copy & CTAs */}
-          <div className="lg:col-span-7 flex flex-col items-start text-left">
+          <motion.div
+            className="lg:col-span-7 flex flex-col items-start text-left"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
             {/* Availability Badge */}
-            <div className="mb-6">
+            <motion.div variants={itemVariants} className="mb-6">
               <Badge variant="success" size="md" className="py-1 px-3">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                 {profileData.availability.status}
               </Badge>
-            </div>
+            </motion.div>
 
             {/* Main Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#F4F4F7] leading-[1.1] mb-6">
+            <motion.h1
+              variants={itemVariants}
+              className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#F4F4F7] leading-[1.1] mb-6"
+            >
               Engineering resilient backends &amp;{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-purple-300 to-indigo-400">
                 high-throughput systems.
               </span>
-            </h1>
+            </motion.h1>
 
             {/* Sub-headline */}
-            <p className="text-base sm:text-lg text-[#9E9EB4] max-w-2xl leading-relaxed mb-8">
+            <motion.p
+              variants={itemVariants}
+              className="text-base sm:text-lg text-[#9E9EB4] max-w-2xl leading-relaxed mb-8"
+            >
               Hi, I&apos;m <span className="text-[#F4F4F7] font-semibold">{profileData.name}</span>. 
               A Backend &amp; Software Engineer focused on designing low-latency REST APIs, 
               tuning relational database execution plans, and deploying containerized microservices 
@@ -52,10 +85,13 @@ export function Hero() {
               <span className="text-violet-300 font-mono text-sm">Oracle DB</span>,{" "}
               <span className="text-violet-300 font-mono text-sm">PostgreSQL</span>, and{" "}
               <span className="text-violet-300 font-mono text-sm">Redis</span>.
-            </p>
+            </motion.p>
 
             {/* CTAs */}
-            <div className="flex flex-wrap items-center gap-3 w-full sm:w-auto mb-8">
+            <motion.div
+              variants={itemVariants}
+              className="flex flex-wrap items-center gap-3 w-full sm:w-auto mb-8"
+            >
               <Button
                 href="#projects"
                 variant="primary"
@@ -81,10 +117,13 @@ export function Hero() {
               >
                 Contact Me
               </Button>
-            </div>
+            </motion.div>
 
             {/* Quick Contact & Socials */}
-            <div className="flex flex-wrap items-center gap-4 text-xs sm:text-sm text-[#9E9EB4] pt-4 border-t border-[#1C1C2C] w-full">
+            <motion.div
+              variants={itemVariants}
+              className="flex flex-wrap items-center gap-4 text-xs sm:text-sm text-[#9E9EB4] pt-4 border-t border-[#1C1C2C] w-full"
+            >
               <button
                 type="button"
                 onClick={copyEmail}
@@ -120,11 +159,16 @@ export function Hero() {
                   <LinkedinIcon className="w-4 h-4" />
                 </a>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           {/* Right Column: Interactive Backend Architecture Terminal */}
-          <div className="lg:col-span-5 w-full">
+          <motion.div
+            className="lg:col-span-5 w-full"
+            initial={{ opacity: 0, scale: shouldReduceMotion ? 1 : 0.95, y: shouldReduceMotion ? 0 : 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.25, ease: "easeOut" }}
+          >
             <div className="rounded-xl border border-[#222236] bg-[#0E0E17]/95 shadow-2xl shadow-violet-950/20 overflow-hidden font-mono text-xs">
               {/* Window Header */}
               <div className="flex items-center justify-between px-4 py-3 bg-[#141420] border-b border-[#222236]">
@@ -196,7 +240,7 @@ export function Hero() {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </Container>
     </section>

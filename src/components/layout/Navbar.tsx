@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Terminal, Menu, X, ArrowUpRight, FileText } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
 import { Button } from "@/components/ui/Button";
 import { profileData } from "@/data/profile";
 
@@ -115,62 +116,68 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Menu Drawer */}
-      {isOpen && (
-        <div
-          className="fixed inset-0 top-[57px] bg-[#08080D]/95 backdrop-blur-xl border-t border-[#222236] z-40 md:hidden flex flex-col justify-between p-6 animate-in fade-in duration-200"
-          role="dialog"
-          aria-modal="true"
-        >
-          <div className="flex flex-col gap-2 pt-4">
-            <div className="pb-3 mb-2 border-b border-[#222236]/60">
-              <span className="text-xs font-mono uppercase tracking-wider text-[#6B6B80]">
-                Navigation
-              </span>
+      {/* Animated Mobile Menu Drawer with Motion & AnimatePresence */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2, ease: "easeInOut" }}
+            className="fixed inset-0 top-[57px] bg-[#08080D]/95 backdrop-blur-xl border-t border-[#222236] z-40 md:hidden flex flex-col justify-between p-6"
+            role="dialog"
+            aria-modal="true"
+          >
+            <div className="flex flex-col gap-2 pt-4">
+              <div className="pb-3 mb-2 border-b border-[#222236]/60">
+                <span className="text-xs font-mono uppercase tracking-wider text-[#6B6B80]">
+                  Navigation
+                </span>
+              </div>
+              {navLinks.map((link) => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center justify-between py-3 text-lg font-medium text-[#E4E4EB] hover:text-violet-400 border-b border-[#181826] transition-colors"
+                >
+                  <span>{link.label}</span>
+                  <span className="text-xs font-mono text-[#6B6B80]">#</span>
+                </a>
+              ))}
             </div>
-            {navLinks.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                onClick={() => setIsOpen(false)}
-                className="flex items-center justify-between py-3 text-lg font-medium text-[#E4E4EB] hover:text-violet-400 border-b border-[#181826] transition-colors"
-              >
-                <span>{link.label}</span>
-                <span className="text-xs font-mono text-[#6B6B80]">#</span>
-              </a>
-            ))}
-          </div>
 
-          <div className="flex flex-col gap-3 pt-6 border-t border-[#222236]">
-            <Button
-              href="/resume/resume.pdf"
-              download="Raja_Hariharan_Resume.pdf"
-              variant="secondary"
-              size="lg"
-              className="w-full justify-center"
-              icon={<FileText className="w-4 h-4" />}
-            >
-              Download Resume
-            </Button>
-            <Button
-              href="#contact"
-              variant="primary"
-              size="lg"
-              className="w-full justify-center"
-              onClick={() => setIsOpen(false)}
-              icon={<ArrowUpRight className="w-4 h-4" />}
-              iconPosition="right"
-            >
-              Contact Me
-            </Button>
-            <div className="text-center pt-2">
-              <span className="text-xs text-[#9E9EB4]">
-                {profileData.availability.status}
-              </span>
+            <div className="flex flex-col gap-3 pt-6 border-t border-[#222236]">
+              <Button
+                href="/resume/resume.pdf"
+                download="Raja_Hariharan_Resume.pdf"
+                variant="secondary"
+                size="lg"
+                className="w-full justify-center"
+                icon={<FileText className="w-4 h-4" />}
+              >
+                Download Resume
+              </Button>
+              <Button
+                href="#contact"
+                variant="primary"
+                size="lg"
+                className="w-full justify-center"
+                onClick={() => setIsOpen(false)}
+                icon={<ArrowUpRight className="w-4 h-4" />}
+                iconPosition="right"
+              >
+                Contact Me
+              </Button>
+              <div className="text-center pt-2">
+                <span className="text-xs text-[#9E9EB4]">
+                  {profileData.availability.status}
+                </span>
+              </div>
             </div>
-          </div>
-        </div>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

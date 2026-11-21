@@ -1,23 +1,28 @@
+"use client";
+
 import React from "react";
 import { MapPin, CheckCircle2 } from "lucide-react";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Container } from "@/components/ui/Container";
+import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/MotionWrapper";
 import { experiencesData } from "@/data/experience";
 
 export function Experience() {
   return (
     <section id="experience" className="py-20 md:py-28 border-t border-[#1C1C2C] bg-[#08080D]">
       <Container>
-        <SectionHeading
-          tag="Career Track"
-          title="Professional Experience"
-          description="A track record of designing, scaling, and maintaining backend infrastructure and high-throughput transactional services."
-          align="center"
-        />
+        <FadeIn>
+          <SectionHeading
+            tag="Career Track"
+            title="Professional Experience"
+            description="A track record of designing, scaling, and maintaining backend infrastructure and high-throughput transactional services."
+            align="center"
+          />
+        </FadeIn>
 
-        <div className="relative border-l border-[#222236] ml-3 sm:ml-6 md:ml-32 space-y-12">
+        <StaggerContainer className="relative border-l border-[#222236] ml-3 sm:ml-6 md:ml-32 space-y-12">
           {experiencesData.map((item) => (
-            <div key={item.id} className="relative pl-6 sm:pl-8 group">
+            <StaggerItem key={item.id} className="relative pl-6 sm:pl-8 group">
               {/* Timeline Bullet */}
               <div className="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-[#11111A] border-2 border-violet-500 group-hover:scale-125 transition-transform" />
 
@@ -26,7 +31,7 @@ export function Experience() {
                 {item.period}
               </div>
 
-              <div className="rounded-2xl bg-[#11111A] border border-[#222236] p-6 sm:p-7 hover:border-violet-500/40 transition-all">
+              <div className="rounded-2xl bg-[#11111A] border border-[#222236] p-6 sm:p-7 hover:border-violet-500/40 hover:-translate-y-1 transition-all duration-300">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
                   <div>
                     <h3 className="text-lg sm:text-xl font-bold text-[#F4F4F7]">
@@ -74,9 +79,9 @@ export function Experience() {
                   ))}
                 </div>
               </div>
-            </div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
       </Container>
     </section>
   );
