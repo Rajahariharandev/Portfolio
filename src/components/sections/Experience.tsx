@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { MapPin, CheckCircle2 } from "lucide-react";
+import { MapPin, CheckCircle2, TrendingUp } from "lucide-react";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Container } from "@/components/ui/Container";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/MotionWrapper";
@@ -15,7 +15,7 @@ export function Experience() {
           <SectionHeading
             tag="Career Track"
             title="Professional Experience"
-            description="A track record of designing, scaling, and maintaining backend infrastructure and high-throughput transactional services."
+            description="3+ years of progressive backend engineering, automation framework development, and team leadership."
             align="center"
           />
         </FadeIn>
@@ -34,9 +34,17 @@ export function Experience() {
               <div className="rounded-2xl bg-[#0c0728]/70 border border-[#7042f8]/30 p-6 sm:p-7 hover:border-[#7042f8]/70 hover:shadow-[0_0_25px_rgba(112,66,248,0.25)] hover:-translate-y-1 transition-all duration-300 backdrop-blur-md">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
                   <div>
-                    <h3 className="text-lg sm:text-xl font-bold text-white">
-                      {item.role}
-                    </h3>
+                    <div className="flex items-center gap-2.5">
+                      <h3 className="text-lg sm:text-xl font-bold text-white">
+                        {item.role}
+                      </h3>
+                      {item.badge && (
+                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold tracking-wider bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-amber-300 border border-amber-500/40 shadow-[0_0_10px_rgba(245,158,11,0.2)]">
+                          <TrendingUp className="w-3 h-3" />
+                          {item.badge}
+                        </span>
+                      )}
+                    </div>
                     <div className="text-sm font-medium text-violet-300">
                       {item.company}
                     </div>

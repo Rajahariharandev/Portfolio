@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Mail, Send, CheckCircle2, Copy, Check, MessageSquare, AlertCircle } from "lucide-react";
+import { Mail, Phone, MapPin, Send, CheckCircle2, Copy, Check, MessageSquare, AlertCircle } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Container } from "@/components/ui/Container";
@@ -10,21 +10,28 @@ import { GithubIcon, LinkedinIcon } from "@/components/ui/Icons";
 import { profileData } from "@/data/profile";
 
 export function Contact() {
-  const [copied, setCopied] = useState(false);
+  const [copiedEmail, setCopiedEmail] = useState(false);
+  const [copiedPhone, setCopiedPhone] = useState(false);
   const [formState, setFormState] = useState({
     name: "",
     email: "",
     subject: "",
     message: "",
-    honeypot: "", // anti-bot spam field
+    honeypot: "",
   });
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
 
   const copyEmail = () => {
     navigator.clipboard.writeText(profileData.contact.email);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    setCopiedEmail(true);
+    setTimeout(() => setCopiedEmail(false), 2000);
+  };
+
+  const copyPhone = () => {
+    navigator.clipboard.writeText(profileData.phone);
+    setCopiedPhone(true);
+    setTimeout(() => setCopiedPhone(false), 2000);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -72,8 +79,8 @@ export function Contact() {
         <FadeIn>
           <SectionHeading
             tag="Get in Touch"
-            title="Let's Discuss Backend Engineering"
-            description="Interested in collaborating on scalable APIs, database architecture, or exploring backend engineering opportunities? Reach out directly."
+            title="Let's Discuss Backend &amp; Automation"
+            description="Interested in collaborating on scalable Python automation frameworks, backend microservices, or discussing leadership opportunities? Reach out directly."
             align="center"
           />
         </FadeIn>
@@ -87,13 +94,13 @@ export function Contact() {
                 Direct Communication
               </h3>
               <p className="text-xs sm:text-sm text-[#a3a3c2] leading-relaxed">
-                I am responsive via email and LinkedIn. Feel free to copy my direct address or leave a note via the message form.
+                Responsive via email, phone, and professional channels. Reach out directly or leave a note below.
               </p>
 
               {/* Email item */}
               <div className="space-y-2">
                 <span className="text-xs font-mono text-violet-400 uppercase">
-                  Primary Email
+                  Direct Email
                 </span>
                 <div className="flex items-center justify-between gap-2 p-3 rounded-xl bg-[#120b38]/80 border border-[#7042f8]/30">
                   <div className="flex items-center gap-2.5 truncate">
@@ -108,13 +115,46 @@ export function Contact() {
                     className="p-1.5 rounded-lg bg-[#1f1354] hover:bg-violet-600 text-violet-200 hover:text-white transition-colors focus-ring"
                     title="Copy email to clipboard"
                   >
-                    {copied ? (
+                    {copiedEmail ? (
                       <Check className="w-3.5 h-3.5 text-emerald-400" />
                     ) : (
                       <Copy className="w-3.5 h-3.5" />
                     )}
                   </button>
                 </div>
+              </div>
+
+              {/* Phone item */}
+              <div className="space-y-2">
+                <span className="text-xs font-mono text-violet-400 uppercase">
+                  Phone / Mobile
+                </span>
+                <div className="flex items-center justify-between gap-2 p-3 rounded-xl bg-[#120b38]/80 border border-[#7042f8]/30">
+                  <div className="flex items-center gap-2.5 truncate">
+                    <Phone className="w-4 h-4 text-emerald-400 shrink-0" />
+                    <span className="font-mono text-xs sm:text-sm text-white truncate">
+                      +91 {profileData.phone}
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={copyPhone}
+                    className="p-1.5 rounded-lg bg-[#1f1354] hover:bg-violet-600 text-violet-200 hover:text-white transition-colors focus-ring"
+                    title="Copy phone to clipboard"
+                  >
+                    {copiedPhone ? (
+                      <Check className="w-3.5 h-3.5 text-emerald-400" />
+                    ) : (
+                      <Copy className="w-3.5 h-3.5" />
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Location */}
+              <div className="flex items-center gap-2 text-xs text-[#a3a3c2] pt-1">
+                <MapPin className="w-4 h-4 text-violet-400" />
+                <span>{profileData.location}</span>
               </div>
 
               {/* Social Channels */}
@@ -148,7 +188,7 @@ export function Contact() {
               <div className="p-3.5 rounded-xl bg-violet-950/40 border border-[#7042f8]/40 text-xs text-violet-200 flex items-start gap-2.5">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 mt-1 shrink-0 animate-pulse shadow-[0_0_8px_#34d399]" />
                 <span>
-                  Currently open to software engineering discussions, high-scale backend roles, and distributed systems challenges.
+                  Promoted Assistant Lead actively available for Python Developer, Backend Automation, and Technical Leadership roles.
                 </span>
               </div>
             </div>
@@ -181,7 +221,7 @@ export function Contact() {
                       Message Sent Successfully
                     </h4>
                     <p className="text-xs sm:text-sm text-[#a3a3c2] max-w-sm mx-auto">
-                      Thank you for reaching out! I have received your note and will get back to you shortly.
+                      Thank you for reaching out! I have received your message and will get back to you promptly.
                     </p>
                     <button
                       type="button"
@@ -267,7 +307,7 @@ export function Contact() {
                         type="text"
                         value={formState.subject}
                         onChange={(e) => setFormState({ ...formState, subject: e.target.value })}
-                        placeholder="Backend Engineering Opportunity / Inquiry"
+                        placeholder="Backend & Python Opportunity / Consultation"
                         className="w-full px-3.5 py-2.5 rounded-xl bg-[#120b38]/80 border border-[#7042f8]/30 text-sm text-white placeholder-[#6a6a8c] focus:border-violet-400 focus-ring transition-colors"
                       />
                     </div>
@@ -285,7 +325,7 @@ export function Contact() {
                         rows={4}
                         value={formState.message}
                         onChange={(e) => setFormState({ ...formState, message: e.target.value })}
-                        placeholder="Hi Raja, we'd like to discuss our backend distributed architecture..."
+                        placeholder="Hi Rajahariharan, we'd like to discuss our Python backend and automation framework..."
                         className="w-full px-3.5 py-2.5 rounded-xl bg-[#120b38]/80 border border-[#7042f8]/30 text-sm text-white placeholder-[#6a6a8c] focus:border-violet-400 focus-ring transition-colors resize-none"
                       />
                     </div>

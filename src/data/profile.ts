@@ -1,17 +1,21 @@
 export interface ProfileData {
   name: string;
   role: string;
+  titleTag: string;
   tagline: string;
   bio: string[];
   location: string;
+  phone: string;
   availability: {
     status: string;
     isAvailable: boolean;
   };
   contact: {
     email: string;
+    phone: string;
     github: string;
     linkedin: string;
+    portfolio: string;
   };
   metrics: {
     label: string;
@@ -25,62 +29,66 @@ export interface ProfileData {
 }
 
 export const profileData: ProfileData = {
-  name: "Raja Hariharan",
-  role: "Backend & Software Engineer",
-  tagline: "Designing resilient backend architectures, high-concurrency APIs, and robust data pipelines with Go, Node.js, and relational databases.",
+  name: "Rajahariharan K",
+  role: "Assistant Lead – Python Developer & Backend Automation",
+  titleTag: "Assistant Lead – Python Developer | Backend Automation | Team Leadership",
+  tagline: "Promoted Python Developer and Assistant Lead with 3+ years of experience building automation scripts, backend microservices, and high-performance REST API integrations.",
   bio: [
-    "I am a Backend Software Engineer dedicated to constructing scalable, secure, and low-latency distributed systems. My hands-on engineering focuses on Go, Node.js, Oracle DB, PostgreSQL, and Redis.",
-    "Over my career, I have worked on mission-critical business workflows, transitioning high-load relational databases to microservices, fine-tuning query execution plans, and automating real-time audit logging.",
-    "I prioritize simplicity, fault-tolerance, clear API contracts, and observable telemetry. When building software, I design for predictable operational behavior under high concurrency."
+    "Promoted Python Developer and Assistant Lead with 3+ years of experience building automation scripts, backend microservices, and REST API integrations. Recognized for technical leadership — elevated to Assistant Lead within the same organization for consistently delivering high-impact automation solutions and mentoring development teams.",
+    "Proven track record in Python (Django, FastAPI), Golang, Node.js, GitLab CI/CD pipelines, SQL optimization across PostgreSQL, Oracle, and Redis, and Agile delivery.",
+    "Dedicated to eliminating manual workflows, enforcing architectural best practices, optimizing database performance, and actively expanding into AWS cloud services (S3, SNS, SQS) and cloud-native automation."
   ],
-  location: "India (Open to Remote & Hybrid)",
+  location: "Trichy, Tamil Nadu, IN",
+  phone: "6383852354",
   availability: {
-    status: "Available for Backend & Distributed Systems roles",
+    status: "Available for Backend, Python & Leadership Opportunities",
     isAvailable: true,
   },
   contact: {
-    email: "rajahariharan.dev@gmail.com",
+    email: "rajahariharan2244@gmail.com",
+    phone: "6383852354",
     github: "https://github.com/rajahariharan",
     linkedin: "https://linkedin.com/in/rajahariharan",
+    portfolio: "https://rajahariharan-portfolio.netlify.app",
   },
   metrics: [
     {
-      label: "P99 Latency Reduction",
-      value: "95%",
-      detail: "From 850ms to 42ms on core high-load query endpoints"
-    },
-    {
-      label: "Peak Query Throughput",
+      label: "System Scalability",
       value: "5x",
-      detail: "Optimized connection pooling and concurrent Go worker pipelines"
+      detail: "SOAP-to-REST migration refactoring enterprise services into Python/Golang"
     },
     {
-      label: "Cache Hit Ratio",
-      value: "99.2%",
-      detail: "Engineered multi-layer Redis cache-aside with jittered invalidation"
+      label: "Access Provisioning Time",
+      value: "-70%",
+      detail: "Automated RBAC permission system with JWT authentication"
     },
     {
-      label: "Daily Audit Events",
-      value: "2M+",
-      detail: "Zero-data-loss asynchronous audit logging pipeline"
+      label: "Database Migration Effort",
+      value: "-40%",
+      detail: "Zero data-loss Python Oracle & PostgreSQL migration engine"
+    },
+    {
+      label: "Manual Processing Saved",
+      value: "~6 hrs/wk",
+      detail: "Python automation scripts for ERP data-sync workflows"
     }
   ],
   principles: [
     {
-      title: "Design for Failure & Predictability",
-      description: "Systems will fail; graceful degradation, circuit breakers, backpressure, and timeouts keep minor faults from triggering cascading outages."
+      title: "End-to-End Automation First",
+      description: "Replace manual, error-prone data handling with resilient Python automation scripts, reducing operational bottlenecks."
     },
     {
-      title: "Data Integrity & Concurrency First",
-      description: "Strict schema constraints, transactional guarantees, and safe concurrency primitives prevent data corruption under load."
+      title: "Architectural Consistency & Clean APIs",
+      description: "Refactor legacy services (SOAP) to scalable modern REST APIs (FastAPI, Django, Go) with strict schema contracts and GitLab CI/CD."
     },
     {
-      title: "Performance by Measurement",
-      description: "Optimize based on profiling (pprof, explain plans, flame graphs) rather than premature intuition."
+      title: "Database Performance & Zero-Loss Integrity",
+      description: "Optimize SQL execution plans, design normalized schemas, and use Redis caching to minimize query response latency."
     },
     {
-      title: "Defense in Depth",
-      description: "Sanitized inputs, least-privilege RBAC, JWT verification, and rate limiting protect every endpoint at the gateway and application level."
+      title: "Technical Leadership & Mentorship",
+      description: "Elevate team performance through structured code reviews, sprint planning, 1:1 developer mentoring, and agile cross-functional delivery."
     }
   ]
 };

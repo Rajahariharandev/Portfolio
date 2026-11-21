@@ -15,7 +15,7 @@ export function Education() {
           <SectionHeading
             tag="Credentials"
             title="Education &amp; Certifications"
-            description="Formal academic foundations in computer science paired with verified technical certifications in database engineering and systems architecture."
+            description="Academic graduation in Computer Applications (BCA) paired with full-stack Python engineering credentials."
             align="center"
           />
         </FadeIn>
@@ -39,9 +39,16 @@ export function Education() {
                   <h4 className="text-base font-semibold text-white">
                     {edu.degree}
                   </h4>
-                  <span className="text-xs font-mono text-cyan-300 font-medium">
-                    {edu.period}
-                  </span>
+                  <div className="flex items-center gap-2">
+                    {edu.aggregate && (
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-950/60 text-emerald-300 border border-emerald-800/50">
+                        {edu.aggregate}
+                      </span>
+                    )}
+                    <span className="text-xs font-mono text-cyan-300 font-medium">
+                      {edu.period}
+                    </span>
+                  </div>
                 </div>
                 <div className="text-sm text-violet-300 font-medium">
                   {edu.institution}
@@ -88,7 +95,7 @@ export function Education() {
                     </p>
                     {cert.credentialId && (
                       <p className="text-[11px] font-mono text-[#8e8ea6] pl-6">
-                        Track: {cert.credentialId}
+                        {cert.credentialId}
                       </p>
                     )}
                   </div>

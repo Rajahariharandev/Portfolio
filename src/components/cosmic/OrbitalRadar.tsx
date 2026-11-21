@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "motion/react";
-import { Database, Server, Terminal } from "lucide-react";
+import { Database, Server, Terminal, GitBranch, Cloud } from "lucide-react";
 
 interface TechNode {
   name: string;
@@ -17,18 +17,18 @@ interface TechNode {
 
 export function OrbitalRadar() {
   const nodes: TechNode[] = [
-    { name: "Go", text: "GO", top: "18%", left: "50%", size: "lg", color: "#00ADD8", delay: 0 },
-    { name: "JavaScript", text: "JS", top: "26%", left: "76%", size: "md", color: "#F7DF1E", delay: 0.2 },
-    { name: "TypeScript", text: "TS", top: "62%", left: "68%", size: "md", color: "#3178C6", delay: 0.4 },
-    { name: "Next.js", text: "▲", top: "44%", left: "78%", size: "lg", color: "#FFFFFF", delay: 0.1 },
-    { name: "Oracle DB", icon: <Database className="w-5 h-5 text-rose-400" />, top: "42%", left: "20%", size: "lg", delay: 0.3 },
+    { name: "Python", text: "PY", top: "18%", left: "50%", size: "lg", color: "#3776AB", delay: 0 },
+    { name: "FastAPI", text: "⚡", top: "26%", left: "76%", size: "md", color: "#009688", delay: 0.2 },
+    { name: "Django", text: "dj", top: "42%", left: "20%", size: "lg", color: "#092E20", delay: 0.3 },
+    { name: "Golang", text: "GO", top: "62%", left: "68%", size: "md", color: "#00ADD8", delay: 0.4 },
+    { name: "Node.js", text: "JS", top: "44%", left: "78%", size: "lg", color: "#5FA04E", delay: 0.1 },
     { name: "PostgreSQL", text: "PG", top: "35%", left: "44%", size: "md", color: "#336791", delay: 0.5 },
-    { name: "Redis", text: "RD", top: "54%", left: "38%", size: "md", color: "#DC382D", delay: 0.2 },
-    { name: "AWS", text: "aws", top: "58%", left: "86%", size: "sm", color: "#FF9900", delay: 0.6 },
-    { name: "Docker", icon: <Server className="w-4 h-4 text-sky-400" />, top: "72%", left: "52%", size: "md", delay: 0.3 },
-    { name: "GitHub", text: "GH", top: "75%", left: "70%", size: "md", color: "#E6EDF3", delay: 0.4 },
-    { name: "Linux", icon: <Terminal className="w-4 h-4 text-amber-300" />, top: "86%", left: "48%", size: "sm", delay: 0.5 },
-    { name: "React", text: "⚛", top: "14%", left: "40%", size: "md", color: "#61DAFB", delay: 0.1 },
+    { name: "Oracle DB", icon: <Database className="w-5 h-5 text-rose-400" />, top: "54%", left: "38%", size: "md", delay: 0.2 },
+    { name: "Redis", text: "RD", top: "14%", left: "38%", size: "md", color: "#DC382D", delay: 0.1 },
+    { name: "GitLab CI/CD", icon: <GitBranch className="w-4 h-4 text-orange-400" />, top: "72%", left: "52%", size: "md", delay: 0.3 },
+    { name: "Docker", icon: <Server className="w-4 h-4 text-sky-400" />, top: "75%", left: "70%", size: "md", delay: 0.4 },
+    { name: "AWS (S3/SNS/SQS)", icon: <Cloud className="w-4 h-4 text-amber-400" />, top: "58%", left: "86%", size: "sm", delay: 0.6 },
+    { name: "Linux CLI", icon: <Terminal className="w-4 h-4 text-amber-300" />, top: "86%", left: "48%", size: "sm", delay: 0.5 },
   ];
 
   return (

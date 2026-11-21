@@ -8,6 +8,6 @@ export default function robots(): MetadataRoute.Robots {
         allow: "/",
       },
     ],
-    sitemap: "https://rajahariharan.dev/sitemap.xml",
+    sitemap: "https://rajahariharan-portfolio.netlify.app/sitemap.xml",
   };
 }

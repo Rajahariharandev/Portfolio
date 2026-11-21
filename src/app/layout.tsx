@@ -25,49 +25,53 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://rajahariharan.dev"),
-  title: "Raja Hariharan | Backend & Software Engineer",
+  metadataBase: new URL("https://rajahariharan-portfolio.netlify.app"),
+  title: "Rajahariharan K | Assistant Lead – Python Developer & Backend Automation",
   description:
-    "Portfolio of Raja Hariharan, Backend & Software Engineer specializing in Go, Node.js, Oracle Database, PostgreSQL, Redis, REST APIs, and high-concurrency distributed systems.",
+    "Portfolio of Rajahariharan K, Promoted Python Developer and Assistant Lead with 3+ years of experience building automation scripts, backend microservices, and REST API integrations across Python (Django, FastAPI), Golang, Node.js, GitLab CI/CD, PostgreSQL, Oracle, and Redis.",
   keywords: [
-    "Raja Hariharan",
-    "Backend Developer",
-    "Software Engineer",
-    "Go",
+    "Rajahariharan K",
+    "Python Developer",
+    "Assistant Lead",
+    "Backend Automation",
+    "Django",
+    "FastAPI",
     "Golang",
-    "Oracle Database",
-    "PostgreSQL",
-    "Redis",
     "Node.js",
-    "Distributed Systems",
-    "REST API",
+    "GitLab CI/CD",
+    "PostgreSQL",
+    "Oracle Database",
+    "Redis Caching",
+    "SOAP to REST Migration",
+    "RBAC",
     "Microservices",
-    "High Throughput"
+    "SQL Optimization",
+    "Agile Leadership"
   ],
-  authors: [{ name: "Raja Hariharan" }],
-  creator: "Raja Hariharan",
+  authors: [{ name: "Rajahariharan K" }],
+  creator: "Rajahariharan K",
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://rajahariharan.dev",
-    title: "Raja Hariharan | Backend & Software Engineer",
+    url: "https://rajahariharan-portfolio.netlify.app",
+    title: "Rajahariharan K | Assistant Lead – Python Developer & Backend Automation",
     description:
-      "Providing the best project experience: engineering resilient backends, high-concurrency APIs, and robust data pipelines with Go, Node.js, Oracle DB, PostgreSQL, and Redis.",
-    siteName: "Raja Hariharan Portfolio",
+      "Providing the best project experience: scalable Python automation frameworks, high-throughput microservices, and reliable backend engineering.",
+    siteName: "Rajahariharan K Portfolio",
     images: [
       {
         url: "/og-image.svg",
         width: 1200,
         height: 630,
-        alt: "Raja Hariharan - Backend & Software Engineer",
+        alt: "Rajahariharan K - Assistant Lead & Python Developer",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Raja Hariharan | Backend & Software Engineer",
+    title: "Rajahariharan K | Assistant Lead – Python Developer & Backend Automation",
     description:
-      "Backend Engineer specializing in Go, Oracle, PostgreSQL, Redis, and high-concurrency systems.",
+      "Promoted Python Developer & Assistant Lead specializing in Python (Django, FastAPI), Golang, GitLab CI/CD, and database optimization.",
     images: ["/og-image.svg"],
   },
   robots: {

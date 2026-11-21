@@ -12,75 +12,75 @@ export interface SkillCategory {
 
 export const skillCategories: SkillCategory[] = [
   {
-    title: "Backend & Systems Languages",
-    description: "Languages used for building concurrent, high-throughput microservices and reliable backends.",
+    title: "Python & Scripting",
+    description: "Core programming stack for automation scripts, web backends, and microservice APIs.",
     skills: [
-      { name: "Go (Golang)", level: "Core", highlight: true },
-      { name: "Node.js (TypeScript / JS)", level: "Core", highlight: true },
-      { name: "PHP", level: "Proficient" },
-      { name: "Python", level: "Proficient" },
-      { name: "SQL (PL/SQL & pgSQL)", level: "Core", highlight: true },
-      { name: "Bash / Shell Scripting", level: "Proficient" }
+      { name: "Python 3.x", level: "Core", highlight: true },
+      { name: "Django", level: "Core", highlight: true },
+      { name: "FastAPI", level: "Core", highlight: true },
+      { name: "Automation Scripts", level: "Core", highlight: true },
+      { name: "Shell / Bash Scripting", level: "Advanced", highlight: true },
+      { name: "PHP", level: "Proficient" }
     ]
   },
   {
-    title: "Databases & In-Memory Stores",
-    description: "Relational modeling, indexing strategies, connection pooling, and low-latency key-value caching.",
+    title: "Backend & Microservices",
+    description: "Scalable API architectures, token security, and legacy enterprise refactoring.",
     skills: [
-      { name: "Oracle Database", level: "Core", highlight: true },
+      { name: "Node.js (Express)", level: "Core", highlight: true },
+      { name: "Golang (Go)", level: "Core", highlight: true },
+      { name: "Microservices Architecture", level: "Core", highlight: true },
+      { name: "SOAP-to-REST Migration", level: "Core", highlight: true },
+      { name: "RBAC (Role-Based Access)", level: "Core", highlight: true },
+      { name: "JWT Authentication", level: "Core", highlight: true }
+    ]
+  },
+  {
+    title: "Databases & Performance Caching",
+    description: "Relational data modeling, query optimization, zero data-loss migration, and in-memory caches.",
+    skills: [
       { name: "PostgreSQL", level: "Core", highlight: true },
-      { name: "Redis (Cache & Pub/Sub)", level: "Core", highlight: true },
-      { name: "MySQL", level: "Proficient" },
-      { name: "MongoDB", level: "Proficient" },
-      { name: "Query Optimization & EXPLAIN", level: "Advanced", highlight: true }
+      { name: "Oracle Database", level: "Core", highlight: true },
+      { name: "MySQL", level: "Advanced" },
+      { name: "SQL Query Optimization", level: "Core", highlight: true },
+      { name: "Schema Design & Migrations", level: "Core", highlight: true },
+      { name: "Redis Caching", level: "Core", highlight: true }
     ]
   },
   {
-    title: "API Design & Concurrency",
-    description: "Robust service communication, asynchronous patterns, and high-load traffic handling.",
+    title: "Automation & Quality Engineering",
+    description: "End-to-end API automation frameworks, code reviews, and testing best practices.",
     skills: [
-      { name: "RESTful API Architecture", level: "Core", highlight: true },
-      { name: "Goroutines & Channels", level: "Core", highlight: true },
-      { name: "Worker Pools & Asynchronous Jobs", level: "Advanced", highlight: true },
-      { name: "WebSockets & Event-Driven", level: "Proficient" },
-      { name: "gRPC & Protocol Buffers", level: "Proficient" },
-      { name: "Microservices Architecture", level: "Advanced" }
+      { name: "REST API Automation", level: "Core", highlight: true },
+      { name: "Automation Frameworks", level: "Core", highlight: true },
+      { name: "pytest Suite", level: "Advanced", highlight: true },
+      { name: "Structured Code Reviews", level: "Core", highlight: true },
+      { name: "Software Dev Best Practices", level: "Core" },
+      { name: "Postman / API Verification", level: "Core" }
     ]
   },
   {
-    title: "Security & Authentication",
-    description: "Protecting data at rest and in transit, access control, and defense-in-depth principles.",
+    title: "DevOps & Cloud CI/CD",
+    description: "Automated pipelines, containerization, Linux environments, and cloud infrastructure.",
     skills: [
-      { name: "JWT & Refresh Tokens", level: "Core", highlight: true },
-      { name: "RBAC (Role-Based Access Control)", level: "Core", highlight: true },
-      { name: "OAuth 2.0 Patterns", level: "Advanced" },
-      { name: "Rate Limiting & Throttling", level: "Advanced", highlight: true },
-      { name: "OWASP Top 10 Mitigation", level: "Advanced" },
-      { name: "Data Sanitization & Zod/Validation", level: "Core" }
-    ]
-  },
-  {
-    title: "Infrastructure & DevOps",
-    description: "Containerization, Linux server deployment, web server configuration, and automation.",
-    skills: [
+      { name: "GitLab CI/CD Pipelines", level: "Core", highlight: true },
       { name: "Docker & Containerization", level: "Core", highlight: true },
-      { name: "Linux / Unix Administration", level: "Core", highlight: true },
-      { name: "Nginx Reverse Proxy", level: "Advanced", highlight: true },
-      { name: "CI/CD (GitHub Actions)", level: "Advanced" },
-      { name: "Systemd Service Daemonization", level: "Advanced" },
-      { name: "Cloud Basics (AWS / GCP)", level: "Proficient" }
+      { name: "Git & Version Control", level: "Core" },
+      { name: "Linux CLI & System Admin", level: "Core", highlight: true },
+      { name: "AWS (S3, SNS, SQS)", level: "Advanced", highlight: true },
+      { name: "VS Code / Tooling", level: "Core" }
     ]
   },
   {
-    title: "Telemetry, Testing & Tooling",
-    description: "Ensuring uptime through observability, profiling, structured telemetry, and test harnesses.",
+    title: "Leadership & Agile Delivery",
+    description: "Cross-functional sprint execution, technical guidance, and team elevation.",
     skills: [
-      { name: "Structured JSON Logging", level: "Core", highlight: true },
-      { name: "Go Test / Jest / Vitest", level: "Core" },
-      { name: "Postman / OpenAPI / Swagger", level: "Core", highlight: true },
-      { name: "Git & Version Control", level: "Core" },
-      { name: "pprof Profiling & Benchmarking", level: "Advanced" },
-      { name: "Prometheus / Grafana Metrics", level: "Proficient" }
+      { name: "Team Leadership", level: "Core", highlight: true },
+      { name: "Technical Mentorship", level: "Core", highlight: true },
+      { name: "Sprint Planning (Agile/Scrum)", level: "Core", highlight: true },
+      { name: "Cross-Functional Collaboration", level: "Core" },
+      { name: "Architectural Standards", level: "Core", highlight: true },
+      { name: "Stakeholder Management", level: "Advanced" }
     ]
   }
 ];

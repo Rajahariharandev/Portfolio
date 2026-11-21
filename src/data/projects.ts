@@ -5,7 +5,7 @@ export interface ProjectCaseStudy {
   subtitle: string;
   role: string;
   period: string;
-  category: "High Concurrency" | "Security & Auth" | "Database & Storage" | "Distributed Systems";
+  category: "Backend & Microservices" | "Security & Auth" | "Automation & ERP" | "Database & Migration";
   summary: string;
   technologies: string[];
   metrics: {
@@ -32,215 +32,207 @@ export interface ProjectCaseStudy {
 
 export const projectsData: ProjectCaseStudy[] = [
   {
-    id: "go-oracle-api-engine",
-    slug: "go-oracle-api-engine",
-    title: "High-Throughput Go & Oracle DB Service Migration",
-    subtitle: "Low-latency REST microservice replacing a bottlenecked legacy monolith",
-    role: "Lead Backend Engineer",
+    id: "soap-to-rest-migration",
+    slug: "soap-to-rest-migration",
+    title: "Enterprise SOAP-to-REST Migration",
+    subtitle: "Refactoring legacy monolithic SOAP services into high-performance Python & Go REST APIs",
+    role: "Lead Automation & Backend Engineer",
     period: "Production Deployment",
-    category: "High Concurrency",
-    summary: "Re-architected a critical data-ingestion and query engine from a legacy monolithic stack to an idiomatic Go service connected to an enterprise Oracle Database cluster, dropping P99 response times from 850ms to 42ms.",
-    technologies: ["Go (Golang)", "Oracle Database", "godror", "Redis", "Docker", "Linux", "Nginx"],
+    category: "Backend & Microservices",
+    summary: "Refactored a legacy enterprise SOAP XML architecture into a modern Python (FastAPI/Django) and Golang REST API, automating deployment via GitLab CI/CD pipelines to achieve a 5x improvement in system scalability.",
+    technologies: ["Python (FastAPI / Django)", "Golang", "GitLab CI/CD", "Docker", "Linux CLI", "REST APIs", "Postman"],
     metrics: [
-      { label: "P99 Latency", value: "850ms → 42ms" },
-      { label: "Query Throughput", value: "5.2x Increase" },
-      { label: "Memory Footprint", value: "-72% Reduced" },
-      { label: "Downtime During Cutover", value: "0 ms" }
+      { label: "System Scalability", value: "5x Improvement" },
+      { label: "Maintenance Overhead", value: "-65% Reduced" },
+      { label: "Deployment Pipeline", value: "100% Automated" },
+      { label: "P99 Response Time", value: "< 45ms" }
     ],
-    problem: "The legacy application suffered from high thread contention, unpredictable garbage collection pauses, and connection pool starvation when servicing concurrent data access requests against an Oracle DB with 12M+ records. End-user transactions experienced intermittent 504 timeouts during morning peak hours.",
+    problem: "The legacy SOAP XML endpoints suffered from bulky XML payloads, high serialization overhead, poor developer ergonomics, and frequent timeouts under concurrent traffic spikes. Deployments were manual, risky, and hindered feature delivery.",
     architecture: {
-      description: "Designed a clean layered Go microservice isolating HTTP transport, business domain logic, and a resilient database repository layer with controlled connection pool sizing and Redis caching.",
+      description: "Designed a clean RESTful microservices architecture with lightweight JSON contracts, asynchronous request handling, and automated containerized delivery via GitLab CI/CD.",
       flow: [
-        "Client Request arrives via Nginx reverse proxy with SSL termination and rate limiting",
-        "Go HTTP Router validates request context, JWT token, and parses structured payload",
-        "Cache-Aside Layer checks Redis for pre-warmed reference queries with TTL jitter",
-        "Repository Layer uses database/sql pooled sessions with prepared statements and context timeouts",
-        "Worker Pool processes write-heavy auditing tasks asynchronously without blocking HTTP response"
+        "Incoming client HTTP requests are terminated at Nginx and routed to the Python/Go REST microservice",
+        "FastAPI/Django serialization validates request schemas using typed Pydantic models",
+        "Business logic executes concurrently with optimized connection pooling to backend datastores",
+        "Automated GitLab CI/CD pipeline runs unit/regression suites and deploys Dockerized services with zero downtime"
       ],
-      diagramSnippet: "Client -> Nginx Proxy -> Go Service (Worker Pool + Conn Pool) <--> Redis Cache | Oracle DB"
+      diagramSnippet: "Client App -> Nginx Reverse Proxy -> Python/Go REST API (GitLab CI/CD) <--> Relational DB"
     },
     keyDecisions: [
       {
-        decision: "Adopted Godror with tuned connection pooling instead of generic ORMs",
-        rationale: "Enterprise Oracle features (bulk collections, bind variables, REF CURSORs) require fine-grained driver control to prevent hard parsing and cursor leakage.",
-        impact: "Reduced database CPU utilization by 34% by ensuring 100% prepared statement reuse across identical queries."
+        decision: "Transitioned from XML SOAP envelopes to JSON REST specifications",
+        rationale: "JSON payloads are 60-70% lighter than verbose SOAP XML, dramatically reducing network bandwidth and parsing overhead.",
+        impact: "Cut network payload transfer sizes by 65% and boosted endpoint throughput by 5x."
       },
       {
-        decision: "Implemented Context-driven timeouts on all external I/O",
-        rationale: "Prevents orphaned goroutines from holding open socket connections when upstream clients disconnect prematurely.",
-        impact: "Zero connection leaks observed across continuous 90-day production run."
-      },
-      {
-        decision: "Decoupled transactional writes from secondary audit indexing",
-        rationale: "Audit persistence should never cause primary record insertion to abort or stall.",
-        impact: "Eliminated tail latency spikes on user-facing checkout and submission flows."
+        decision: "Engineered automated GitLab CI/CD containerized deployment pipelines",
+        rationale: "Eliminated manual SSH releases and human configuration error during updates.",
+        impact: "Accelerated release velocity from monthly batches to multiple verified weekly releases."
       }
     ],
     securityAndReliability: [
-      "Strict parameter binding across all PL/SQL queries to eliminate SQL injection vectors",
-      "Graceful shutdown handling SIGTERM signals, allowing active in-flight requests 15s to complete",
-      "Health and readiness probes (/healthz, /readyz) verifying Oracle DB ping before accepting traffic",
-      "Structured JSON logs with sanitized payload masking (removing PII and credential data)"
+      "Strict request validation schemas with automated input sanitization",
+      "GitLab CI/CD automated linting, test suites, and Docker image vulnerability scanning",
+      "Structured JSON error handling with sanitized error codes that prevent leaking backend internals"
     ],
-    challenges: "Handling Oracle connection re-establishment during intermittent network resets without terminating the Go daemon. Solved by writing an exponential backoff reconnect wrapper with max retry thresholds.",
+    challenges: "Maintaining backward compatibility for existing enterprise consumers while shifting core endpoints. Solved by implementing an API translation gateway during the phase-in period.",
     outcomes: [
-      "Successfully processed over 4.5 million daily API calls without a single out-of-memory or crash event",
-      "Decreased server provisioning costs by running on 2 lightweight Docker containers compared to 8 legacy VM nodes",
-      "Achieved sub-50ms SLA across 99.1% of all customer transactions"
+      "Achieved a 5x improvement in system scalability under peak concurrency",
+      "Significantly reduced long-term maintenance overhead and bug ticket turnaround",
+      "Established standard API design blueprints now adopted across the development organization"
     ],
     githubUrl: "https://github.com/rajahariharan"
   },
   {
-    id: "audit-telemetry-pipeline",
-    slug: "audit-telemetry-pipeline",
-    title: "Distributed Audit-Log & Telemetry Pipeline",
-    subtitle: "Zero-data-loss asynchronous audit stream with partitioned storage",
-    role: "Backend & Systems Engineer",
-    period: "Production Deployment",
-    category: "Distributed Systems",
-    summary: "Engineered an asynchronous, tamper-evident audit logging engine utilizing Redis Streams, Go worker consumers, and partitioned PostgreSQL storage to fulfill strict enterprise compliance standards.",
-    technologies: ["Node.js / Go", "PostgreSQL", "Redis Streams", "Timescale / Partitioning", "Docker"],
-    metrics: [
-      { label: "Daily Ingestion", value: "2M+ Events" },
-      { label: "Producer Ingestion Overhead", value: "< 3.5ms" },
-      { label: "Log Retention Search Time", value: "< 120ms" },
-      { label: "Data Loss Incidents", value: "Zero" }
-    ],
-    problem: "Regulatory compliance required comprehensive immutable logging of all state mutations across multiple microservices. The existing synchronous database write approach created severe backpressure and threatened system stability whenever write bursts occurred.",
-    architecture: {
-      description: "Implemented an event-driven telemetry pipeline separating fast producer ingestion from reliable consumer batch-writing.",
-      flow: [
-        "Originating services emit mutation events to a Redis Stream buffer with deterministic event IDs",
-        "Lightweight telemetry sidecar verifies payload checksum and timestamps",
-        "Go-based consumer groups read in batches of 500 events using XREADGROUP with ACK semantics",
-        "Events are validated and bulk-inserted into monthly partitioned PostgreSQL tables",
-        "Archive worker compresses cold partition tables older than 90 days"
-      ],
-      diagramSnippet: "Services -> Telemetry Client -> Redis Stream -> Go Consumer Group -> Partitioned Postgres"
-    },
-    keyDecisions: [
-      {
-        decision: "Utilized Redis Streams with Consumer Groups over standard Pub/Sub",
-        rationale: "Redis Pub/Sub offers fire-and-forget delivery; Streams guarantee persistence and explicit acknowledgement (PEL - Pending Entries List).",
-        impact: "Guaranteed at-least-once delivery with automatic reprocessing of unacknowledged crashed worker messages."
-      },
-      {
-        decision: "Partitioned PostgreSQL tables by monthly range",
-        rationale: "Querying historical audit logs over hundreds of gigabytes degraded B-Tree index efficiency.",
-        impact: "Maintained flat 120ms search response times regardless of total dataset size."
-      }
-    ],
-    securityAndReliability: [
-      "Cryptographic SHA-256 hash chaining between consecutive log entries to detect unauthorized tampering",
-      "Role-Based Access Control on audit query APIs restricted to authorized security officers",
-      "Dead Letter Queue (DLQ) for malformed schema events to avoid pipeline blocking"
-    ],
-    challenges: "Balancing consumer batch size against latency. If batches were too large, memory spiked; if too small, Postgres suffered IOPS exhaustion. Tuning batch size to 500 records or 250ms window yielded optimal throughput.",
-    outcomes: [
-      "Complied 100% with enterprise security audit criteria without impacting core platform performance",
-      "Successfully scaled to handle 3x burst volume during quarterly closing operations without packet drops"
-    ],
-    githubUrl: "https://github.com/rajahariharan"
-  },
-  {
-    id: "enterprise-rbac-engine",
-    slug: "enterprise-rbac-engine",
-    title: "Enterprise Workflow & Role-Based Access Engine",
-    subtitle: "Centralized authorization service with sub-3ms permission evaluation",
-    role: "Backend Developer",
+    id: "employee-rbac-permission-system",
+    slug: "employee-rbac-permission-system",
+    title: "Employee RBAC Permission System",
+    subtitle: "Automated Role-Based Access Control and authorization engine with JWT verification",
+    role: "Backend & Systems Developer",
     period: "Production Deployment",
     category: "Security & Auth",
-    summary: "Created a unified authorization service providing fine-grained hierarchical permissions, token introspection, and dynamic role inheritance across 15+ internal services.",
-    technologies: ["Node.js", "TypeScript", "PostgreSQL", "Redis", "JWT", "Express", "Docker"],
+    summary: "Engineered a centralized Role-Based Access Control (RBAC) system with JWT authentication and automated permission workflows, cutting manual access provisioning by 70% and securing sensitive enterprise data.",
+    technologies: ["Node.js (Express)", "Python", "PostgreSQL", "Redis", "JWT", "Docker", "REST API"],
     metrics: [
+      { label: "Access Provisioning Time", value: "-70% Cut" },
       { label: "Evaluation Latency", value: "< 2.8ms" },
-      { label: "Cache Hit Rate", value: "94.6%" },
-      { label: "Integrated Services", value: "15+ Systems" },
-      { label: "Privilege Drifts", value: "0" }
+      { label: "Cache Hit Rate", value: "95.2%" },
+      { label: "Privilege Escalation Risks", value: "Zero" }
     ],
-    problem: "Different teams had implemented disparate access checks in PHP, Node, and Python services. Changing a user's department permissions required updating multiple databases, leading to stale privileges, security oversights, and slow onboarding.",
+    problem: "Manual role assignments and fragmented access checks scattered across different internal portals led to permission drift, security vulnerabilities, and required several hours of IT manual approval per employee change.",
     architecture: {
-      description: "A centralized authorization service that evaluates user capability matrices against requested resources using short-lived cryptographically signed tokens and cached bitmask permission graphs.",
+      description: "A centralized authorization engine evaluating role matrices against requested endpoints using cryptographically signed JWTs and in-memory Redis caching.",
       flow: [
-        "Client passes Bearer token to API Gateway / Service Middleware",
-        "Authorization engine decodes claims and queries the in-memory Redis permission bitmask",
-        "If cache miss, queries Postgres hierarchical role graph (CTEs) and re-populates cache",
-        "Deterministic boolean decision returned to caller along with audit trace ID"
+        "User authenticates and receives an encrypted JWT containing validated claims and role scopes",
+        "API Gateway middleware extracts token and checks permission bitmask in Redis cache",
+        "If cache miss, queries hierarchical role graph in PostgreSQL and updates cache with TTL",
+        "Instant access approval/denial returned with auditable trace context"
       ],
-      diagramSnippet: "Gateway Middleware -> RBAC Evaluation Engine -> Redis Permission Cache <-> Postgres Role Graph"
+      diagramSnippet: "Client Request -> JWT Middleware -> Redis Permission Cache <-> PostgreSQL Role Matrix"
     },
     keyDecisions: [
       {
-        decision: "Bitmask-based permission evaluation",
-        rationale: "Bitwise operations (AND/OR) on integer masks execute in CPU nanoseconds compared to string array searches.",
-        impact: "Permission verification added negligible latency (< 3ms) to upstream requests."
+        decision: "Bitmask-based permission evaluation engine",
+        rationale: "Bitwise boolean operations execute in nanoseconds compared to string array iterations.",
+        impact: "Permission verification added negligible overhead (< 3ms) to API requests."
       },
       {
-        decision: "Event-driven cache invalidation via Redis Pub/Sub",
-        rationale: "When an administrator revokes a permission, the user's cached rights must expire immediately across all gateway nodes.",
-        impact: "Permission revocations propagate across all cluster nodes within 50ms."
+        decision: "Automated permission lifecycle triggers",
+        rationale: "Role changes in HR management trigger instant pub/sub cache invalidation.",
+        impact: "Reduced employee access provisioning and de-provisioning from days to seconds."
       }
     ],
     securityAndReliability: [
-      "Asymmetric RSA key pairs for signing and verifying authorization assertions",
-      "Constant-time string comparisons to prevent timing attacks on token validation",
-      "Immutable audit log for every role assignment and permission escalation attempt"
+      "Short-lived access tokens with secure refresh token rotation",
+      "Strict least-privilege role definitions preventing unauthorized access across departments",
+      "Comprehensive audit trail for every privilege grant, escalation, or revocation"
     ],
-    challenges: "Preventing infinite loops during recursive role inheritance traversal. Addressed by implementing cycle detection algorithms in the graph validation layer.",
+    challenges: "Handling nested multi-department roles without cyclical inheritance bugs. Resolved by creating a directed acyclic graph (DAG) role validation rule.",
     outcomes: [
-      "Consolidated authorization logic across the organization, saving estimated 200+ developer hours",
-      "Eliminated orphaned access permissions and passed compliance audits with zero findings"
+      "Cut manual access provisioning effort by 70% across internal operations",
+      "Passed internal IT security audits with 100% compliance and zero privilege drift incidents"
     ],
     githubUrl: "https://github.com/rajahariharan"
   },
   {
-    id: "redis-cache-sync-layer",
-    slug: "redis-cache-sync-layer",
-    title: "Resilient Redis Cache & Data Sync Layer",
-    subtitle: "High-concurrency caching layer preventing stampedes and stale reads",
-    role: "Backend Engineer",
+    id: "erp-data-sync-automation",
+    slug: "erp-data-sync-automation",
+    title: "ERP Data-Sync & REST Automation Framework",
+    subtitle: "High-throughput automation pipelines connecting legacy ERP systems with modern web frontends",
+    role: "Associate Software Developer",
     period: "Production Deployment",
-    category: "Database & Storage",
-    summary: "Engineered a distributed caching and synchronization layer featuring atomic locks, TTL jittering, and proactive background re-warming to protect core relational databases from peak flash-load spikes.",
-    technologies: ["Go", "Redis", "PostgreSQL", "Prometheus", "Docker", "Linux"],
+    category: "Automation & ERP",
+    summary: "Built internal REST automation frameworks (FastAPI / Django / Golang) integrating legacy ERP systems with modern web applications, eliminating ~6 hours/week of manual processing and reducing response time by 30% through Redis caching.",
+    technologies: ["Python (FastAPI / Django)", "Golang", "Redis Caching", "PostgreSQL", "SQL Optimization", "Shell Scripting"],
     metrics: [
-      { label: "Cache Hit Ratio", value: "99.2%" },
-      { label: "DB Query Load Reduction", value: "-78%" },
-      { label: "Thundering Herd Events", value: "0" },
-      { label: "Peak Load Capacity", value: "12,000 req/s" }
+      { label: "Manual Effort Eliminated", value: "~6 hrs/week" },
+      { label: "Server Response Time", value: "-30% Reduced" },
+      { label: "Backend Throughput", value: "+30% Boost" },
+      { label: "Data-Sync Accuracy", value: "100%" }
     ],
-    problem: "During high-traffic batch notifications, thousands of concurrent requests invalidated the same cache key simultaneously. This 'thundering herd' phenomenon triggered catastrophic database connection spikes and degraded query responsiveness.",
+    problem: "Operational teams had to manually export, transform, and sync ERP inventory and transaction records between disjointed enterprise databases, creating human errors and slow data propagation.",
     architecture: {
-      description: "Layered caching proxy implementing single-flight request coalescing, distributed locking (SetNX with short lease times), and probabilistic early expiration (XFetch algorithm).",
+      description: "Automated event-driven Python daemon synchronizing ERP records with modern web frontends, backed by Redis cache layers and query-tuned database schemas.",
       flow: [
-        "Request checks Redis for cached entity",
-        "On cache miss, SingleFlight coalesces 500 identical concurrent requests into a single database fetch",
-        "The winning worker acquires an atomic Redis lock, queries Postgres, and updates the cache with jittered TTL",
-        "Subordinate requests receive the coalesced result without touching the database"
+        "Python background worker monitors ERP transactional changelogs",
+        "Automated scripts validate, normalize, and transform raw ERP records",
+        "Updates are written to PostgreSQL with batch optimization and cached in Redis",
+        "Frontend web consumers receive instant, cached data with sub-second propagation"
       ],
-      diagramSnippet: "Incoming Requests -> SingleFlight Coalescer -> Redis Lock -> Relational DB -> Cache Populate"
+      diagramSnippet: "Legacy ERP DB -> Python Automation Daemon -> Redis Cache & PostgreSQL -> Modern Frontend"
     },
     keyDecisions: [
       {
-        decision: "SingleFlight request suppression pattern in Go",
-        rationale: "Prevents duplicate concurrent queries from hitting the database while a fresh value is being calculated.",
-        impact: "Reduced peak database CPU spikes from 92% to 22% during flash traffic events."
+        decision: "Implemented Redis cache-aside with proactive cache warming",
+        rationale: "Prevents direct read spikes from hammering the central ERP database.",
+        impact: "Reduced server response times by 30% while maintaining real-time inventory fidelity."
       },
       {
-        decision: "Jittered TTL calculation (Base TTL +/- 10% random variance)",
-        rationale: "Uniform TTLs cause all keys written together to expire at the exact same second, causing synchronized misses.",
-        impact: "Evenly distributed database refresh traffic across the entire operating window."
+        decision: "Automated scheduled data-sync batch routines with Python & Shell",
+        rationale: "Eliminated repetitive manual operator intervention for recurring data reconciliation.",
+        impact: "Freed ~6 engineering hours per week and eliminated human copy-paste data corruption."
       }
     ],
     securityAndReliability: [
-      "Graceful fallback: if Redis becomes temporarily unreachable, system falls back to read replicas with reduced rate limits",
-      "Encrypted in-transit TLS connections between Go backend and Redis Sentinel cluster",
-      "Automated alerting triggers when cache hit ratio dips below 92%"
+      "Transactional batch commits ensuring zero partial or corrupted sync states",
+      "Automated alerting triggers if sync delays exceed SLA thresholds",
+      "Encrypted database credentials managed via secure Linux environment variables"
     ],
-    challenges: "Handling Redis network blips without crashing the main application thread. Implemented a circuit-breaker wrapper around the Redis client.",
+    challenges: "Dealing with ERP lock contention during heavy daytime updates. Solved by splitting large transactions into non-blocking micro-batches.",
     outcomes: [
-      "Sustained 12,000 requests per second with flat 18ms latency during peak marketing campaigns",
-      "Cut database infrastructure cost by nearly 40% by reducing required read replica sizing"
+      "Improved overall backend throughput by 30% under peak sales traffic",
+      "Eliminated recurring manual data entry, saving over 300 operational hours annually"
+    ],
+    githubUrl: "https://github.com/rajahariharan"
+  },
+  {
+    id: "zero-loss-database-migration",
+    slug: "zero-loss-database-migration",
+    title: "Zero Data-Loss Database Migration Engine",
+    subtitle: "Python-driven data pipeline migrating large-scale Oracle and PostgreSQL schemas",
+    role: "Junior Associate – Software Developer",
+    period: "Production Deployment",
+    category: "Database & Migration",
+    summary: "Designed and executed Python-based migration scripts for Oracle and PostgreSQL database clusters, maintaining zero data-loss integrity across massive datasets while reducing migration effort by ~40%.",
+    technologies: ["Python", "Oracle Database", "PostgreSQL", "SQL Optimization", "Schema Design", "Shell Scripting"],
+    metrics: [
+      { label: "Migration Effort", value: "-40% Reduced" },
+      { label: "Data-Loss Rate", value: "0.00% (Zero)" },
+      { label: "Schema Validation", value: "100% Integrity" },
+      { label: "Downtime Window", value: "Minimal" }
+    ],
+    problem: "Migrating enterprise datasets across disparate database engines (Oracle and PostgreSQL) risked data truncation, type mismatch corruption, and lengthy maintenance downtime windows.",
+    architecture: {
+      description: "Python-orchestrated ETL migration pipeline featuring chunked stream reading, automated schema type translation, and multi-stage verification checksums.",
+      flow: [
+        "Python extractor streams source records in buffered chunks using cursor pagination",
+        "Data transformation layer maps proprietary Oracle data types to standard PostgreSQL types",
+        "Bulk insertion pipeline writes to target database within transactional savepoints",
+        "Automated verification worker compares SHA-256 record hashes to certify 100% integrity"
+      ],
+      diagramSnippet: "Source Oracle DB -> Python ETL Streaming Engine -> Checksum Validator -> Target PostgreSQL"
+    },
+    keyDecisions: [
+      {
+        decision: "Engineered automated schema mapping and type translation scripts",
+        rationale: "Manual SQL table recreation across hundreds of tables is error-prone.",
+        impact: "Reduced migration preparation effort by approximately 40%."
+      },
+      {
+        decision: "Automated cryptographic checksum validation between source and destination",
+        rationale: "Guaranteed absolute proof that no rows were dropped or mutated.",
+        impact: "Achieved verified 0% data loss across all historical datasets."
+      }
+    ],
+    securityAndReliability: [
+      "Rollback checkpoints allowing instant recovery in the event of network disruption",
+      "Parametric SQL bindings preventing data-escape injection flaws during data transfer",
+      "Zero plain-text logging of sensitive customer records during processing"
+    ],
+    challenges: "Handling foreign key constraint dependencies during bulk imports. Solved by writing a topological sort dependency resolver in Python.",
+    outcomes: [
+      "Successfully migrated large-scale enterprise datasets without any production data loss",
+      "Decreased overall project migration timeline from estimated months to 3 automated weeks"
     ],
     githubUrl: "https://github.com/rajahariharan"
   }
