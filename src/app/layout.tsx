@@ -8,6 +8,7 @@ import { ShootingStars } from "@/components/cosmic/ShootingStars";
 import { ConstellationMesh } from "@/components/cosmic/ConstellationMesh";
 import { CustomCursor } from "@/components/cosmic/CustomCursor";
 import { ScrollProgress } from "@/components/cosmic/ScrollProgress";
+import { AnimationControl } from "@/components/ui/AnimationControl";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -94,6 +95,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-[#030014] text-[#F4F4F7] antialiased selection:bg-[#7042f8]/40 selection:text-white relative">
         <ScrollProgress />
         <CustomCursor />
+        <AnimationControl />
         <ConstellationMesh />
         <StarBackground />
         <ShootingStars />
