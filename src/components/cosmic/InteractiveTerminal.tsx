@@ -87,8 +87,8 @@ export function InteractiveTerminal() {
         <div className="text-xs text-slate-300 space-y-1">
           <p>Email: <span className="text-cyan-300 font-mono">{profileData.contact.email}</span></p>
           <p>Phone: <span className="text-cyan-300 font-mono">{profileData.contact.phone}</span></p>
-          <p>GitHub: <a href={profileData.contact.github} target="_blank" rel="noopener noreferrer" className="text-violet-400 underline">github.com/Rajahariharan22</a></p>
-          <p>LinkedIn: <a href={profileData.contact.linkedin} target="_blank" rel="noopener noreferrer" className="text-violet-400 underline">linkedin.com/in/rajahariharan-k</a></p>
+          <p>GitHub: <a href={profileData.contact.github} target="_blank" rel="noreferrer" className="text-violet-400 underline">github.com/Rajahariharan22</a></p>
+          <p>LinkedIn: <a href={profileData.contact.linkedin} target="_blank" rel="noreferrer" className="text-violet-400 underline">linkedin.com/in/rajahariharan-k</a></p>
         </div>
       );
     } else {
