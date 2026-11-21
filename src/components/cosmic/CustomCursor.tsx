@@ -40,16 +40,16 @@ const MODES: {
   desc: string;
   color: string;
 }[] = [
-  { id: "plasma", name: "Plasma", icon: Zap, desc: "Pulsing energy core with bio-luminescent embers", color: "#a855f7" },
-  { id: "stardust", name: "Stardust", icon: Sparkles, desc: "Twinkling constellation crystals & celestial dust", color: "#facc15" },
-  { id: "magnetic", name: "Magnetic", icon: Magnet, desc: "Gravitational attraction to interactive elements", color: "#00f0ff" },
-  { id: "orbit", name: "Orbit", icon: Orbit, desc: "Continuously revolving gyroscopic quantum rings", color: "#38bdf8" },
-  { id: "glitch", name: "Glitch", icon: Activity, desc: "RGB channel separation with digital matrix jitter", color: "#ff0055" },
-  { id: "comet", name: "Comet", icon: Flame, desc: "Burning celestial meteorite with aerodynamic trail", color: "#38bdf8" },
-];
+    { id: "plasma", name: "Plasma", icon: Zap, desc: "Pulsing energy core with bio-luminescent embers", color: "#a855f7" },
+    { id: "stardust", name: "Stardust", icon: Sparkles, desc: "Twinkling constellation crystals & celestial dust", color: "#facc15" },
+    { id: "magnetic", name: "Magnetic", icon: Magnet, desc: "Gravitational attraction to interactive elements", color: "#00f0ff" },
+    { id: "orbit", name: "Orbit", icon: Orbit, desc: "Continuously revolving gyroscopic quantum rings", color: "#38bdf8" },
+    { id: "glitch", name: "Glitch", icon: Activity, desc: "RGB channel separation with digital matrix jitter", color: "#ff0055" },
+    { id: "comet", name: "Comet", icon: Flame, desc: "Burning celestial meteorite with aerodynamic trail", color: "#38bdf8" },
+  ];
 
 export function CustomCursor() {
-  const [cursorMode, setCursorMode] = useState<CursorMode>("plasma");
+  const [cursorMode, setCursorMode] = useState<CursorMode>("comet");
   const [mounted, setMounted] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -81,7 +81,7 @@ export function CustomCursor() {
     active: false,
   });
 
-  const modeRef = useRef<CursorMode>("plasma");
+  const modeRef = useRef<CursorMode>("comet");
   const particlesRef = useRef<Particle[]>([]);
   const ripplesRef = useRef<Ripple[]>([]);
   const animFrameRef = useRef<number>(0);
@@ -186,12 +186,12 @@ export function CustomCursor() {
       if (target) {
         const interactive = Boolean(
           target.closest("button") ||
-            target.closest("a") ||
-            target.closest("input") ||
-            target.closest("textarea") ||
-            target.closest("[role='button']") ||
-            target.tagName === "BUTTON" ||
-            target.tagName === "A"
+          target.closest("a") ||
+          target.closest("input") ||
+          target.closest("textarea") ||
+          target.closest("[role='button']") ||
+          target.tagName === "BUTTON" ||
+          target.tagName === "A"
         );
         setIsHovered(interactive);
       }
@@ -202,14 +202,14 @@ export function CustomCursor() {
         modeRef.current === "plasma"
           ? "#a855f7"
           : modeRef.current === "stardust"
-          ? "#facc15"
-          : modeRef.current === "magnetic"
-          ? "#00f0ff"
-          : modeRef.current === "orbit"
-          ? "#38bdf8"
-          : modeRef.current === "glitch"
-          ? "#ff0055"
-          : "#00f0ff";
+            ? "#facc15"
+            : modeRef.current === "magnetic"
+              ? "#00f0ff"
+              : modeRef.current === "orbit"
+                ? "#38bdf8"
+                : modeRef.current === "glitch"
+                  ? "#ff0055"
+                  : "#00f0ff";
 
       ripplesRef.current.push({
         x: e.clientX,
@@ -479,9 +479,8 @@ export function CustomCursor() {
           <div className="relative flex items-center justify-center">
             <div className="w-9 h-9 rounded-full bg-gradient-to-r from-violet-500/40 via-cyan-400/30 to-purple-600/40 blur-[5px] animate-pulse" />
             <div
-              className={`absolute rounded-full border border-cyan-400/80 shadow-[0_0_15px_#00f0ff,inset_0_0_8px_#a855f7] transition-all duration-200 ${
-                isHovered ? "w-8 h-8 scale-110" : "w-6 h-6"
-              }`}
+              className={`absolute rounded-full border border-cyan-400/80 shadow-[0_0_15px_#00f0ff,inset_0_0_8px_#a855f7] transition-all duration-200 ${isHovered ? "w-8 h-8 scale-110" : "w-6 h-6"
+                }`}
             />
             <div className="absolute w-2 h-2 rounded-full bg-white shadow-[0_0_8px_#ffffff,0_0_16px_#00f0ff]" />
           </div>
@@ -492,9 +491,8 @@ export function CustomCursor() {
           <div className="relative flex items-center justify-center">
             <div className="w-8 h-8 flex items-center justify-center animate-[spin_8s_linear_infinite]">
               <svg
-                className={`text-amber-300 drop-shadow-[0_0_10px_#facc15] transition-all ${
-                  isHovered ? "w-8 h-8 scale-125" : "w-6 h-6"
-                }`}
+                className={`text-amber-300 drop-shadow-[0_0_10px_#facc15] transition-all ${isHovered ? "w-8 h-8 scale-125" : "w-6 h-6"
+                  }`}
                 viewBox="0 0 24 24"
                 fill="currentColor"
               >
@@ -509,9 +507,8 @@ export function CustomCursor() {
         {cursorMode === "magnetic" && (
           <div className="relative flex items-center justify-center">
             <div
-              className={`rounded-full border border-cyan-400/90 shadow-[0_0_12px_#00f0ff] transition-all duration-200 ${
-                isHovered ? "w-9 h-9 scale-110" : "w-7 h-7"
-              }`}
+              className={`rounded-full border border-cyan-400/90 shadow-[0_0_12px_#00f0ff] transition-all duration-200 ${isHovered ? "w-9 h-9 scale-110" : "w-7 h-7"
+                }`}
             />
             <span className="absolute -top-1 -left-1 w-2 h-2 border-t-2 border-l-2 border-cyan-300" />
             <span className="absolute -top-1 -right-1 w-2 h-2 border-t-2 border-r-2 border-cyan-300" />
@@ -527,9 +524,8 @@ export function CustomCursor() {
             <div className="absolute w-9 h-3.5 rounded-full border border-cyan-400/80 rotate-45 animate-[spin_3s_linear_infinite] shadow-[0_0_8px_#00f0ff]" />
             <div className="absolute w-9 h-3.5 rounded-full border border-violet-400/80 -rotate-45 animate-[spin_4s_linear_infinite_reverse] shadow-[0_0_8px_#a855f7]" />
             <div
-              className={`rounded-full bg-white shadow-[0_0_10px_#ffffff,0_0_18px_#38bdf8] transition-all ${
-                isHovered ? "w-3 h-3 scale-125" : "w-2.5 h-2.5"
-              }`}
+              className={`rounded-full bg-white shadow-[0_0_10px_#ffffff,0_0_18px_#38bdf8] transition-all ${isHovered ? "w-3 h-3 scale-125" : "w-2.5 h-2.5"
+                }`}
             />
           </div>
         )}
@@ -547,9 +543,8 @@ export function CustomCursor() {
         {cursorMode === "comet" && (
           <div className="relative flex items-center justify-center">
             <div
-              className={`rounded-full bg-gradient-to-tr from-cyan-400 via-white to-blue-500 shadow-[0_0_16px_#00f0ff,0_0_28px_#3b82f6] transition-all ${
-                isHovered ? "w-5 h-5 scale-110" : "w-4 h-4"
-              }`}
+              className={`rounded-full bg-gradient-to-tr from-cyan-400 via-white to-blue-500 shadow-[0_0_16px_#00f0ff,0_0_28px_#3b82f6] transition-all ${isHovered ? "w-5 h-5 scale-110" : "w-4 h-4"
+                }`}
             />
             <div className="absolute w-1.5 h-1.5 rounded-full bg-white" />
           </div>
@@ -577,11 +572,10 @@ export function CustomCursor() {
               key={m.id}
               type="button"
               onClick={() => selectMode(m.id)}
-              className={`p-2 rounded-full transition-all flex items-center justify-center cursor-pointer relative group ${
-                isActive
+              className={`p-2 rounded-full transition-all flex items-center justify-center cursor-pointer relative group ${isActive
                   ? "bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 text-white shadow-[0_0_16px_rgba(112,66,248,0.7),inset_0_1px_0_0_rgba(255,255,255,0.3)] scale-105"
                   : "text-slate-400 hover:text-white hover:bg-white/[0.08]"
-              }`}
+                }`}
               title={`${m.name}: ${m.desc} (Press 'C' to cycle)`}
               aria-label={`Select ${m.name} cursor mode`}
             >
