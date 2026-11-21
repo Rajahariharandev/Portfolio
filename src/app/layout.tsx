@@ -5,6 +5,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { StarBackground } from "@/components/cosmic/StarBackground";
 import { ShootingStars } from "@/components/cosmic/ShootingStars";
+import { ConstellationMesh } from "@/components/cosmic/ConstellationMesh";
 import { CustomCursor } from "@/components/cosmic/CustomCursor";
 import { ScrollProgress } from "@/components/cosmic/ScrollProgress";
 
@@ -93,6 +94,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-[#030014] text-[#F4F4F7] antialiased selection:bg-[#7042f8]/40 selection:text-white relative">
         <ScrollProgress />
         <CustomCursor />
+        <ConstellationMesh />
         <StarBackground />
         <ShootingStars />
         <Navbar />
