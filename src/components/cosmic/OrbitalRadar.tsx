@@ -34,20 +34,34 @@ export function OrbitalRadar() {
   return (
     <div className="relative w-full max-w-[540px] aspect-square mx-auto flex items-center justify-center select-none">
       {/* Background Ambient Purple Radial Glow */}
-      <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-[#7042f8]/20 via-[#2A0E61]/35 to-transparent blur-3xl pointer-events-none" />
+      <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-[#7042f8]/25 via-[#2A0E61]/40 to-transparent blur-3xl pointer-events-none" />
+
+      {/* Rotating Radar Sweep Beam */}
+      <motion.div
+        animate={{ rotate: 360 }}
+        transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
+        className="absolute w-[94%] h-[94%] rounded-full pointer-events-none"
+        style={{
+          background: "conic-gradient(from 0deg, rgba(0, 240, 255, 0.15) 0deg, rgba(112, 66, 248, 0.08) 45deg, transparent 75deg, transparent 360deg)",
+        }}
+      />
 
       {/* Outer Orbit Circle */}
       <div className="absolute w-[94%] h-[94%] rounded-full border border-violet-500/20" />
 
-      {/* Middle Orbit Circle */}
-      <div className="absolute w-[72%] h-[72%] rounded-full border border-violet-500/25 border-dashed" />
+      {/* Middle Rotating Orbit Circle with Dashes */}
+      <motion.div
+        animate={{ rotate: -360 }}
+        transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+        className="absolute w-[72%] h-[72%] rounded-full border border-violet-500/30 border-dashed"
+      />
 
       {/* Inner Orbit Circle */}
       <div className="absolute w-[48%] h-[48%] rounded-full border border-violet-500/35" />
 
       {/* Core Center Pulse Circle */}
-      <div className="absolute w-[24%] h-[24%] rounded-full border border-violet-400/40 bg-violet-950/20 flex items-center justify-center shadow-[0_0_30px_rgba(112,66,248,0.35)]">
-        <div className="w-2.5 h-2.5 rounded-full bg-violet-400 shadow-[0_0_12px_#a855f7] animate-pulse" />
+      <div className="absolute w-[24%] h-[24%] rounded-full border border-violet-400/40 bg-violet-950/30 flex items-center justify-center shadow-[0_0_30px_rgba(112,66,248,0.4)]">
+        <div className="w-2.5 h-2.5 rounded-full bg-cyan-400 shadow-[0_0_12px_#00f0ff] animate-pulse" />
       </div>
 
       {/* Crosshair Axes (Radar grid lines) */}
@@ -70,17 +84,20 @@ export function OrbitalRadar() {
             className="absolute -translate-x-1/2 -translate-y-1/2 cursor-pointer group"
             style={{ top: node.top, left: node.left }}
             animate={{
-              y: [0, -6, 0],
+              y: [0, -7, 0],
+              rotate: [0, 2, -2, 0],
             }}
             transition={{
-              duration: 3 + (node.delay || 0) * 2,
+              duration: 3.5 + (node.delay || 0) * 2,
               repeat: Infinity,
               ease: "easeInOut",
               delay: node.delay || 0,
             }}
+            whileHover={{ scale: 1.25, zIndex: 30 }}
+            whileTap={{ scale: 0.95 }}
           >
             <div
-              className={`${sizeClasses} rounded-2xl bg-[#0c0728]/85 border border-[#7042f8]/40 backdrop-blur-md flex items-center justify-center font-mono font-bold shadow-lg shadow-[#030014] group-hover:border-[#00f0ff] group-hover:shadow-[0_0_20px_rgba(0,240,255,0.4)] group-hover:scale-110 transition-all duration-300`}
+              className={`${sizeClasses} rounded-2xl bg-[#0c0728]/85 border border-[#7042f8]/40 backdrop-blur-md flex items-center justify-center font-mono font-bold shadow-lg shadow-[#030014] group-hover:border-[#00f0ff] group-hover:shadow-[0_0_25px_rgba(0,240,255,0.6)] transition-all duration-300`}
               style={{ color: node.color || "#ffffff" }}
               title={node.name}
             >
@@ -88,7 +105,7 @@ export function OrbitalRadar() {
             </div>
 
             {/* Hover tooltip label */}
-            <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1.5 px-2 py-0.5 rounded bg-[#030014]/90 border border-violet-500/40 text-[10px] font-sans text-violet-200 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20 shadow-md">
+            <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1.5 px-2.5 py-0.5 rounded-full bg-[#030014]/95 border border-[#00f0ff]/50 text-[10px] font-sans text-cyan-200 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-40 shadow-[0_0_10px_rgba(0,240,255,0.3)]">
               {node.name}
             </div>
           </motion.div>

@@ -15,6 +15,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Container } from "@/components/ui/Container";
 import { FadeIn } from "@/components/ui/MotionWrapper";
+import { SpotlightCard } from "@/components/cosmic/SpotlightCard";
 import { projectsData } from "@/data/projects";
 
 export function Projects() {
@@ -42,7 +43,7 @@ export function Projects() {
 
             return (
               <FadeIn key={project.id} delay={index * 0.08}>
-                <div className="rounded-2xl bg-[#0c0728]/70 border border-[#7042f8]/30 transition-all duration-300 hover:border-[#7042f8]/70 hover:shadow-[0_0_30px_rgba(112,66,248,0.25)] overflow-hidden backdrop-blur-md">
+                <SpotlightCard className="overflow-hidden" spotlightColor="rgba(0, 240, 255, 0.12)">
                   {/* Project Card Summary Header */}
                   <div className="p-6 sm:p-8">
                     <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-4">
@@ -57,7 +58,7 @@ export function Projects() {
                           {project.role}
                         </span>
                       </div>
-                      <div className="text-xs font-mono text-violet-300">
+                      <div className="text-xs font-mono text-cyan-300">
                         {project.period}
                       </div>
                     </div>
@@ -249,7 +250,7 @@ export function Projects() {
                       </motion.div>
                     )}
                   </AnimatePresence>
-                </div>
+                </SpotlightCard>
               </FadeIn>
             );
           })}

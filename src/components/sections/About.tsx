@@ -5,6 +5,7 @@ import { Server, Database, ShieldCheck, Cpu } from "lucide-react";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Container } from "@/components/ui/Container";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/MotionWrapper";
+import { SpotlightCard } from "@/components/cosmic/SpotlightCard";
 import { profileData } from "@/data/profile";
 
 export function About() {
@@ -53,11 +54,11 @@ export function About() {
             </div>
           </FadeIn>
 
-          {/* Right: Quantified Impact Cards with Staggered Motion */}
+          {/* Right: Quantified Impact Cards with Spotlight & Stagger */}
           <StaggerContainer className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
             {profileData.metrics.map((metric, idx) => (
               <StaggerItem key={idx}>
-                <div className="p-5 rounded-2xl bg-[#0c0728]/70 border border-[#7042f8]/30 hover:border-[#7042f8]/60 hover:shadow-[0_0_25px_rgba(112,66,248,0.25)] hover:-translate-y-1 transition-all duration-300 backdrop-blur-md group h-full">
+                <SpotlightCard className="p-5 h-full" spotlightColor="rgba(0, 240, 255, 0.15)">
                   <div className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-violet-300 via-purple-300 to-cyan-300 font-mono mb-1">
                     {metric.value}
                   </div>
@@ -67,7 +68,7 @@ export function About() {
                   <p className="text-xs text-[#a3a3c2] leading-relaxed">
                     {metric.detail}
                   </p>
-                </div>
+                </SpotlightCard>
               </StaggerItem>
             ))}
           </StaggerContainer>
@@ -87,7 +88,7 @@ export function About() {
           <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {profileData.principles.map((principle, index) => (
               <StaggerItem key={principle.title}>
-                <div className="p-6 rounded-2xl bg-[#0c0728]/70 border border-[#7042f8]/30 hover:border-[#7042f8]/60 hover:shadow-[0_0_25px_rgba(112,66,248,0.2)] transition-all flex items-start gap-4 backdrop-blur-md h-full">
+                <SpotlightCard className="p-6 flex items-start gap-4 h-full" spotlightColor="rgba(112, 66, 248, 0.2)">
                   <div className="p-2.5 rounded-xl bg-violet-950/70 border border-violet-800/50 shrink-0 shadow-[0_0_15px_rgba(112,66,248,0.3)]">
                     {principleIcons[index % principleIcons.length]}
                   </div>
@@ -99,7 +100,7 @@ export function About() {
                       {principle.description}
                     </p>
                   </div>
-                </div>
+                </SpotlightCard>
               </StaggerItem>
             ))}
           </StaggerContainer>

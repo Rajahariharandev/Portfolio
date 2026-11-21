@@ -37,11 +37,10 @@ export function Skills() {
               key={cat}
               type="button"
               onClick={() => setActiveCategory(cat)}
-              className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all focus-ring cursor-pointer backdrop-blur-md ${
-                activeCategory === cat
+              className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all focus-ring cursor-pointer backdrop-blur-md ${activeCategory === cat
                   ? "bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-[0_0_20px_rgba(112,66,248,0.5)] border border-violet-400/50 scale-105"
                   : "bg-[#0b0626]/70 text-[#a3a3c2] border border-[#7042f8]/30 hover:text-white hover:border-violet-500/50"
-              }`}
+                }`}
             >
               {cat}
             </button>
@@ -77,11 +76,10 @@ export function Skills() {
                     {category.skills.map((skill) => (
                       <div
                         key={skill.name}
-                        className={`flex items-center justify-between p-2.5 rounded-xl border text-xs transition-colors ${
-                          skill.highlight
+                        className={`flex items-center justify-between p-2.5 rounded-xl border text-xs transition-colors ${skill.highlight
                             ? "bg-violet-950/40 border-violet-700/50 text-white shadow-[0_0_10px_rgba(112,66,248,0.15)]"
                             : "bg-[#0e0730]/60 border-[#7042f8]/20 text-[#c8c8e0]"
-                        }`}
+                          }`}
                       >
                         <div className="flex items-center gap-2">
                           {skill.highlight ? (
@@ -92,13 +90,12 @@ export function Skills() {
                           <span className="font-medium font-mono">{skill.name}</span>
                         </div>
                         <span
-                          className={`text-[10px] font-mono uppercase px-2 py-0.5 rounded-full ${
-                            skill.level === "Core"
+                          className={`text-[10px] font-mono uppercase px-2 py-0.5 rounded-full ${skill.level === "Core"
                               ? "bg-violet-900/60 text-violet-200 border border-violet-700/50"
                               : skill.level === "Advanced"
-                              ? "bg-[#1f1545]/80 text-violet-300 border border-violet-800/40"
-                              : "bg-[#140e30] text-zinc-400"
-                          }`}
+                                ? "bg-[#1f1545]/80 text-violet-300 border border-violet-800/40"
+                                : "bg-[#140e30] text-zinc-400"
+                            }`}
                         >
                           {skill.level}
                         </span>

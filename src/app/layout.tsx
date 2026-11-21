@@ -4,6 +4,9 @@ import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { StarBackground } from "@/components/cosmic/StarBackground";
+import { ShootingStars } from "@/components/cosmic/ShootingStars";
+import { CustomCursor } from "@/components/cosmic/CustomCursor";
+import { ScrollProgress } from "@/components/cosmic/ScrollProgress";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -84,7 +87,10 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
     >
       <body className="min-h-full flex flex-col bg-[#030014] text-[#F4F4F7] antialiased selection:bg-[#7042f8]/40 selection:text-white relative">
+        <ScrollProgress />
+        <CustomCursor />
         <StarBackground />
+        <ShootingStars />
         <Navbar />
         <div className="relative z-10 flex-1 flex flex-col">
           {children}
