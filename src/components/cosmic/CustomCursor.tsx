@@ -33,7 +33,13 @@ interface Ripple {
   color: string;
 }
 
-const MODES: { id: CursorMode; name: string; icon: React.ComponentType<{ className?: string }>; desc: string; color: string }[] = [
+const MODES: {
+  id: CursorMode;
+  name: string;
+  icon: React.ComponentType<{ className?: string }>;
+  desc: string;
+  color: string;
+}[] = [
   { id: "plasma", name: "Plasma", icon: Zap, desc: "Pulsing energy core with bio-luminescent embers", color: "#a855f7" },
   { id: "stardust", name: "Stardust", icon: Sparkles, desc: "Twinkling constellation crystals & celestial dust", color: "#facc15" },
   { id: "magnetic", name: "Magnetic", icon: Magnet, desc: "Gravitational attraction to interactive elements", color: "#00f0ff" },
@@ -44,15 +50,30 @@ const MODES: { id: CursorMode; name: string; icon: React.ComponentType<{ classNa
 
 export function CustomCursor() {
   const [cursorMode, setCursorMode] = useState<CursorMode>("plasma");
-  const [enabled, setEnabled] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const cursorRef = useRef<HTMLDivElement>(null);
 
-  // Mouse & Physics state kept in refs for 60fps/120fps zero-render loop
-  const mouseRef = useRef({ x: -100, y: -100, targetX: -100, targetY: -100, vx: 0, vy: 0, visible: false });
-  const magneticTargetRef = useRef<{ x: number; y: number; width: number; height: number; active: boolean }>({
+  // Position & physics state in refs for 60fps/120fps direct rendering (zero React re-renders)
+  const posRef = useRef({
+    x: -100,
+    y: -100,
+    targetX: -100,
+    targetY: -100,
+    vx: 0,
+    vy: 0,
+    visible: false,
+  });
+
+  const magneticRef = useRef<{
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+    active: boolean;
+  }>({
     x: 0,
     y: 0,
     width: 0,
@@ -60,106 +81,107 @@ export function CustomCursor() {
     active: false,
   });
 
-  const modeRef = useRef<CursorMode>(cursorMode);
-
+  const modeRef = useRef<CursorMode>("plasma");
   const particlesRef = useRef<Particle[]>([]);
   const ripplesRef = useRef<Ripple[]>([]);
   const animFrameRef = useRef<number>(0);
-  const orbitAnglesRef = useRef({ r1: 0, r2: 0, r3: 0 });
-  const glitchJitterRef = useRef({ x: 0, y: 0, frame: 0 });
 
-  // Switch mode callback
   const selectMode = useCallback((newMode: CursorMode) => {
     setCursorMode(newMode);
     modeRef.current = newMode;
     particlesRef.current = [];
   }, []);
 
+  // Mount check
   useEffect(() => {
-    // 1. Device and Motion Checks
     if (typeof window === "undefined") return;
     const isFinePointer = window.matchMedia("(pointer: fine)").matches;
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    if (!isFinePointer || prefersReducedMotion) {
-      return;
+    if (isFinePointer && !prefersReducedMotion) {
+      const timer = setTimeout(() => {
+        setMounted(true);
+        document.documentElement.classList.add("has-custom-cursor");
+      }, 0);
+      return () => clearTimeout(timer);
     }
+  }, []);
 
-    // Set enabled safely without React cascading render warnings
-    const enableTimer = setTimeout(() => {
-      setEnabled(true);
-      document.documentElement.classList.add("has-custom-cursor");
-    }, 0);
+  // Main Canvas & Pointer Loop (Runs once mounted is true)
+  useEffect(() => {
+    if (!mounted) return;
 
     const canvas = canvasRef.current;
-    if (!canvas) return () => clearTimeout(enableTimer);
+    if (!canvas) return;
 
     const ctx = canvas.getContext("2d", { alpha: true });
-    if (!ctx) return () => clearTimeout(enableTimer);
+    if (!ctx) return;
 
-    // Canvas Sizing
-    const resizeCanvas = () => {
+    // Handle high-DPI crisp canvas sizing
+    const handleResize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       canvas.width = window.innerWidth * dpr;
       canvas.height = window.innerHeight * dpr;
-      ctx.scale(dpr, dpr);
+      canvas.style.width = `${window.innerWidth}px`;
+      canvas.style.height = `${window.innerHeight}px`;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
-    resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
+    handleResize();
+    window.addEventListener("resize", handleResize);
 
-    // Track Mouse
-    let prevX = -100;
-    let prevY = -100;
-    let prevTime = performance.now();
+    let lastX = -100;
+    let lastY = -100;
+    let lastTime = performance.now();
 
     const onMouseMove = (e: MouseEvent) => {
-      mouseRef.current.visible = true;
-      mouseRef.current.targetX = e.clientX;
-      mouseRef.current.targetY = e.clientY;
+      const p = posRef.current;
+      p.visible = true;
+      p.targetX = e.clientX;
+      p.targetY = e.clientY;
 
       const now = performance.now();
-      const dt = Math.max(1, now - prevTime);
-      mouseRef.current.vx = (e.clientX - prevX) / dt;
-      mouseRef.current.vy = (e.clientY - prevY) / dt;
-      prevX = e.clientX;
-      prevY = e.clientY;
-      prevTime = now;
+      const dt = Math.max(1, now - lastTime);
+      p.vx = (e.clientX - lastX) / dt;
+      p.vy = (e.clientY - lastY) / dt;
+      lastX = e.clientX;
+      lastY = e.clientY;
+      lastTime = now;
 
-      // Check for magnetic attraction to nearby buttons/links
+      // Magnetic mode: inspect interactive elements
       if (modeRef.current === "magnetic") {
         const interactiveElements = document.querySelectorAll(
           "button, a, input, textarea, select, [role='button']"
         );
         let closestDist = 95;
-        let foundTarget = false;
+        let found = false;
 
         interactiveElements.forEach((el) => {
           const rect = el.getBoundingClientRect();
-          const centerX = rect.left + rect.width / 2;
-          const centerY = rect.top + rect.height / 2;
-          const dist = Math.hypot(e.clientX - centerX, e.clientY - centerY);
+          const cx = rect.left + rect.width / 2;
+          const cy = rect.top + rect.height / 2;
+          const dist = Math.hypot(e.clientX - cx, e.clientY - cy);
 
           if (dist < closestDist) {
             closestDist = dist;
-            magneticTargetRef.current = {
-              x: centerX,
-              y: centerY,
+            magneticRef.current = {
+              x: cx,
+              y: cy,
               width: rect.width,
               height: rect.height,
               active: true,
             };
-            foundTarget = true;
+            found = true;
           }
         });
 
-        if (!foundTarget) {
-          magneticTargetRef.current.active = false;
+        if (!found) {
+          magneticRef.current.active = false;
         }
       } else {
-        magneticTargetRef.current.active = false;
+        magneticRef.current.active = false;
       }
 
-      // Check hovering for other modes
+      // Check hover on interactive items
       const target = e.target as HTMLElement | null;
       if (target) {
         const interactive = Boolean(
@@ -176,63 +198,62 @@ export function CustomCursor() {
     };
 
     const onMouseDown = (e: MouseEvent) => {
-      // Spawn ripple shockwave
+      const color =
+        modeRef.current === "plasma"
+          ? "#a855f7"
+          : modeRef.current === "stardust"
+          ? "#facc15"
+          : modeRef.current === "magnetic"
+          ? "#00f0ff"
+          : modeRef.current === "orbit"
+          ? "#38bdf8"
+          : modeRef.current === "glitch"
+          ? "#ff0055"
+          : "#00f0ff";
+
       ripplesRef.current.push({
         x: e.clientX,
         y: e.clientY,
         radius: 4,
         maxRadius: 65,
-        opacity: 0.85,
-        color:
-          modeRef.current === "plasma"
-            ? "#a855f7"
-            : modeRef.current === "stardust"
-            ? "#facc15"
-            : modeRef.current === "orbit"
-            ? "#00f0ff"
-            : modeRef.current === "glitch"
-            ? "#ff0055"
-            : modeRef.current === "comet"
-            ? "#38bdf8"
-            : "#00f0ff",
+        opacity: 0.9,
+        color,
       });
 
-      // Extra burst for Plasma and Comet
-      if (modeRef.current === "plasma" || modeRef.current === "comet") {
-        for (let i = 0; i < 18; i++) {
-          const angle = Math.random() * Math.PI * 2;
-          const spd = Math.random() * 4 + 2;
-          particlesRef.current.push({
-            x: e.clientX,
-            y: e.clientY,
-            vx: Math.cos(angle) * spd,
-            vy: Math.sin(angle) * spd,
-            life: 1,
-            maxLife: 1,
-            size: Math.random() * 4 + 2,
-            color: modeRef.current === "plasma" ? "#c084fc" : "#00f0ff",
-          });
-        }
+      // Spawn click particles
+      for (let i = 0; i < 16; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const spd = Math.random() * 4 + 2;
+        particlesRef.current.push({
+          x: e.clientX,
+          y: e.clientY,
+          vx: Math.cos(angle) * spd,
+          vy: Math.sin(angle) * spd,
+          life: 1,
+          maxLife: Math.random() * 20 + 15,
+          size: Math.random() * 4 + 2,
+          color,
+        });
       }
     };
 
     const onMouseLeave = () => {
-      mouseRef.current.visible = false;
+      posRef.current.visible = false;
       document.documentElement.classList.remove("has-custom-cursor");
     };
 
     const onMouseEnter = () => {
-      mouseRef.current.visible = true;
+      posRef.current.visible = true;
       document.documentElement.classList.add("has-custom-cursor");
     };
 
-    // Keyboard shortcut: Press 'C' to cycle cursor modes
+    // Keyboard 'C' key to cycle mode
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
       if (e.key.toLowerCase() === "c") {
-        const currentIndex = MODES.findIndex((m) => m.id === modeRef.current);
-        const nextMode = MODES[(currentIndex + 1) % MODES.length].id;
-        selectMode(nextMode);
+        const idx = MODES.findIndex((m) => m.id === modeRef.current);
+        const next = MODES[(idx + 1) % MODES.length].id;
+        selectMode(next);
       }
     };
 
@@ -243,30 +264,39 @@ export function CustomCursor() {
     window.addEventListener("keydown", onKeyDown);
 
     // ==========================================
-    // 2. High-Performance Animation Render Loop
+    // RequestAnimationFrame Animation Loop
     // ==========================================
     const render = () => {
-      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-
-      const m = mouseRef.current;
+      const p = posRef.current;
       const mode = modeRef.current;
 
+      // Clear canvas using logical dimensions
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+
       // Smooth lag / interpolation
-      if (mode === "magnetic" && magneticTargetRef.current.active) {
-        // Magnetic snap towards target center
-        m.x += (magneticTargetRef.current.x - m.x) * 0.28;
-        m.y += (magneticTargetRef.current.y - m.y) * 0.28;
+      if (mode === "magnetic" && magneticRef.current.active) {
+        p.x += (magneticRef.current.x - p.x) * 0.32;
+        p.y += (magneticRef.current.y - p.y) * 0.32;
       } else {
-        // Normal cursor spring follow
-        const followSpeed = mode === "plasma" ? 0.32 : mode === "comet" ? 0.38 : 0.45;
-        m.x += (m.targetX - m.x) * followSpeed;
-        m.y += (m.targetY - m.y) * followSpeed;
+        const factor = mode === "plasma" ? 0.38 : mode === "comet" ? 0.42 : 0.48;
+        p.x += (p.targetX - p.x) * factor;
+        p.y += (p.targetY - p.y) * factor;
       }
 
-      // Update and draw ripples
+      // 1. Direct DOM Cursor update (Always visible!)
+      if (cursorRef.current) {
+        if (p.visible && p.x > -50 && p.y > -50) {
+          cursorRef.current.style.opacity = "1";
+          cursorRef.current.style.transform = `translate3d(${p.x}px, ${p.y}px, 0)`;
+        } else {
+          cursorRef.current.style.opacity = "0";
+        }
+      }
+
+      // 2. Render Ripples
       for (let i = ripplesRef.current.length - 1; i >= 0; i--) {
         const r = ripplesRef.current[i];
-        r.radius += 2.2;
+        r.radius += 2.5;
         r.opacity = Math.max(0, 1 - r.radius / r.maxRadius);
 
         ctx.save();
@@ -285,381 +315,104 @@ export function CustomCursor() {
         }
       }
 
-      // ------------------------------------------------
-      // MODE 1: PLASMA (Pulsing orb & floating embers)
-      // ------------------------------------------------
-      if (mode === "plasma" && m.visible) {
-        // Emit floating plasma sparks
-        if (Math.hypot(m.vx, m.vy) > 0.05 || Math.random() < 0.3) {
-          particlesRef.current.push({
-            x: m.x + (Math.random() * 8 - 4),
-            y: m.y + (Math.random() * 8 - 4),
-            vx: (Math.random() - 0.5) * 1.5,
-            vy: (Math.random() - 0.5) * 1.5 - 0.6,
-            life: 1,
-            maxLife: Math.random() * 25 + 20,
-            size: Math.random() * 3.5 + 1.5,
-            color: Math.random() > 0.4 ? "#a855f7" : "#00f0ff",
-          });
-        }
+      // 3. Emit Mode-Specific Canvas Particles
+      if (p.visible) {
+        const spd = Math.hypot(p.vx, p.vy);
 
-        // Draw outer energy aura
-        const pulse = Math.sin(performance.now() * 0.006) * 4;
-        const outerRadius = 18 + pulse;
-
-        const grad = ctx.createRadialGradient(m.x, m.y, 2, m.x, m.y, outerRadius);
-        grad.addColorStop(0, "rgba(255, 255, 255, 0.9)");
-        grad.addColorStop(0.3, "rgba(0, 240, 255, 0.75)");
-        grad.addColorStop(0.7, "rgba(168, 85, 247, 0.35)");
-        grad.addColorStop(1, "rgba(112, 66, 248, 0)");
-
-        ctx.save();
-        ctx.beginPath();
-        ctx.arc(m.x, m.y, outerRadius, 0, Math.PI * 2);
-        ctx.fillStyle = grad;
-        ctx.shadowBlur = 18;
-        ctx.shadowColor = "#a855f7";
-        ctx.fill();
-
-        // Inner white-hot nucleus
-        ctx.beginPath();
-        ctx.arc(m.x, m.y, 4, 0, Math.PI * 2);
-        ctx.fillStyle = "#ffffff";
-        ctx.shadowBlur = 10;
-        ctx.shadowColor = "#00f0ff";
-        ctx.fill();
-        ctx.restore();
-      }
-
-      // ------------------------------------------------
-      // MODE 2: STARDUST (Twinkling constellation crystals)
-      // ------------------------------------------------
-      if (mode === "stardust" && m.visible) {
-        // Emit twinkling crystal stars
-        if (Math.hypot(m.vx, m.vy) > 0.08 || Math.random() < 0.35) {
-          const colors = ["#facc15", "#ffffff", "#f472b6", "#c084fc", "#38bdf8"];
-          particlesRef.current.push({
-            x: m.x + (Math.random() * 12 - 6),
-            y: m.y + (Math.random() * 12 - 6),
-            vx: (Math.random() - 0.5) * 1.8,
-            vy: (Math.random() - 0.5) * 1.8 + 0.4,
-            life: 1,
-            maxLife: Math.random() * 32 + 25,
-            size: Math.random() * 5 + 3,
-            color: colors[Math.floor(Math.random() * colors.length)],
-            angle: Math.random() * Math.PI,
-            rotSpeed: (Math.random() - 0.5) * 0.12,
-          });
-        }
-
-        // Draw crystal center
-        ctx.save();
-        ctx.translate(m.x, m.y);
-        ctx.rotate(performance.now() * 0.002);
-
-        // 4-point star core
-        ctx.beginPath();
-        for (let i = 0; i < 4; i++) {
-          ctx.lineTo(Math.cos((i * Math.PI) / 2) * 9, Math.sin((i * Math.PI) / 2) * 9);
-          ctx.lineTo(Math.cos((i * Math.PI) / 2 + Math.PI / 4) * 2.8, Math.sin((i * Math.PI) / 2 + Math.PI / 4) * 2.8);
-        }
-        ctx.closePath();
-        ctx.fillStyle = "#ffffff";
-        ctx.shadowBlur = 14;
-        ctx.shadowColor = "#facc15";
-        ctx.fill();
-
-        ctx.restore();
-      }
-
-      // ------------------------------------------------
-      // MODE 3: MAGNETIC (Attraction & Bounding Lock)
-      // ------------------------------------------------
-      if (mode === "magnetic" && m.visible) {
-        ctx.save();
-        const target = magneticTargetRef.current;
-
-        if (target.active) {
-          // Locked onto element: draw holographic target brackets
-          const padding = 8;
-          const boxX = target.x - target.width / 2 - padding;
-          const boxY = target.y - target.height / 2 - padding;
-          const boxW = target.width + padding * 2;
-          const boxH = target.height + padding * 2;
-          const cornerLen = 12;
-
-          ctx.strokeStyle = "#00f0ff";
-          ctx.lineWidth = 1.8;
-          ctx.shadowBlur = 16;
-          ctx.shadowColor = "#00f0ff";
-
-          // Top-Left
+        if (mode === "plasma") {
+          // Floating bio-luminescent embers
+          if (spd > 0.05 || Math.random() < 0.35) {
+            particlesRef.current.push({
+              x: p.x + (Math.random() * 10 - 5),
+              y: p.y + (Math.random() * 10 - 5),
+              vx: (Math.random() - 0.5) * 1.6,
+              vy: (Math.random() - 0.5) * 1.6 - 0.5,
+              life: 1,
+              maxLife: Math.random() * 25 + 18,
+              size: Math.random() * 3.5 + 1.5,
+              color: Math.random() > 0.4 ? "#a855f7" : "#00f0ff",
+            });
+          }
+        } else if (mode === "stardust") {
+          // Twinkling crystal stars
+          if (spd > 0.08 || Math.random() < 0.4) {
+            const colors = ["#facc15", "#ffffff", "#f472b6", "#c084fc", "#38bdf8"];
+            particlesRef.current.push({
+              x: p.x + (Math.random() * 14 - 7),
+              y: p.y + (Math.random() * 14 - 7),
+              vx: (Math.random() - 0.5) * 1.8,
+              vy: (Math.random() - 0.5) * 1.8 + 0.3,
+              life: 1,
+              maxLife: Math.random() * 30 + 20,
+              size: Math.random() * 5 + 2.5,
+              color: colors[Math.floor(Math.random() * colors.length)],
+              angle: Math.random() * Math.PI,
+              rotSpeed: (Math.random() - 0.5) * 0.1,
+            });
+          }
+        } else if (mode === "comet") {
+          // Dense aerodynamic meteor tail
+          const emitCount = spd > 0.1 ? 4 : 1;
+          for (let i = 0; i < emitCount; i++) {
+            const revAngle = Math.atan2(p.vy, p.vx) + Math.PI + (Math.random() - 0.5) * 0.45;
+            const emberSpd = Math.random() * (spd * 0.6 + 2);
+            particlesRef.current.push({
+              x: p.x,
+              y: p.y,
+              vx: Math.cos(revAngle) * emberSpd,
+              vy: Math.sin(revAngle) * emberSpd,
+              life: 1,
+              maxLife: Math.random() * 26 + 18,
+              size: Math.random() * 4.5 + 2,
+              color: Math.random() > 0.3 ? "#00f0ff" : "#60a5fa",
+            });
+          }
+        } else if (mode === "glitch") {
+          // Digital scanline noise fragments
+          if (Math.random() < 0.4) {
+            ctx.save();
+            ctx.fillStyle = "rgba(0, 240, 255, 0.6)";
+            ctx.fillRect(p.x - 16, p.y + (Math.random() * 24 - 12), 32, 1.5);
+            ctx.fillStyle = "rgba(255, 0, 85, 0.5)";
+            ctx.fillRect(p.x - 12, p.y + (Math.random() * 24 - 12), 24, 1.5);
+            ctx.restore();
+          }
+        } else if (mode === "magnetic" && magneticRef.current.active) {
+          // Dashed magnetic flux line between target and pointer
+          ctx.save();
           ctx.beginPath();
-          ctx.moveTo(boxX, boxY + cornerLen);
-          ctx.lineTo(boxX, boxY);
-          ctx.lineTo(boxX + cornerLen, boxY);
-          ctx.stroke();
-
-          // Top-Right
-          ctx.beginPath();
-          ctx.moveTo(boxX + boxW - cornerLen, boxY);
-          ctx.lineTo(boxX + boxW, boxY);
-          ctx.lineTo(boxX + boxW, boxY + cornerLen);
-          ctx.stroke();
-
-          // Bottom-Left
-          ctx.beginPath();
-          ctx.moveTo(boxX, boxY + boxH - cornerLen);
-          ctx.lineTo(boxX, boxY + boxH);
-          ctx.lineTo(boxX + cornerLen, boxY + boxH);
-          ctx.stroke();
-
-          // Bottom-Right
-          ctx.beginPath();
-          ctx.moveTo(boxX + boxW - cornerLen, boxY + boxH);
-          ctx.lineTo(boxX + boxW, boxY + boxH);
-          ctx.lineTo(boxX + boxW, boxY + boxH - cornerLen);
-          ctx.stroke();
-
-          // Magnetic field line to true mouse position
-          ctx.beginPath();
-          ctx.moveTo(m.targetX, m.targetY);
-          ctx.lineTo(target.x, target.y);
-          ctx.strokeStyle = "rgba(0, 240, 255, 0.4)";
+          ctx.moveTo(p.targetX, p.targetY);
+          ctx.lineTo(magneticRef.current.x, magneticRef.current.y);
+          ctx.strokeStyle = "rgba(0, 240, 255, 0.45)";
           ctx.lineWidth = 1;
           ctx.setLineDash([3, 3]);
           ctx.stroke();
-          ctx.setLineDash([]);
-        } else {
-          // Idle magnetic reticle
-          ctx.beginPath();
-          ctx.arc(m.x, m.y, 16, 0, Math.PI * 2);
-          ctx.strokeStyle = "rgba(0, 240, 255, 0.75)";
-          ctx.lineWidth = 1.5;
-          ctx.shadowBlur = 12;
-          ctx.shadowColor = "#00f0ff";
-          ctx.stroke();
-
-          // Reticle ticks
-          ctx.beginPath();
-          ctx.moveTo(m.x - 22, m.y);
-          ctx.lineTo(m.x - 17, m.y);
-          ctx.moveTo(m.x + 17, m.y);
-          ctx.lineTo(m.x + 22, m.y);
-          ctx.moveTo(m.x, m.y - 22);
-          ctx.lineTo(m.x, m.y - 17);
-          ctx.moveTo(m.x, m.y + 17);
-          ctx.lineTo(m.x, m.y + 22);
-          ctx.stroke();
-
-          // Center magnet core
-          ctx.beginPath();
-          ctx.arc(m.x, m.y, 3.5, 0, Math.PI * 2);
-          ctx.fillStyle = "#ffffff";
-          ctx.fill();
+          ctx.restore();
         }
-        ctx.restore();
       }
 
-      // ------------------------------------------------
-      // MODE 4: ORBIT (Continuously rotating 3D rings)
-      // ------------------------------------------------
-      if (mode === "orbit" && m.visible) {
-        ctx.save();
-        const speedMultiplier = 1 + Math.hypot(m.vx, m.vy) * 0.8;
-        orbitAnglesRef.current.r1 += 0.04 * speedMultiplier;
-        orbitAnglesRef.current.r2 -= 0.032 * speedMultiplier;
-        orbitAnglesRef.current.r3 += 0.025 * speedMultiplier;
-
-        const { r1, r2, r3 } = orbitAnglesRef.current;
-
-        // Core Quantum Dot
-        ctx.beginPath();
-        ctx.arc(m.x, m.y, 4, 0, Math.PI * 2);
-        ctx.fillStyle = "#ffffff";
-        ctx.shadowBlur = 14;
-        ctx.shadowColor = "#38bdf8";
-        ctx.fill();
-
-        // Ring 1 (Tilted 40 deg, cyan)
-        ctx.save();
-        ctx.translate(m.x, m.y);
-        ctx.rotate(0.7);
-        ctx.beginPath();
-        ctx.ellipse(0, 0, 20, 7, 0, 0, Math.PI * 2);
-        ctx.strokeStyle = "rgba(56, 189, 248, 0.7)";
-        ctx.lineWidth = 1.2;
-        ctx.stroke();
-
-        // Electron 1
-        const e1X = Math.cos(r1) * 20;
-        const e1Y = Math.sin(r1) * 7;
-        ctx.beginPath();
-        ctx.arc(e1X, e1Y, 2.5, 0, Math.PI * 2);
-        ctx.fillStyle = "#00f0ff";
-        ctx.shadowBlur = 8;
-        ctx.shadowColor = "#00f0ff";
-        ctx.fill();
-        ctx.restore();
-
-        // Ring 2 (Tilted -40 deg, violet)
-        ctx.save();
-        ctx.translate(m.x, m.y);
-        ctx.rotate(-0.7);
-        ctx.beginPath();
-        ctx.ellipse(0, 0, 20, 7, 0, 0, Math.PI * 2);
-        ctx.strokeStyle = "rgba(168, 85, 247, 0.7)";
-        ctx.lineWidth = 1.2;
-        ctx.stroke();
-
-        // Electron 2
-        const e2X = Math.cos(r2) * 20;
-        const e2Y = Math.sin(r2) * 7;
-        ctx.beginPath();
-        ctx.arc(e2X, e2Y, 2.5, 0, Math.PI * 2);
-        ctx.fillStyle = "#c084fc";
-        ctx.shadowBlur = 8;
-        ctx.shadowColor = "#c084fc";
-        ctx.fill();
-        ctx.restore();
-
-        // Ring 3 (Equatorial horizontal ring)
-        ctx.save();
-        ctx.translate(m.x, m.y);
-        ctx.beginPath();
-        ctx.ellipse(0, 0, 23, 8, 0, 0, Math.PI * 2);
-        ctx.strokeStyle = "rgba(255, 255, 255, 0.5)";
-        ctx.lineWidth = 1;
-        ctx.stroke();
-
-        // Electron 3
-        const e3X = Math.cos(r3) * 23;
-        const e3Y = Math.sin(r3) * 8;
-        ctx.beginPath();
-        ctx.arc(e3X, e3Y, 2.2, 0, Math.PI * 2);
-        ctx.fillStyle = "#ffffff";
-        ctx.fill();
-        ctx.restore();
-
-        ctx.restore();
-      }
-
-      // ------------------------------------------------
-      // MODE 5: GLITCH (RGB separation & Matrix noise)
-      // ------------------------------------------------
-      if (mode === "glitch" && m.visible) {
-        ctx.save();
-        glitchJitterRef.current.frame++;
-        const jitterIntensity = Math.hypot(m.vx, m.vy) * 2 + 3;
-        const jx = (Math.random() - 0.5) * jitterIntensity;
-        const jy = (Math.random() - 0.5) * jitterIntensity;
-
-        // Cyan separated channel
-        ctx.save();
-        ctx.beginPath();
-        ctx.rect(m.x - 9 - jx, m.y - 9 - jy, 18, 18);
-        ctx.strokeStyle = "#00f0ff";
-        ctx.lineWidth = 1.5;
-        ctx.stroke();
-        ctx.restore();
-
-        // Magenta/Red separated channel
-        ctx.save();
-        ctx.beginPath();
-        ctx.rect(m.x - 9 + jx, m.y - 9 + jy, 18, 18);
-        ctx.strokeStyle = "#ff0055";
-        ctx.lineWidth = 1.5;
-        ctx.stroke();
-        ctx.restore();
-
-        // Digital horizontal scanline slices
-        if (Math.random() < 0.4) {
-          ctx.fillStyle = "rgba(0, 240, 255, 0.7)";
-          ctx.fillRect(m.x - 16, m.y + (Math.random() * 20 - 10), 32, 1.5);
-        }
-
-        // Center white digital cross
-        ctx.beginPath();
-        ctx.moveTo(m.x - 4, m.y);
-        ctx.lineTo(m.x + 4, m.y);
-        ctx.moveTo(m.x, m.y - 4);
-        ctx.lineTo(m.x, m.y + 4);
-        ctx.strokeStyle = "#ffffff";
-        ctx.lineWidth = 2;
-        ctx.stroke();
-
-        ctx.restore();
-      }
-
-      // ------------------------------------------------
-      // MODE 6: COMET (High-speed burning meteor trail)
-      // ------------------------------------------------
-      if (mode === "comet" && m.visible) {
-        // Emit aerodynamic comet embers opposite to movement direction
-        const spd = Math.hypot(m.vx, m.vy);
-        const emitCount = spd > 0.1 ? 4 : 1;
-
-        for (let i = 0; i < emitCount; i++) {
-          const revAngle = Math.atan2(m.vy, m.vx) + Math.PI + (Math.random() - 0.5) * 0.45;
-          const emberSpd = Math.random() * (spd * 0.5 + 2);
-          particlesRef.current.push({
-            x: m.x,
-            y: m.y,
-            vx: Math.cos(revAngle) * emberSpd,
-            vy: Math.sin(revAngle) * emberSpd,
-            life: 1,
-            maxLife: Math.random() * 28 + 20,
-            size: Math.random() * 4.5 + 2,
-            color: Math.random() > 0.3 ? "#00f0ff" : "#60a5fa",
-          });
-        }
-
-        // Draw blinding comet head
-        ctx.save();
-        const headGrad = ctx.createRadialGradient(m.x, m.y, 1, m.x, m.y, 14);
-        headGrad.addColorStop(0, "#ffffff");
-        headGrad.addColorStop(0.3, "#00f0ff");
-        headGrad.addColorStop(0.7, "rgba(59, 130, 246, 0.4)");
-        headGrad.addColorStop(1, "rgba(59, 130, 246, 0)");
-
-        ctx.beginPath();
-        ctx.arc(m.x, m.y, 14, 0, Math.PI * 2);
-        ctx.fillStyle = headGrad;
-        ctx.shadowBlur = 18;
-        ctx.shadowColor = "#00f0ff";
-        ctx.fill();
-
-        ctx.beginPath();
-        ctx.arc(m.x, m.y, 4, 0, Math.PI * 2);
-        ctx.fillStyle = "#ffffff";
-        ctx.fill();
-        ctx.restore();
-      }
-
-      // ------------------------------------------------
-      // Render and update all active particles
-      // ------------------------------------------------
+      // 4. Update and Draw Active Particles
       for (let i = particlesRef.current.length - 1; i >= 0; i--) {
-        const p = particlesRef.current[i];
-        p.x += p.vx;
-        p.y += p.vy;
-        p.life -= 1 / p.maxLife;
+        const pt = particlesRef.current[i];
+        pt.x += pt.vx;
+        pt.y += pt.vy;
+        pt.life -= 1 / pt.maxLife;
 
-        if (p.life <= 0) {
+        if (pt.life <= 0) {
           particlesRef.current.splice(i, 1);
           continue;
         }
 
         ctx.save();
-        ctx.globalAlpha = p.life;
+        ctx.globalAlpha = Math.max(0, pt.life);
 
-        if (mode === "stardust" && p.angle !== undefined) {
-          // Draw rotated 4-point star crystal
-          p.angle += p.rotSpeed || 0.05;
-          ctx.translate(p.x, p.y);
-          ctx.rotate(p.angle);
+        if (mode === "stardust" && pt.angle !== undefined) {
+          // Draw rotated 4-point crystal star
+          pt.angle += pt.rotSpeed || 0.05;
+          ctx.translate(pt.x, pt.y);
+          ctx.rotate(pt.angle);
           ctx.beginPath();
-          const sz = p.size * p.life;
+          const sz = pt.size * pt.life;
           ctx.moveTo(0, -sz);
           ctx.lineTo(sz * 0.3, -sz * 0.3);
           ctx.lineTo(sz, 0);
@@ -669,26 +422,21 @@ export function CustomCursor() {
           ctx.lineTo(-sz, 0);
           ctx.lineTo(-sz * 0.3, -sz * 0.3);
           ctx.closePath();
-          ctx.fillStyle = p.color;
+          ctx.fillStyle = pt.color;
           ctx.shadowBlur = 10;
-          ctx.shadowColor = p.color;
+          ctx.shadowColor = pt.color;
           ctx.fill();
         } else {
-          // Circular ember / particle
+          // Circular particle with glow
           ctx.beginPath();
-          ctx.arc(p.x, p.y, Math.max(0.5, p.size * p.life), 0, Math.PI * 2);
-          ctx.fillStyle = p.color;
+          ctx.arc(pt.x, pt.y, Math.max(0.5, pt.size * pt.life), 0, Math.PI * 2);
+          ctx.fillStyle = pt.color;
           ctx.shadowBlur = 8;
-          ctx.shadowColor = p.color;
+          ctx.shadowColor = pt.color;
           ctx.fill();
         }
 
         ctx.restore();
-      }
-
-      // Direct DOM update for top-most indicator
-      if (cursorRef.current && m.visible) {
-        cursorRef.current.style.transform = `translate3d(${m.x}px, ${m.y}px, 0)`;
       }
 
       animFrameRef.current = requestAnimationFrame(render);
@@ -697,9 +445,8 @@ export function CustomCursor() {
     animFrameRef.current = requestAnimationFrame(render);
 
     return () => {
-      clearTimeout(enableTimer);
       cancelAnimationFrame(animFrameRef.current);
-      window.removeEventListener("resize", resizeCanvas);
+      window.removeEventListener("resize", handleResize);
       window.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("mousedown", onMouseDown);
       document.removeEventListener("mouseleave", onMouseLeave);
@@ -707,31 +454,105 @@ export function CustomCursor() {
       window.removeEventListener("keydown", onKeyDown);
       document.documentElement.classList.remove("has-custom-cursor");
     };
-  }, [selectMode]);
+  }, [mounted, selectMode]);
 
-  if (!enabled) return null;
+  if (!mounted) return null;
 
   const currentModeInfo = MODES.find((m) => m.id === cursorMode) || MODES[0];
 
   return (
     <>
-      {/* 1. Fullscreen Canvas Particle & Animation Layer */}
+      {/* 1. Fullscreen Canvas for Smooth Particle Trails & Shockwaves */}
       <canvas
         ref={canvasRef}
-        className="fixed inset-0 pointer-events-none z-[9998] w-full h-full select-none"
+        className="fixed inset-0 pointer-events-none z-[9998] select-none"
       />
 
-      {/* 2. Direct DOM Cursor Marker Layer (Zero latency) */}
+      {/* 2. Direct DOM Cursor Marker (Rock-Solid, Always 100% Visible & Centered) */}
       <div
         ref={cursorRef}
-        className="fixed top-0 left-0 pointer-events-none z-[9999] select-none -translate-x-1/2 -translate-y-1/2 will-change-transform"
+        className="fixed top-0 left-0 pointer-events-none z-[9999] select-none -translate-x-1/2 -translate-y-1/2 will-change-transform transition-opacity duration-150"
+        style={{ opacity: 0 }}
       >
-        {/* Subtle hover pulse ring */}
-        {isHovered && (
-          <div
-            className="w-10 h-10 -translate-x-1/2 -translate-y-1/2 rounded-full border border-cyan-400/70 animate-ping opacity-60 pointer-events-none"
-            style={{ position: "absolute", left: "50%", top: "50%" }}
-          />
+        {/* MODE 1: PLASMA */}
+        {cursorMode === "plasma" && (
+          <div className="relative flex items-center justify-center">
+            <div className="w-9 h-9 rounded-full bg-gradient-to-r from-violet-500/40 via-cyan-400/30 to-purple-600/40 blur-[5px] animate-pulse" />
+            <div
+              className={`absolute rounded-full border border-cyan-400/80 shadow-[0_0_15px_#00f0ff,inset_0_0_8px_#a855f7] transition-all duration-200 ${
+                isHovered ? "w-8 h-8 scale-110" : "w-6 h-6"
+              }`}
+            />
+            <div className="absolute w-2 h-2 rounded-full bg-white shadow-[0_0_8px_#ffffff,0_0_16px_#00f0ff]" />
+          </div>
+        )}
+
+        {/* MODE 2: STARDUST */}
+        {cursorMode === "stardust" && (
+          <div className="relative flex items-center justify-center">
+            <div className="w-8 h-8 flex items-center justify-center animate-[spin_8s_linear_infinite]">
+              <svg
+                className={`text-amber-300 drop-shadow-[0_0_10px_#facc15] transition-all ${
+                  isHovered ? "w-8 h-8 scale-125" : "w-6 h-6"
+                }`}
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path d="M12 0 L14.5 9.5 L24 12 L14.5 14.5 L12 24 L9.5 14.5 L0 12 L9.5 9.5 Z" />
+              </svg>
+            </div>
+            <div className="absolute w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_8px_#ffffff]" />
+          </div>
+        )}
+
+        {/* MODE 3: MAGNETIC */}
+        {cursorMode === "magnetic" && (
+          <div className="relative flex items-center justify-center">
+            <div
+              className={`rounded-full border border-cyan-400/90 shadow-[0_0_12px_#00f0ff] transition-all duration-200 ${
+                isHovered ? "w-9 h-9 scale-110" : "w-7 h-7"
+              }`}
+            />
+            <span className="absolute -top-1 -left-1 w-2 h-2 border-t-2 border-l-2 border-cyan-300" />
+            <span className="absolute -top-1 -right-1 w-2 h-2 border-t-2 border-r-2 border-cyan-300" />
+            <span className="absolute -bottom-1 -left-1 w-2 h-2 border-b-2 border-l-2 border-cyan-300" />
+            <span className="absolute -bottom-1 -right-1 w-2 h-2 border-b-2 border-r-2 border-cyan-300" />
+            <div className="absolute w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_6px_#ffffff]" />
+          </div>
+        )}
+
+        {/* MODE 4: ORBIT */}
+        {cursorMode === "orbit" && (
+          <div className="relative flex items-center justify-center">
+            <div className="absolute w-9 h-3.5 rounded-full border border-cyan-400/80 rotate-45 animate-[spin_3s_linear_infinite] shadow-[0_0_8px_#00f0ff]" />
+            <div className="absolute w-9 h-3.5 rounded-full border border-violet-400/80 -rotate-45 animate-[spin_4s_linear_infinite_reverse] shadow-[0_0_8px_#a855f7]" />
+            <div
+              className={`rounded-full bg-white shadow-[0_0_10px_#ffffff,0_0_18px_#38bdf8] transition-all ${
+                isHovered ? "w-3 h-3 scale-125" : "w-2.5 h-2.5"
+              }`}
+            />
+          </div>
+        )}
+
+        {/* MODE 5: GLITCH */}
+        {cursorMode === "glitch" && (
+          <div className="relative flex items-center justify-center">
+            <div className="absolute w-6 h-6 border border-cyan-400 -translate-x-[2px] -translate-y-[1px] opacity-85 shadow-[0_0_8px_#00f0ff]" />
+            <div className="absolute w-6 h-6 border border-rose-500 translate-x-[2px] translate-y-[1px] opacity-85 shadow-[0_0_8px_#ff0055]" />
+            <div className="w-1.5 h-1.5 bg-white shadow-[0_0_8px_#ffffff]" />
+          </div>
+        )}
+
+        {/* MODE 6: COMET */}
+        {cursorMode === "comet" && (
+          <div className="relative flex items-center justify-center">
+            <div
+              className={`rounded-full bg-gradient-to-tr from-cyan-400 via-white to-blue-500 shadow-[0_0_16px_#00f0ff,0_0_28px_#3b82f6] transition-all ${
+                isHovered ? "w-5 h-5 scale-110" : "w-4 h-4"
+              }`}
+            />
+            <div className="absolute w-1.5 h-1.5 rounded-full bg-white" />
+          </div>
         )}
       </div>
 
@@ -740,8 +561,11 @@ export function CustomCursor() {
         aria-label="Cursor animation style switcher"
         className="fixed bottom-5 right-5 z-[9990] flex items-center gap-1.5 p-1.5 rounded-full bg-[#07031e]/90 border border-white/[0.12] backdrop-blur-2xl shadow-[0_8px_32px_0_rgba(0,0,0,0.5),inset_0_1px_0_0_rgba(255,255,255,0.15)] select-none transition-all"
       >
-        <span className="text-[11px] font-mono text-slate-300 font-semibold px-2 hidden sm:inline flex items-center gap-1">
-          <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: currentModeInfo.color }} />
+        <span className="text-[11px] font-mono text-slate-300 font-semibold px-2 hidden sm:inline flex items-center gap-1.5">
+          <span
+            className="w-2 h-2 rounded-full inline-block shadow-sm"
+            style={{ backgroundColor: currentModeInfo.color }}
+          />
           <span>{currentModeInfo.name}</span>
         </span>
 
