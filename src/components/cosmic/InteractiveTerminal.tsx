@@ -16,9 +16,9 @@ export function InteractiveTerminal() {
   const bottomRef = useRef<HTMLDivElement>(null);
 
   const defaultPresets = [
-    { label: "python skills.py", cmd: "python skills.py" },
+    // { label: "python skills.py", cmd: "python skills.py" },
     { label: "cat status.json", cmd: "cat status.json" },
-    { label: "run cicd_pipeline", cmd: "run cicd_pipeline" },
+    // { label: "run cicd_pipeline", cmd: "run cicd_pipeline" },
   ];
 
   const handleCommand = (cmdStr: string) => {
@@ -31,9 +31,9 @@ export function InteractiveTerminal() {
       outputNode = (
         <div className="text-xs text-slate-300 space-y-1">
           <p className="text-cyan-400 font-semibold">Available commands:</p>
-          <p><span className="text-violet-400">python skills.py</span> - Inspect technical competencies</p>
-          <p><span className="text-violet-400">cat status.json</span> - View current role &amp; company details</p>
-          <p><span className="text-violet-400">run cicd_pipeline</span> - Simulate automated test &amp; deploy suite</p>
+          <p><span className="text-violet-400">skills</span> - Inspect technical competencies</p>
+          <p><span className="text-violet-400">status</span> - View current role &amp; company details</p>
+          {/* <p><span className="text-violet-400">run cicd_pipeline</span> - Simulate automated test &amp; deploy suite</p> */}
           <p><span className="text-violet-400">contact</span> - Display email and communication endpoints</p>
           <p><span className="text-violet-400">whoami</span> - Developer profile summary</p>
           <p><span className="text-violet-400">clear</span> - Clear terminal window</p>
@@ -47,47 +47,56 @@ export function InteractiveTerminal() {
       outputNode = (
         <div className="text-xs font-mono space-y-1.5 text-slate-300 bg-[#060317] p-2.5 rounded-lg border border-violet-500/20">
           <p className="text-cyan-300 font-semibold">&gt;&gt;&gt; Tech Stack Output:</p>
-          <p><span className="text-emerald-400">Core:</span> Python (FastAPI, Django), Golang, Node.js</p>
-          <p><span className="text-amber-400">Databases:</span> PostgreSQL, Oracle Database, Redis Caching</p>
-          <p><span className="text-purple-400">DevOps &amp; Cloud:</span> GitLab CI/CD, Docker, AWS (EC2/S3), Linux</p>
-          <p><span className="text-cyan-400">Architecture:</span> Microservices, SOAP-to-REST, RBAC, Async Workers</p>
+          <p><span className="text-emerald-400">Programming Languages:</span> Python, FastApi, JavaScript, Go(Golang), Node.js, Php</p>
+          <p><span className="text-emerald-400">Backend Development:</span> REST APIs, Microservices, JWT Authentication, API Integration,SOAP-to-REST, RBAC, Async Wo, Event-Driven Architecturesrkers</p>
+          <p><span className="text-amber-400">Performance & Concurrency:</span> Connection Pooling, Goroutines, Channels, Worker Pools, Rate Limiting, singleflight, Query Optimization</p>
+          <p><span className="text-amber-400">Databases:</span> Oracle Database, PostgreSQL, Redis, Ristretto, In-Memory Caching</p>
+          <p><span className="text-purple-400">DevOps &amp; Cloud:</span> Git, GitLab CI/CD, Docker, AWS (EC2/S3), Linux,  Ubuntu, Nginx, PM2, Apache HTTP Server, Systemd
+          </p>
+          {/* <p><span className="text-cyan-400">Architecture:</span> Microservices, SOAP-to-REST, RBAC, Async Wo, Event-Driven Architecturesrkers</p> */}
         </div>
       );
-    } else if (trimmed === "cat status.json" || trimmed === "status") {
+    } else if (trimmed === "cat status.json" || trimmed === "status" || trimmed === "/status") {
       outputNode = (
         <pre className="text-xs font-mono text-emerald-300 bg-[#060317] p-2.5 rounded-lg border border-emerald-500/20 overflow-x-auto">
           {`{
-  "name": "Rajahariharan K",
-  "role": "Assistant Lead – Backend Developer",
-  "promoted": "February 2026",
-  "company": "The SCM Silk Private Limited",
-  "location": "Trichy, Tamil Nadu, IN",
-  "availability": "Ready for high-impact backend projects"
-}`}
+            "name": "Rajahariharan K",
+            "role": "Assistant Lead - Backend Developer",
+            "promoted": "February 2026",
+            "company": "AV7 SCM - HO",
+            "location": "Tiruppur, Tamil Nadu, IN",
+            "availability": "Ready for high-impact backend projects"
+          }`}
         </pre>
       );
-    } else if (trimmed === "run cicd_pipeline" || trimmed === "cicd") {
-      outputNode = (
-        <div className="text-xs font-mono space-y-1 text-slate-300 bg-[#060317] p-2.5 rounded-lg border border-cyan-500/20">
-          <p className="text-violet-400">[0.02s] 🚀 Initializing GitLab Runner v16.8...</p>
-          <p className="text-cyan-300">[0.45s] ⚡ Running pytest unit &amp; regression tests: 42 passed</p>
-          <p className="text-cyan-300">[0.88s] 🔒 Executing SAST security &amp; dependency audit: 0 vulnerabilities</p>
-          <p className="text-amber-300">[1.20s] 📦 Building Docker container: rajahariharan/backend:latest</p>
-          <p className="text-emerald-400 font-semibold">[1.65s] ✔ Pipeline Passed! Deployed in 1.65s (-70% provisioning time)</p>
-        </div>
-      );
-    } else if (trimmed === "whoami") {
+    }
+    // else if (trimmed === "run cicd_pipeline" || trimmed === "Cloud") {
+    //   outputNode = (
+    //     <div className="text-xs font-mono space-y-1 text-slate-300 bg-[#060317] p-2.5 rounded-lg border border-cyan-500/20">
+    //       <p className="text-violet-400">[0.02s] 🚀 Initializing GitLab Runner v16.8...</p>
+    //       <p className="text-cyan-300">[0.45s] ⚡ Running pytest unit &amp; regression tests: 42 passed</p>
+    //       <p className="text-cyan-300">[0.88s] 🔒 Executing SAST security &amp; dependency audit: 0 vulnerabilities</p>
+    //       <p className="text-amber-300">[1.20s] 📦 Building Docker container: rajahariharan/backend:latest</p>
+    //       <p className="text-emerald-400 font-semibold">[1.65s] ✔ Pipeline Passed! Deployed in 1.65s (-70% provisioning time)</p>
+    //     </div>
+    //   );
+    // } 
+    else if (trimmed === "whoami" || trimmed === "/who" || trimmed === "who") {
       outputNode = (
         <p className="text-xs text-violet-200">
-          Rajahariharan K — Assistant Lead &amp; Backend  Developer with 4+ years engineering enterprise automation scripts, backend microservices, and database performance tuning.
+          Rajahariharan K — Assistant Lead &amp; Backend Developer
+          specializing in Go, Node.js, PHP, backend microservices,
+          REST API development, Oracle databases, and performance
+          optimization.
         </p>
       );
+
     } else if (trimmed === "contact") {
       outputNode = (
         <div className="text-xs text-slate-300 space-y-1">
           <p>Email: <span className="text-cyan-300 font-mono">{profileData.contact.email}</span></p>
           <p>Phone: <span className="text-cyan-300 font-mono">{profileData.contact.phone}</span></p>
-          <p>GitHub: <a href={profileData.contact.github} target="_blank" rel="noreferrer" className="text-violet-400 underline">github.com/Rajahariharan22</a></p>
+          <p>GitHub: <a href={profileData.contact.github} target="_blank" rel="noreferrer" className="text-violet-400 underline">github.com/Rajahariharan-k</a></p>
           <p>LinkedIn: <a href={profileData.contact.linkedin} target="_blank" rel="noreferrer" className="text-violet-400 underline">linkedin.com/in/rajahariharan-k</a></p>
         </div>
       );

@@ -47,8 +47,8 @@ export const profileData: ProfileData = {
   contact: {
     email: "rajahariharan2244@gmail.com",
     phone: "6383852354",
-    github: "https://github.com/rajahariharan",
-    linkedin: "https://linkedin.com/in/rajahariharan",
+    github: "https://github.com/Rajahariharandev",
+    linkedin: "https://linkedin.com/in/rajahariharan-k-2b39a4243",
     portfolio: "https://rajahariharan-portfolio.netlify.app",
   },
   metrics: [

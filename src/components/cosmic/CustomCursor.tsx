@@ -573,8 +573,8 @@ export function CustomCursor() {
               type="button"
               onClick={() => selectMode(m.id)}
               className={`p-2 rounded-full transition-all flex items-center justify-center cursor-pointer relative group ${isActive
-                  ? "bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 text-white shadow-[0_0_16px_rgba(112,66,248,0.7),inset_0_1px_0_0_rgba(255,255,255,0.3)] scale-105"
-                  : "text-slate-400 hover:text-white hover:bg-white/[0.08]"
+                ? "bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 text-white shadow-[0_0_16px_rgba(112,66,248,0.7),inset_0_1px_0_0_rgba(255,255,255,0.3)] scale-105"
+                : "text-slate-400 hover:text-white hover:bg-white/[0.08]"
                 }`}
               title={`${m.name}: ${m.desc} (Press 'C' to cycle)`}
               aria-label={`Select ${m.name} cursor mode`}
