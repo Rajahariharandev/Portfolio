@@ -1,4 +1,5 @@
 import React from "react";
+import { Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface SectionHeadingProps {
@@ -25,18 +26,18 @@ export function SectionHeading({
       )}
     >
       {tag && (
-        <div className="mb-3">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-medium tracking-wide bg-violet-950/40 text-violet-300 border border-violet-800/40">
-            <span className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse" />
+        <div className="mb-3.5">
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-mono font-medium tracking-wide bg-[#030014]/80 text-[#e9d5ff] border border-[#7042f8]/50 backdrop-blur-md shadow-[0_0_15px_rgba(112,66,248,0.25)]">
+            <Sparkles className="w-3 h-3 text-[#c084fc] animate-pulse" />
             {tag}
           </span>
         </div>
       )}
-      <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#F4F4F7]">
+      <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white">
         {title}
       </h2>
       {description && (
-        <p className="mt-3 sm:mt-4 text-sm sm:text-base text-[#9E9EB4] leading-relaxed">
+        <p className="mt-3 sm:mt-4 text-sm sm:text-base text-[#a3a3c2] leading-relaxed">
           {description}
         </p>
       )}

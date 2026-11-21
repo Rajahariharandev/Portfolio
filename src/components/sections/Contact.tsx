@@ -5,7 +5,6 @@ import { Mail, Send, CheckCircle2, Copy, Check, MessageSquare, AlertCircle } fro
 import { motion, AnimatePresence } from "motion/react";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Container } from "@/components/ui/Container";
-import { Button } from "@/components/ui/Button";
 import { FadeIn } from "@/components/ui/MotionWrapper";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/Icons";
 import { profileData } from "@/data/profile";
@@ -31,7 +30,6 @@ export function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Spam honeypot check
     if (formState.honeypot) {
       setStatus("success");
       return;
@@ -43,7 +41,6 @@ export function Contact() {
       return;
     }
 
-    // Basic email format check
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formState.email)) {
       setStatus("error");
@@ -53,7 +50,6 @@ export function Contact() {
 
     setStatus("submitting");
 
-    // Client-side validated flow with fallback mailto
     try {
       await new Promise((resolve) => setTimeout(resolve, 800));
       setStatus("success");
@@ -71,7 +67,7 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="py-20 md:py-28 border-t border-[#1C1C2C] bg-[#08080D]">
+    <section id="contact" className="py-20 md:py-28 border-t border-[#7042f8]/20 bg-transparent relative z-20">
       <Container>
         <FadeIn>
           <SectionHeading
@@ -85,31 +81,31 @@ export function Contact() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 max-w-5xl mx-auto">
           {/* Left Column: Direct Contact Info */}
           <FadeIn direction="left" className="lg:col-span-5 space-y-6">
-            <div className="rounded-2xl bg-[#11111A] border border-[#222236] p-6 sm:p-7 space-y-6">
-              <h3 className="text-lg font-bold text-[#F4F4F7] flex items-center gap-2">
+            <div className="rounded-2xl bg-[#0c0728]/70 border border-[#7042f8]/30 p-6 sm:p-7 space-y-6 backdrop-blur-md shadow-[0_0_30px_rgba(42,14,97,0.3)]">
+              <h3 className="text-lg font-bold text-white flex items-center gap-2">
                 <MessageSquare className="w-4 h-4 text-violet-400" />
                 Direct Communication
               </h3>
-              <p className="text-xs sm:text-sm text-[#9E9EB4] leading-relaxed">
+              <p className="text-xs sm:text-sm text-[#a3a3c2] leading-relaxed">
                 I am responsive via email and LinkedIn. Feel free to copy my direct address or leave a note via the message form.
               </p>
 
               {/* Email item */}
               <div className="space-y-2">
-                <span className="text-xs font-mono text-[#6B6B80] uppercase">
+                <span className="text-xs font-mono text-violet-400 uppercase">
                   Primary Email
                 </span>
-                <div className="flex items-center justify-between gap-2 p-3 rounded-xl bg-[#161624] border border-[#222236]">
+                <div className="flex items-center justify-between gap-2 p-3 rounded-xl bg-[#120b38]/80 border border-[#7042f8]/30">
                   <div className="flex items-center gap-2.5 truncate">
-                    <Mail className="w-4 h-4 text-violet-400 shrink-0" />
-                    <span className="font-mono text-xs sm:text-sm text-[#F4F4F7] truncate">
+                    <Mail className="w-4 h-4 text-cyan-400 shrink-0" />
+                    <span className="font-mono text-xs sm:text-sm text-white truncate">
                       {profileData.contact.email}
                     </span>
                   </div>
                   <button
                     type="button"
                     onClick={copyEmail}
-                    className="p-1.5 rounded-lg bg-[#202033] hover:bg-[#282842] text-[#9E9EB4] hover:text-[#F4F4F7] transition-colors focus-ring"
+                    className="p-1.5 rounded-lg bg-[#1f1354] hover:bg-violet-600 text-violet-200 hover:text-white transition-colors focus-ring"
                     title="Copy email to clipboard"
                   >
                     {copied ? (
@@ -122,8 +118,8 @@ export function Contact() {
               </div>
 
               {/* Social Channels */}
-              <div className="pt-4 border-t border-[#1C1C2C] space-y-3">
-                <span className="text-xs font-mono text-[#6B6B80] uppercase block">
+              <div className="pt-4 border-t border-[#7042f8]/20 space-y-3">
+                <span className="text-xs font-mono text-violet-400 uppercase block">
                   Professional Profiles
                 </span>
                 <div className="grid grid-cols-2 gap-3">
@@ -131,26 +127,26 @@ export function Contact() {
                     href={profileData.contact.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2.5 p-3 rounded-xl bg-[#161624] border border-[#222236] text-xs font-medium text-[#C8C8D8] hover:text-[#F4F4F7] hover:border-violet-500/50 transition-all focus-ring"
+                    className="flex items-center gap-2.5 p-3 rounded-xl bg-[#120b38]/80 border border-[#7042f8]/30 text-xs font-medium text-[#c8c8e0] hover:text-white hover:border-[#7042f8] hover:shadow-[0_0_15px_rgba(112,66,248,0.4)] transition-all focus-ring"
                   >
-                    <GithubIcon className="w-4 h-4 text-violet-400" />
+                    <GithubIcon className="w-4 h-4 text-violet-300" />
                     <span>GitHub</span>
                   </a>
                   <a
                     href={profileData.contact.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2.5 p-3 rounded-xl bg-[#161624] border border-[#222236] text-xs font-medium text-[#C8C8D8] hover:text-[#F4F4F7] hover:border-violet-500/50 transition-all focus-ring"
+                    className="flex items-center gap-2.5 p-3 rounded-xl bg-[#120b38]/80 border border-[#7042f8]/30 text-xs font-medium text-[#c8c8e0] hover:text-white hover:border-[#7042f8] hover:shadow-[0_0_15px_rgba(112,66,248,0.4)] transition-all focus-ring"
                   >
-                    <LinkedinIcon className="w-4 h-4 text-violet-400" />
+                    <LinkedinIcon className="w-4 h-4 text-violet-300" />
                     <span>LinkedIn</span>
                   </a>
                 </div>
               </div>
 
               {/* Availability Notice */}
-              <div className="p-3.5 rounded-xl bg-violet-950/20 border border-violet-800/30 text-xs text-violet-300 flex items-start gap-2.5">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 mt-1 shrink-0 animate-pulse" />
+              <div className="p-3.5 rounded-xl bg-violet-950/40 border border-[#7042f8]/40 text-xs text-violet-200 flex items-start gap-2.5">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 mt-1 shrink-0 animate-pulse shadow-[0_0_8px_#34d399]" />
                 <span>
                   Currently open to software engineering discussions, high-scale backend roles, and distributed systems challenges.
                 </span>
@@ -160,11 +156,11 @@ export function Contact() {
 
           {/* Right Column: Protected Form */}
           <FadeIn direction="right" className="lg:col-span-7">
-            <div className="rounded-2xl bg-[#11111A] border border-[#222236] p-6 sm:p-8">
-              <h3 className="text-lg font-bold text-[#F4F4F7] mb-2">
+            <div className="rounded-2xl bg-[#0c0728]/70 border border-[#7042f8]/30 p-6 sm:p-8 backdrop-blur-md shadow-[0_0_30px_rgba(42,14,97,0.3)]">
+              <h3 className="text-lg font-bold text-white mb-2">
                 Send a Message
               </h3>
-              <p className="text-xs text-[#9E9EB4] mb-6">
+              <p className="text-xs text-[#a3a3c2] mb-6">
                 All inquiries go directly to my inbox. I usually reply within 24 hours.
               </p>
 
@@ -178,22 +174,22 @@ export function Contact() {
                     transition={{ duration: 0.3 }}
                     className="py-12 text-center space-y-4"
                   >
-                    <div className="w-12 h-12 rounded-full bg-emerald-950/80 border border-emerald-800/60 text-emerald-400 mx-auto flex items-center justify-center">
+                    <div className="w-12 h-12 rounded-full bg-emerald-950/80 border border-emerald-800/60 text-emerald-400 mx-auto flex items-center justify-center shadow-[0_0_20px_rgba(52,211,153,0.4)]">
                       <CheckCircle2 className="w-6 h-6" />
                     </div>
-                    <h4 className="text-lg font-bold text-[#F4F4F7]">
+                    <h4 className="text-lg font-bold text-white">
                       Message Sent Successfully
                     </h4>
-                    <p className="text-xs sm:text-sm text-[#9E9EB4] max-w-sm mx-auto">
+                    <p className="text-xs sm:text-sm text-[#a3a3c2] max-w-sm mx-auto">
                       Thank you for reaching out! I have received your note and will get back to you shortly.
                     </p>
-                    <Button
-                      variant="secondary"
-                      size="sm"
+                    <button
+                      type="button"
                       onClick={() => setStatus("idle")}
+                      className="px-4 py-2 rounded-xl text-xs font-semibold bg-[#1a0f4a] hover:bg-violet-600 text-white border border-[#7042f8]/40 transition-colors"
                     >
                       Send Another Message
-                    </Button>
+                    </button>
                   </motion.div>
                 ) : (
                   <motion.form
@@ -204,7 +200,6 @@ export function Contact() {
                     onSubmit={handleSubmit}
                     className="space-y-4"
                   >
-                    {/* Honeypot field (hidden from users, traps automated bots) */}
                     <input
                       type="text"
                       name="website_honeypot"
@@ -217,7 +212,7 @@ export function Contact() {
                     />
 
                     {status === "error" && (
-                      <div className="p-3 rounded-lg bg-rose-950/40 border border-rose-800/50 text-rose-300 text-xs flex items-center gap-2">
+                      <div className="p-3 rounded-xl bg-rose-950/60 border border-rose-800/60 text-rose-300 text-xs flex items-center gap-2">
                         <AlertCircle className="w-4 h-4 shrink-0" />
                         <span>{errorMessage}</span>
                       </div>
@@ -227,7 +222,7 @@ export function Contact() {
                       <div>
                         <label
                           htmlFor="contact-name"
-                          className="block text-xs font-mono text-[#B4B4C8] mb-1.5"
+                          className="block text-xs font-mono text-violet-300 mb-1.5"
                         >
                           Your Name *
                         </label>
@@ -238,13 +233,13 @@ export function Contact() {
                           value={formState.name}
                           onChange={(e) => setFormState({ ...formState, name: e.target.value })}
                           placeholder="Alex Morgan"
-                          className="w-full px-3.5 py-2.5 rounded-xl bg-[#161624] border border-[#222236] text-sm text-[#F4F4F7] placeholder-[#5A5A70] focus:border-violet-500 focus-ring transition-colors"
+                          className="w-full px-3.5 py-2.5 rounded-xl bg-[#120b38]/80 border border-[#7042f8]/30 text-sm text-white placeholder-[#6a6a8c] focus:border-violet-400 focus-ring transition-colors"
                         />
                       </div>
                       <div>
                         <label
                           htmlFor="contact-email"
-                          className="block text-xs font-mono text-[#B4B4C8] mb-1.5"
+                          className="block text-xs font-mono text-violet-300 mb-1.5"
                         >
                           Your Email *
                         </label>
@@ -255,7 +250,7 @@ export function Contact() {
                           value={formState.email}
                           onChange={(e) => setFormState({ ...formState, email: e.target.value })}
                           placeholder="alex@company.com"
-                          className="w-full px-3.5 py-2.5 rounded-xl bg-[#161624] border border-[#222236] text-sm text-[#F4F4F7] placeholder-[#5A5A70] focus:border-violet-500 focus-ring transition-colors"
+                          className="w-full px-3.5 py-2.5 rounded-xl bg-[#120b38]/80 border border-[#7042f8]/30 text-sm text-white placeholder-[#6a6a8c] focus:border-violet-400 focus-ring transition-colors"
                         />
                       </div>
                     </div>
@@ -263,7 +258,7 @@ export function Contact() {
                     <div>
                       <label
                         htmlFor="contact-subject"
-                        className="block text-xs font-mono text-[#B4B4C8] mb-1.5"
+                        className="block text-xs font-mono text-violet-300 mb-1.5"
                       >
                         Subject
                       </label>
@@ -273,14 +268,14 @@ export function Contact() {
                         value={formState.subject}
                         onChange={(e) => setFormState({ ...formState, subject: e.target.value })}
                         placeholder="Backend Engineering Opportunity / Inquiry"
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-[#161624] border border-[#222236] text-sm text-[#F4F4F7] placeholder-[#5A5A70] focus:border-violet-500 focus-ring transition-colors"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-[#120b38]/80 border border-[#7042f8]/30 text-sm text-white placeholder-[#6a6a8c] focus:border-violet-400 focus-ring transition-colors"
                       />
                     </div>
 
                     <div>
                       <label
                         htmlFor="contact-message"
-                        className="block text-xs font-mono text-[#B4B4C8] mb-1.5"
+                        className="block text-xs font-mono text-violet-300 mb-1.5"
                       >
                         Message *
                       </label>
@@ -291,21 +286,18 @@ export function Contact() {
                         value={formState.message}
                         onChange={(e) => setFormState({ ...formState, message: e.target.value })}
                         placeholder="Hi Raja, we'd like to discuss our backend distributed architecture..."
-                        className="w-full px-3.5 py-2.5 rounded-xl bg-[#161624] border border-[#222236] text-sm text-[#F4F4F7] placeholder-[#5A5A70] focus:border-violet-500 focus-ring transition-colors resize-none"
+                        className="w-full px-3.5 py-2.5 rounded-xl bg-[#120b38]/80 border border-[#7042f8]/30 text-sm text-white placeholder-[#6a6a8c] focus:border-violet-400 focus-ring transition-colors resize-none"
                       />
                     </div>
 
-                    <Button
+                    <button
                       type="submit"
-                      variant="primary"
-                      size="md"
-                      className="w-full justify-center"
-                      icon={<Send className="w-3.5 h-3.5" />}
-                      iconPosition="right"
                       disabled={status === "submitting"}
+                      className="w-full py-3 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-[#7042f8] to-[#581c87] border border-[#a855f7]/50 shadow-[0_0_20px_rgba(112,66,248,0.5)] hover:shadow-[0_0_30px_rgba(112,66,248,0.8)] transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                     >
-                      {status === "submitting" ? "Validating & Sending..." : "Send Message"}
-                    </Button>
+                      <span>{status === "submitting" ? "Validating & Sending..." : "Send Message"}</span>
+                      <Send className="w-3.5 h-3.5" />
+                    </button>
                   </motion.form>
                 )}
               </AnimatePresence>

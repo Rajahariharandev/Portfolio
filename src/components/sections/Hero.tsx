@@ -1,12 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import { ArrowRight, FileText, Mail, CheckCircle2, Copy, Check } from "lucide-react";
+import { ArrowRight, FileText, Mail, Sparkles, Copy, Check } from "lucide-react";
 import { motion, useReducedMotion, type Variants } from "motion/react";
-import { Button } from "@/components/ui/Button";
-import { Badge } from "@/components/ui/Badge";
+import { BlackHole } from "@/components/cosmic/BlackHole";
+import { OrbitalRadar } from "@/components/cosmic/OrbitalRadar";
 import { Container } from "@/components/ui/Container";
-import { GithubIcon, LinkedinIcon } from "@/components/ui/Icons";
 import { profileData } from "@/data/profile";
 
 export function Hero() {
@@ -24,8 +23,8 @@ export function Hero() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.1,
+        staggerChildren: 0.12,
+        delayChildren: 0.15,
       },
     },
   };
@@ -35,211 +34,118 @@ export function Hero() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.5, ease: "easeOut" },
+      transition: { duration: 0.55, ease: "easeOut" },
     },
   };
 
   return (
-    <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden bg-radial-gradient">
-      {/* Background Grid Accent */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-40 pointer-events-none" />
+    <section className="relative min-h-[92vh] pt-36 pb-20 md:pt-44 md:pb-28 overflow-hidden flex items-center justify-center">
+      {/* Top Cosmic Black Hole & Accretion Disk Graphic */}
+      <BlackHole />
 
-      <Container>
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          {/* Left Column: Copy & CTAs */}
+      <Container className="relative z-20">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+          {/* Left Column: Copy & Actions (Exact layout from screenshot) */}
           <motion.div
             className="lg:col-span-7 flex flex-col items-start text-left"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
           >
-            {/* Availability Badge */}
+            {/* Sparkle Pill Badge */}
             <motion.div variants={itemVariants} className="mb-6">
-              <Badge variant="success" size="md" className="py-1 px-3">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                {profileData.availability.status}
-              </Badge>
+              <div className="inline-flex items-center gap-2 py-1.5 px-4 rounded-full border border-[#7042f8]/60 bg-[#030014]/60 backdrop-blur-md shadow-[0_0_15px_rgba(112,66,248,0.3)]">
+                <Sparkles className="w-3.5 h-3.5 text-[#c084fc] animate-pulse" />
+                <span className="text-xs font-medium text-[#e9d5ff]">
+                  Backend Software Engineer Portfolio
+                </span>
+              </div>
             </motion.div>
 
-            {/* Main Headline */}
+            {/* Headline with vibrant purple-to-cyan gradient on "the best" */}
             <motion.h1
               variants={itemVariants}
-              className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#F4F4F7] leading-[1.1] mb-6"
+              className="text-4xl sm:text-5xl lg:text-[58px] font-extrabold tracking-tight text-white leading-[1.12] mb-6"
             >
-              Engineering resilient backends &amp;{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-purple-300 to-indigo-400">
-                high-throughput systems.
-              </span>
+              Providing{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#9333ea] via-[#c084fc] to-[#06b6d4] drop-shadow-[0_0_25px_rgba(112,66,248,0.4)]">
+                the best
+              </span>{" "}
+              project experience
             </motion.h1>
 
-            {/* Sub-headline */}
+            {/* Sub-headline description */}
             <motion.p
               variants={itemVariants}
-              className="text-base sm:text-lg text-[#9E9EB4] max-w-2xl leading-relaxed mb-8"
+              className="text-base sm:text-lg text-[#9494ad] max-w-xl leading-relaxed mb-8"
             >
-              Hi, I&apos;m <span className="text-[#F4F4F7] font-semibold">{profileData.name}</span>. 
-              A Backend &amp; Software Engineer focused on designing low-latency REST APIs, 
-              tuning relational database execution plans, and deploying containerized microservices 
-              with <span className="text-violet-300 font-mono text-sm">Go</span>,{" "}
-              <span className="text-violet-300 font-mono text-sm">Node.js</span>,{" "}
-              <span className="text-violet-300 font-mono text-sm">Oracle DB</span>,{" "}
-              <span className="text-violet-300 font-mono text-sm">PostgreSQL</span>, and{" "}
-              <span className="text-violet-300 font-mono text-sm">Redis</span>.
+              I&apos;m a Backend Software Engineer with experience in High-Throughput REST APIs, 
+              Database Optimization, Microservices, and Distributed Systems with Go, Node.js, Oracle DB, PostgreSQL, and Redis. Check out my projects and skills.
             </motion.p>
 
-            {/* CTAs */}
+            {/* Radiant Action Buttons */}
             <motion.div
               variants={itemVariants}
               className="flex flex-wrap items-center gap-3 w-full sm:w-auto mb-8"
             >
-              <Button
+              {/* Primary "Learn More!" button styled exactly as screenshot */}
+              <a
                 href="#projects"
-                variant="primary"
-                size="lg"
-                icon={<ArrowRight className="w-4 h-4" />}
-                iconPosition="right"
+                className="px-7 py-3 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-[#7042f8] to-[#581c87] border border-[#a855f7]/50 shadow-[0_0_25px_rgba(112,66,248,0.5)] hover:shadow-[0_0_35px_rgba(112,66,248,0.8)] hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2 cursor-pointer"
               >
-                Explore Projects
-              </Button>
-              <Button
+                <span>Learn More!</span>
+                <ArrowRight className="w-4 h-4 text-violet-200" />
+              </a>
+
+              <a
                 href="/resume/resume.pdf"
                 download="Raja_Hariharan_Resume.pdf"
-                variant="secondary"
-                size="lg"
-                icon={<FileText className="w-4 h-4" />}
+                className="px-5 py-3 rounded-xl text-sm font-medium text-[#c4b5fd] bg-[#0c0828]/70 border border-[#7042f8]/40 hover:border-violet-400 hover:text-white backdrop-blur-md transition-all flex items-center gap-2"
               >
-                Download Resume
-              </Button>
-              <Button
+                <FileText className="w-4 h-4 text-violet-400" />
+                <span>Resume</span>
+              </a>
+
+              <a
                 href="#contact"
-                variant="ghost"
-                size="lg"
+                className="px-5 py-3 rounded-xl text-sm font-medium text-[#9E9EB4] hover:text-white transition-colors"
               >
-                Contact Me
-              </Button>
+                Contact
+              </a>
             </motion.div>
 
-            {/* Quick Contact & Socials */}
+            {/* Direct Email with copy helper */}
             <motion.div
               variants={itemVariants}
-              className="flex flex-wrap items-center gap-4 text-xs sm:text-sm text-[#9E9EB4] pt-4 border-t border-[#1C1C2C] w-full"
+              className="flex items-center gap-3 text-xs text-[#9E9EB4] pt-2"
             >
               <button
                 type="button"
                 onClick={copyEmail}
-                className="inline-flex items-center gap-2 hover:text-[#F4F4F7] bg-[#11111A] border border-[#222236] px-3 py-1.5 rounded-lg transition-colors focus-ring cursor-pointer"
-                title="Click to copy email address"
+                className="inline-flex items-center gap-2 hover:text-white bg-[#0a0624]/80 border border-[#7042f8]/30 px-3.5 py-1.5 rounded-full transition-all cursor-pointer backdrop-blur-md hover:border-violet-400"
+                title="Click to copy email"
               >
                 <Mail className="w-3.5 h-3.5 text-violet-400" />
-                <span className="font-mono text-xs">{profileData.contact.email}</span>
+                <span className="font-mono text-xs text-violet-200">{profileData.contact.email}</span>
                 {copied ? (
                   <Check className="w-3.5 h-3.5 text-emerald-400" />
                 ) : (
-                  <Copy className="w-3.5 h-3.5 text-[#6B6B80]" />
+                  <Copy className="w-3.5 h-3.5 text-violet-400" />
                 )}
               </button>
-
-              <div className="flex items-center gap-2">
-                <a
-                  href={profileData.contact.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2 rounded-lg bg-[#11111A] border border-[#222236] text-[#9E9EB4] hover:text-[#F4F4F7] hover:border-violet-500/50 transition-colors"
-                  aria-label="GitHub profile"
-                >
-                  <GithubIcon className="w-4 h-4" />
-                </a>
-                <a
-                  href={profileData.contact.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2 rounded-lg bg-[#11111A] border border-[#222236] text-[#9E9EB4] hover:text-[#F4F4F7] hover:border-violet-500/50 transition-colors"
-                  aria-label="LinkedIn profile"
-                >
-                  <LinkedinIcon className="w-4 h-4" />
-                </a>
-              </div>
+              <span className="text-[#6B6B80] hidden sm:inline">•</span>
+              <span className="text-[#8e8ea6] hidden sm:inline">Available for backend roles</span>
             </motion.div>
           </motion.div>
 
-          {/* Right Column: Interactive Backend Architecture Terminal */}
+          {/* Right Column: The Celestial Orbital Tech Radar */}
           <motion.div
-            className="lg:col-span-5 w-full"
-            initial={{ opacity: 0, scale: shouldReduceMotion ? 1 : 0.95, y: shouldReduceMotion ? 0 : 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.25, ease: "easeOut" }}
+            className="lg:col-span-5 w-full flex items-center justify-center"
+            initial={{ opacity: 0, scale: shouldReduceMotion ? 1 : 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.25, ease: "easeOut" }}
           >
-            <div className="rounded-xl border border-[#222236] bg-[#0E0E17]/95 shadow-2xl shadow-violet-950/20 overflow-hidden font-mono text-xs">
-              {/* Window Header */}
-              <div className="flex items-center justify-between px-4 py-3 bg-[#141420] border-b border-[#222236]">
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-rose-500/80" />
-                  <div className="w-3 h-3 rounded-full bg-amber-500/80" />
-                  <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
-                  <span className="ml-2 text-[#9E9EB4] text-[11px] font-sans">rajahariharan-server :: telemetry</span>
-                </div>
-                <span className="text-[10px] text-emerald-400 bg-emerald-950/60 border border-emerald-800/40 px-2 py-0.5 rounded">
-                  HEALTHY
-                </span>
-              </div>
-
-              {/* Terminal Body */}
-              <div className="p-4 sm:p-5 space-y-3.5 text-[#E4E4EB] leading-relaxed">
-                <div>
-                  <span className="text-violet-400 font-semibold">$</span>{" "}
-                  <span className="text-zinc-400">systemctl status go-oracle-service</span>
-                </div>
-                <div className="text-[#9E9EB4] pl-2 border-l border-violet-500/30 space-y-1 text-[11px]">
-                  <p>● go-oracle-service.service - High-Throughput REST Gateway</p>
-                  <p className="text-emerald-400 flex items-center gap-1.5">
-                    <CheckCircle2 className="w-3 h-3" /> Active: running (uptime: 99.98%)
-                  </p>
-                  <p>  Memory: 48.2 MB / CPU: 4.8% / Goroutines: 124</p>
-                </div>
-
-                <div className="pt-1">
-                  <span className="text-violet-400 font-semibold">$</span>{" "}
-                  <span className="text-zinc-400">telemetry --metrics --live</span>
-                </div>
-                <div className="grid grid-cols-2 gap-2 pt-1 text-[11px]">
-                  <div className="bg-[#141420] p-2.5 rounded border border-[#222236]">
-                    <span className="text-[#6B6B80] block text-[10px] uppercase">P99 Query Latency</span>
-                    <span className="text-emerald-400 text-sm font-bold">42 ms</span>
-                    <span className="text-[#6B6B80] block text-[9px]">baseline: 850ms</span>
-                  </div>
-                  <div className="bg-[#141420] p-2.5 rounded border border-[#222236]">
-                    <span className="text-[#6B6B80] block text-[10px] uppercase">Redis Cache Hit</span>
-                    <span className="text-violet-300 text-sm font-bold">99.2 %</span>
-                    <span className="text-[#6B6B80] block text-[9px]">singleflight active</span>
-                  </div>
-                  <div className="bg-[#141420] p-2.5 rounded border border-[#222236]">
-                    <span className="text-[#6B6B80] block text-[10px] uppercase">Oracle Connection Pool</span>
-                    <span className="text-sky-400 text-sm font-bold">18 / 20</span>
-                    <span className="text-[#6B6B80] block text-[9px]">zero starvation</span>
-                  </div>
-                  <div className="bg-[#141420] p-2.5 rounded border border-[#222236]">
-                    <span className="text-[#6B6B80] block text-[10px] uppercase">Daily Events Stream</span>
-                    <span className="text-amber-300 text-sm font-bold">2,140,580</span>
-                    <span className="text-[#6B6B80] block text-[9px]">0 unhandled drops</span>
-                  </div>
-                </div>
-
-                <div className="pt-1">
-                  <span className="text-violet-400 font-semibold">$</span>{" "}
-                  <span className="text-zinc-400">tail -n 2 /var/log/audit.json</span>
-                </div>
-                <div className="bg-[#0A0A10] p-2 rounded border border-[#1C1C2C] text-[10px] text-zinc-400 overflow-x-auto">
-                  <code>{`{"event":"MUTATION","status":200,"duration_ms":3.2,"trace":"tr-88f1"}`}</code>
-                  <br />
-                  <code>{`{"event":"CACHE_READ","status":304,"duration_ms":0.8,"cache":"HIT"}`}</code>
-                </div>
-
-                <div className="flex items-center gap-2 pt-2 text-[#6B6B80] text-[11px]">
-                  <span className="w-2 h-2 rounded-full bg-violet-500 animate-ping" />
-                  <span>Daemon listening on 0.0.0.0:8080 (HTTP/2 + TLS)</span>
-                </div>
-              </div>
-            </div>
+            <OrbitalRadar />
           </motion.div>
         </div>
       </Container>

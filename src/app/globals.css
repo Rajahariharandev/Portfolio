@@ -1,26 +1,24 @@
 @import "tailwindcss";
 
 :root {
-  --background: #08080d;
-  --surface: #11111a;
-  --surface-raised: #181826;
-  --surface-border: #222236;
+  --background: #030014;
+  --surface: #0a061e;
+  --surface-raised: #120b33;
+  --surface-border: #7042f833;
   --foreground: #f4f4f7;
-  --muted: #9e9eb4;
-  --accent: #8b5cf6;
-  --accent-light: #a78bfa;
-  --accent-dark: #6d28d9;
-  --accent-glow: rgba(139, 92, 246, 0.15);
+  --muted: #a3a3c2;
+  --accent-purple: #7042f8;
+  --accent-cyan: #00f0ff;
+  --accent-glow: rgba(112, 66, 248, 0.25);
 }
 
 @theme {
-  --color-dark-bg: #08080d;
-  --color-dark-surface: #11111a;
-  --color-dark-raised: #181826;
-  --color-dark-border: #222236;
-  --color-accent-violet: #8b5cf6;
-  --color-accent-light: #a78bfa;
-  --color-accent-dark: #6d28d9;
+  --color-cosmic-bg: #030014;
+  --color-cosmic-surface: #0a061e;
+  --color-cosmic-raised: #120b33;
+  --color-cosmic-border: #7042f840;
+  --color-accent-purple: #7042f8;
+  --color-accent-cyan: #00f0ff;
 }
 
 html {
@@ -29,54 +27,69 @@ html {
 }
 
 body {
-  background-color: var(--background);
-  color: var(--foreground);
+  background-color: #030014;
+  color: #f4f4f7;
   font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   overflow-x: hidden;
   min-height: 100vh;
 }
 
 ::selection {
-  background-color: rgba(139, 92, 246, 0.35);
+  background-color: rgba(112, 66, 248, 0.45);
   color: #ffffff;
 }
 
-/* Custom Scrollbar for sleek dark look */
+/* Custom Scrollbar for sleek cosmic look */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #08080d;
+  background: #030014;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #222236;
+  background: #2a1b54;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #8b5cf6;
+  background: #7042f8;
 }
 
-/* Subtle grid backdrop */
-.bg-grid-pattern {
-  background-size: 36px 36px;
-  background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+/* Cosmic purple glowing button and card borders */
+.cosmic-glass {
+  background: rgba(10, 6, 30, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(112, 66, 248, 0.25);
 }
 
-.bg-radial-gradient {
-  background: radial-gradient(circle at 50% 0%, rgba(139, 92, 246, 0.15) 0%, transparent 65%);
+.cosmic-glass:hover {
+  border-color: rgba(112, 66, 248, 0.5);
+  box-shadow: 0 0 25px rgba(112, 66, 248, 0.2);
+}
+
+.cosmic-btn-primary {
+  background: linear-gradient(90deg, #7042f8 0%, #8b5cf6 50%, #6366f1 100%);
+  box-shadow: 0 0 20px rgba(112, 66, 248, 0.4);
+  transition: all 0.3s ease;
+}
+
+.cosmic-btn-primary:hover {
+  box-shadow: 0 0 30px rgba(112, 66, 248, 0.7);
+  transform: translateY(-1px);
+}
+
+.text-gradient-purple-cyan {
+  background: linear-gradient(to right, #a855f7 0%, #7042f8 50%, #06b6d4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* Accessible focus visible utility */
-.focus-ring {
-  outline: none;
-}
 .focus-ring:focus-visible {
-  outline: 2px solid #8b5cf6;
+  outline: 2px solid #7042f8;
   outline-offset: 2px;
 }

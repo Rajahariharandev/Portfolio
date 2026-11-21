@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { StarBackground } from "@/components/cosmic/StarBackground";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const viewport: Viewport = {
-  themeColor: "#08080D",
+  themeColor: "#030014",
   width: "device-width",
   initialScale: 1,
 };
@@ -48,7 +49,7 @@ export const metadata: Metadata = {
     url: "https://rajahariharan.dev",
     title: "Raja Hariharan | Backend & Software Engineer",
     description:
-      "Engineering resilient backends, high-concurrency APIs, and robust data pipelines with Go, Node.js, Oracle DB, PostgreSQL, and Redis.",
+      "Providing the best project experience: engineering resilient backends, high-concurrency APIs, and robust data pipelines with Go, Node.js, Oracle DB, PostgreSQL, and Redis.",
     siteName: "Raja Hariharan Portfolio",
     images: [
       {
@@ -82,9 +83,12 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
     >
-      <body className="min-h-full flex flex-col bg-[#08080D] text-[#F4F4F7] antialiased selection:bg-violet-600/30 selection:text-white">
+      <body className="min-h-full flex flex-col bg-[#030014] text-[#F4F4F7] antialiased selection:bg-[#7042f8]/40 selection:text-white relative">
+        <StarBackground />
         <Navbar />
-        {children}
+        <div className="relative z-10 flex-1 flex flex-col">
+          {children}
+        </div>
         <Footer />
       </body>
     </html>
