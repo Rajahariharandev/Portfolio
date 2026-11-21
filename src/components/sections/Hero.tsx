@@ -40,13 +40,13 @@ export function Hero() {
     offset: ["start start", "end start"],
   });
 
-  const yBlackHole = useTransform(scrollYProgress, [0, 1], [0, 110]);
-  const yContent = useTransform(scrollYProgress, [0, 1], [0, 50]);
+  const yBlackHole = useTransform(scrollYProgress, [0, 1], [0, 100]);
+  const yContent = useTransform(scrollYProgress, [0, 1], [0, 45]);
   const opacityContent = useTransform(scrollYProgress, [0, 0.75], [1, 0.1]);
   const scaleHero = useTransform(scrollYProgress, [0, 1], [1, 0.96]);
 
   const roles = [
-    "Assistant Lead – Python Developer & Backend Automation",
+    "Assistant Lead – Python Developer & Automation",
     "Enterprise Automation & CI/CD Pipeline Architect",
     "FastAPI, Django & Golang Microservices Specialist",
     "High-Performance Database & Caching Engineer",
@@ -165,14 +165,14 @@ export function Hero() {
             initial="hidden"
             animate="visible"
           >
-            {/* Live Clock & Promoted Status Pill */}
+            {/* Live Clock & Promoted Status Pill (Attractive, Theme-Aligned) */}
             <motion.div variants={itemVariants} className="mb-5 flex flex-wrap items-center gap-2.5">
-              <div className="inline-flex items-center gap-2 py-1.5 px-3.5 rounded-full border border-white/[0.08] bg-[#07031e]/70 backdrop-blur-xl shadow-[0_4px_20px_rgba(0,0,0,0.25),inset_0_1px_0_0_rgba(255,255,255,0.1)]">
+              <div className="inline-flex items-center gap-2 py-1.5 px-3.5 rounded-full border border-violet-500/30 bg-[#07031e]/75 backdrop-blur-xl shadow-[0_4px_20px_rgba(112,66,248,0.25),inset_0_1px_0_0_rgba(255,255,255,0.12)]">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-400" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-400 shadow-[0_0_8px_#00f0ff]" />
                 </span>
-                <Sparkles className="w-3.5 h-3.5 text-violet-300 animate-pulse" />
+                <Sparkles className="w-3.5 h-3.5 text-violet-300" />
                 <AnimatePresence mode="wait">
                   <motion.span
                     key={activeRoleIndex}
@@ -180,7 +180,7 @@ export function Hero() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -6 }}
                     transition={{ duration: 0.3 }}
-                    className="text-xs font-medium text-slate-200 tracking-wide"
+                    className="text-xs font-semibold text-transparent bg-clip-text bg-gradient-to-r from-violet-200 via-white to-cyan-200 tracking-wide"
                   >
                     {roles[activeRoleIndex]}
                   </motion.span>
@@ -190,7 +190,7 @@ export function Hero() {
               {currentTime && (
                 <div className="inline-flex items-center gap-1.5 py-1.5 px-3 rounded-full border border-white/[0.06] bg-[#07031e]/50 text-[11px] font-mono text-cyan-300/80 backdrop-blur-xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]">
                   <Clock className="w-3 h-3 text-cyan-400" />
-                  <span>Trichy: {currentTime} IST</span>
+                  <span>Trichy • {currentTime} IST</span>
                 </div>
               )}
             </motion.div>
