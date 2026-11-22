@@ -102,7 +102,7 @@ export const certificationsData: CertificationItem[] = [
   {
     title: "AWS Cloud & Pytest Automation Specialization",
     issuer: "Self-Directed Advanced Cloud Study",
-    date: "Active",
+    date: "Learn",
     credentialId: "AWS S3, SNS, SQS & Pytest Test Automation"
   }
 ];

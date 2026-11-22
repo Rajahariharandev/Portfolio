@@ -30,7 +30,7 @@ export function Footer() {
               <span className="font-mono">{profileData.name}</span>
             </Link>
             <p className="text-sm text-[#a3a3c2] max-w-md leading-relaxed mb-4">
-              {profileData.role} specialized in concurrent architectures, database optimization, and high-performance API design with Go, Node.js, and relational databases.
+              {profileData.role} specialized in concurrent architectures, database optimization, and high-performance API design with Go, Node.js, Python and relational databases.
             </p>
             <div className="flex items-center gap-3">
               <a
@@ -103,7 +103,7 @@ export function Footer() {
             <ul className="space-y-1.5 text-sm font-mono text-[#a3a3c2]">
               <li className="flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_#00f0ff]" />
-                Go (Golang)
+                Golang / node.js / Python
               </li>
               <li className="flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_#00f0ff]" />
@@ -111,15 +111,15 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_#00f0ff]" />
-                PostgreSQL & Redis
+                PostgreSQL / Redis / Oracle
               </li>
               <li className="flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_#00f0ff]" />
-                Node.js / TypeScript
+                Next.js / Express.js
               </li>
               <li className="flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_#00f0ff]" />
-                Docker & Linux
+                Linux / Nginx / Docker
               </li>
             </ul>
           </div>
@@ -128,7 +128,7 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="pt-8 border-t border-[#7042f8]/20 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
           <p className="text-[#6B6B80]">
-            © {currentYear} {profileData.name}. All rights reserved. Space &amp; Cosmic Black Hole theme.
+            © {currentYear} {profileData.name}. All rights reserved.
           </p>
           <button
             type="button"

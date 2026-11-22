@@ -30,18 +30,18 @@ export interface ProfileData {
 
 export const profileData: ProfileData = {
   name: "Rajahariharan K",
-  role: "Assistant Lead – Python Developer & Backend Automation",
-  titleTag: "Assistant Lead – Python Developer | Backend Automation | Team Leadership",
-  tagline: "Promoted Python Developer and Assistant Lead with 3+ years of experience building automation scripts, backend microservices, and high-performance REST API integrations.",
+  role: "Assistant Lead -  backend Developer",
+  titleTag: "Assistant Lead - Developer | Backend Automation | Team Leadership | Server Configuration | Automation | Linux | Cloud | Middleware | Rest api | CI/CD | Mysql | Redis | Aws | Python | Node js | Go | Docker  | Git  | Pm2 | Ristretto | singleflight | Systemd | Agile | Agile delivery | cloud watch | SSH | Nginx | Apache",
+  tagline: "Promoted  Developer and Assistant Lead with 4+ years of experience building automation scripts, backend microservices, and high-performance REST API integrations.",
   bio: [
-    "Promoted Python Developer and Assistant Lead with 3+ years of experience building automation scripts, backend microservices, and REST API integrations. Recognized for technical leadership — elevated to Assistant Lead within the same organization for consistently delivering high-impact automation solutions and mentoring development teams.",
-    "Proven track record in Python (Django, FastAPI), Golang, Node.js, GitLab CI/CD pipelines, SQL optimization across PostgreSQL, Oracle, and Redis, and Agile delivery.",
-    "Dedicated to eliminating manual workflows, enforcing architectural best practices, optimizing database performance, and actively expanding into AWS cloud services (S3, SNS, SQS) and cloud-native automation."
+    "Promoted Developer and Assistant Lead with 4+ years of experience building automation scripts, backend microservices, and REST API integrations. Recognized for technical leadership — elevated to Assistant Lead within the same organization for consistently delivering high-impact automation solutions and mentoring development teams.",
+    "Proven track record in Python, Golang, Node.js, Linux, Docker, Nginx, Apache, Middleware, GitLab CI/CD pipelines, SQL optimization across PostgreSQL, Oracle, and Redis, Pm2, Ristretto, singleflight, Systemd, and Agile delivery.",
+    "Dedicated to eliminating manual workflows, enforcing architectural best practices, optimizing database performance, and actively expanding into Server Configurations , cloud services and cloud-native automation."
   ],
   location: "Trichy, Tamil Nadu, IN",
   phone: "6383852354",
   availability: {
-    status: "Available for Backend, Python & Leadership Opportunities",
+    status: "Available for Backend & Leadership Opportunities",
     isAvailable: true,
   },
   contact: {
@@ -55,7 +55,7 @@ export const profileData: ProfileData = {
     {
       label: "System Scalability",
       value: "5x",
-      detail: "SOAP-to-REST migration refactoring enterprise services into Python/Golang"
+      detail: "SOAP-to-REST migration refactoring enterprise services into Golang"
     },
     {
       label: "Access Provisioning Time",
@@ -65,12 +65,12 @@ export const profileData: ProfileData = {
     {
       label: "Database Migration Effort",
       value: "-40%",
-      detail: "Zero data-loss Python Oracle & PostgreSQL migration engine"
+      detail: "Zero data-loss Golang with Oracle & PostgreSQL migration engine"
     },
     {
       label: "Manual Processing Saved",
       value: "~6 hrs/wk",
-      detail: "Python automation scripts for ERP data-sync workflows"
+      detail: "Golang automation scripts for ERP data-sync workflows"
     }
   ],
   principles: [
@@ -80,11 +80,11 @@ export const profileData: ProfileData = {
     },
     {
       title: "Architectural Consistency & Clean APIs",
-      description: "Refactor legacy services (SOAP) to scalable modern REST APIs (FastAPI, Django, Go) with strict schema contracts and GitLab CI/CD."
+      description: "Refactor legacy services (SOAP) to scalable modern REST APIs (Golang) with strict schema contracts and GitLab CI/CD."
     },
     {
       title: "Database Performance & Zero-Loss Integrity",
-      description: "Optimize SQL execution plans, design normalized schemas, and use Redis caching to minimize query response latency."
+      description: "Optimize SQL execution plans, design normalized schemas, and use L1 Ristretto , L2 Redis caching to minimize query response latency."
     },
     {
       title: "Technical Leadership & Mentorship",

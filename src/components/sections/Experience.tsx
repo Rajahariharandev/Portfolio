@@ -15,7 +15,7 @@ export function Experience() {
           <SectionHeading
             tag="Career Track"
             title="Professional Experience"
-            description="3+ years of progressive backend engineering, automation framework development, and team leadership."
+            description="$+ years of progressive backend , automation framework development, and team leadership."
             align="center"
           />
         </FadeIn>

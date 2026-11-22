@@ -80,7 +80,7 @@ export function Contact() {
           <SectionHeading
             tag="Get in Touch"
             title="Let's Discuss Backend &amp; Automation"
-            description="Interested in collaborating on scalable Python automation frameworks, backend microservices, or discussing leadership opportunities? Reach out directly."
+            description="Interested in collaborating on scalable frameworks, backend microservices, or discussing leadership opportunities? Reach out directly."
             align="center"
           />
         </FadeIn>
@@ -188,7 +188,7 @@ export function Contact() {
               <div className="p-3.5 rounded-xl bg-violet-950/40 border border-[#7042f8]/40 text-xs text-violet-200 flex items-start gap-2.5">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 mt-1 shrink-0 animate-pulse shadow-[0_0_8px_#34d399]" />
                 <span>
-                  Promoted Assistant Lead actively available for Python Developer, Backend Automation, and Technical Leadership roles.
+                  Promoted Assistant Lead actively available for Developer, Backend Automation, and Technical Leadership roles.
                 </span>
               </div>
             </div>
@@ -307,7 +307,7 @@ export function Contact() {
                         type="text"
                         value={formState.subject}
                         onChange={(e) => setFormState({ ...formState, subject: e.target.value })}
-                        placeholder="Backend & Python Opportunity / Consultation"
+                        placeholder="Backend Opportunity / Consultation"
                         className="w-full px-3.5 py-2.5 rounded-xl bg-[#120b38]/80 border border-[#7042f8]/30 text-sm text-white placeholder-[#6a6a8c] focus:border-violet-400 focus-ring transition-colors"
                       />
                     </div>
@@ -325,7 +325,7 @@ export function Contact() {
                         rows={4}
                         value={formState.message}
                         onChange={(e) => setFormState({ ...formState, message: e.target.value })}
-                        placeholder="Hi Rajahariharan, we'd like to discuss our Python backend and automation framework..."
+                        placeholder="Hi Rajahariharan, we'd like to discuss our backend and automation framework..."
                         className="w-full px-3.5 py-2.5 rounded-xl bg-[#120b38]/80 border border-[#7042f8]/30 text-sm text-white placeholder-[#6a6a8c] focus:border-violet-400 focus-ring transition-colors resize-none"
                       />
                     </div>

@@ -15,7 +15,7 @@ export function Education() {
           <SectionHeading
             tag="Credentials"
             title="Education &amp; Certifications"
-            description="Academic graduation in Computer Applications (BCA) paired with full-stack Python engineering credentials."
+            description="Academic graduation in Computer Applications (BCA) paired with full-stack Devloper Knowledge."
             align="center"
           />
         </FadeIn>

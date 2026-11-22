@@ -43,12 +43,11 @@ export function OrbitalRadar() {
       glowColor: "rgba(45, 212, 191, 0.5)",
       delay: 0.2,
     },
+
     {
-      name: "Node",
+      name: "PM2",
       badge: (
-        <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-          <path fill="#339933" d="M128 0L0 73.9v147.8L128 295.6l128-73.9V73.9L128 0zm49.3 185.6c-15.6 9-36.9 9.5-53.5 1.3-4.6-2.3-7.6-5.4-7.6-10.4 0-3.1 2.5-5.6 5.6-5.6 2.2 0 4.1 1.2 5.1 3.1 2.4 4.1 7.6 6.8 14.8 7.5 11.4 1.1 23.4-1.8 25.1-9.8 1.5-7.3-5.2-10.7-21.6-14.2-17.8-3.8-33.5-8.9-33.5-26.5 0-16.8 14.3-27.7 35.8-27.7 19.3 0 32.3 7.5 35.1 21.6.6 3.1-1.7 6-4.9 6-2.5 0-4.7-1.7-5.3-4.1-2.1-8.2-10.5-12.5-24.9-12.5-14.6 0-24.3 6.2-24.3 16.2 0 9.1 7.6 12.1 24.1 15.6 19.2 4.1 31.6 10.1 31.6 26.2 0 10.6-5.2 18.6-13.6 23.3zM99.8 164.4c0 16.5-12.1 25.7-29.4 25.7-11.1 0-21.3-3.9-27.9-10.2-2.2-2.1-2.3-5.6-.2-7.8 2.1-2.2 5.6-2.3 7.8-.2 4.7 4.5 12.2 7.2 20.3 7.2 11.2 0 18.3-5.1 18.3-14.7V109c0-3.1 2.5-5.6 5.6-5.6s5.6 2.5 5.6 5.6v55.4z" />
-        </svg>
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.18.0/icons/pm2/pm2-original.svg" alt="PM2" width="40" height="40" />
       ),
       top: "44%",
       left: "18%",
@@ -59,9 +58,7 @@ export function OrbitalRadar() {
     {
       name: "Next",
       badge: (
-        <span className="font-bold text-[#cccccc] font-serif text-sm tracking-tighter">
-          Next
-        </span>
+        <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/nextdotjs/default.svg" alt="Next.js" width="24" height="24" />
       ),
       top: "60%",
       left: "18%",
@@ -83,18 +80,19 @@ export function OrbitalRadar() {
       delay: 0.4,
     },
     {
-      name: "Node.js",
+      name: "Node",
       badge: (
-        <span className="font-bold text-[#22c55e] text-xs">
-          JS
-        </span>
+        <svg xmlns="http://w3.org" viewBox="0 0 256 289" width="30" height="60">
+          <path fill="#339933" d="M128 0L0 73.9v147.8L128 295.6l128-73.9V73.9L128 0zm49.3 185.6c-15.6 9-36.9 9.5-53.5 1.3-4.6-2.3-7.6-5.4-7.6-10.4 0-3.1 2.5-5.6 5.6-5.6 2.2 0 4.1 1.2 5.1 3.1 2.4 4.1 7.6 6.8 14.8 7.5 11.4 1.1 23.4-1.8 25.1-9.8 1.5-7.3-5.2-10.7-21.6-14.2-17.8-3.8-33.5-8.9-33.5-26.5 0-16.8 14.3-27.7 35.8-27.7 19.3 0 32.3 7.5 35.1 21.6.6 3.1-1.7 6-4.9 6-2.5 0-4.7-1.7-5.3-4.1-2.1-8.2-10.5-12.5-24.9-12.5-14.6 0-24.3 6.2-24.3 16.2 0 9.1 7.6 12.1 24.1 15.6 19.2 4.1 31.6 10.1 31.6 26.2 0 10.6-5.2 18.6-13.6 23.3zM99.8 164.4c0 16.5-12.1 25.7-29.4 25.7-11.1 0-21.3-3.9-27.9-10.2-2.2-2.1-2.3-5.6-.2-7.8 2.1-2.2 5.6-2.3 7.8-.2 4.7 4.5 12.2 7.2 20.3 7.2 11.2 0 18.3-5.1 18.3-14.7V109c0-3.1 2.5-5.6 5.6-5.6s5.6 2.5 5.6 5.6v55.4z" />
+        </svg>
       ),
-      top: "43%",
+      top: "42%",
       left: "82%",
       size: "lg",
-      glowColor: "rgba(34, 197, 94, 0.5)",
-      delay: 0.1,
+      glowColor: "rgba(74, 222, 128, 0.5)",
+      delay: 0.3,
     },
+
     {
       name: "PostgreSQL",
       badge: (
@@ -128,8 +126,8 @@ export function OrbitalRadar() {
           RD
         </span>
       ),
-      top: "13%",
-      left: "36%",
+      top: "25%",
+      left: "25%",
       size: "md",
       glowColor: "rgba(239, 68, 68, 0.5)",
       delay: 0.15,
@@ -150,6 +148,37 @@ export function OrbitalRadar() {
       delay: 0.35,
     },
     {
+      name: "Go / Goroutines",
+      badge: (
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.18.0/icons/go/go-original.svg" alt="Goroutines" width="40" height="40" />
+      ),
+      top: "87%",
+      left: "30%",
+      size: "md",
+      glowColor: "rgba(241, 12, 70, 0.5)",
+      delay: 0.35,
+    },
+
+    {
+      name: "Singleflight",
+      badge: (
+        <svg width="40" height="40" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 10 L24 24 M10 24 L24 24 M10 38 L24 24" stroke="#8B5CF6" strokeWidth="3" strokeLinecap="round" />
+          <path d="M24 24 L38 24" stroke="#06B6D4" strokeWidth="3" strokeLinecap="round" />
+          <circle cx="10" cy="10" r="5" fill="#F59E0B" />
+          <circle cx="10" cy="24" r="5" fill="#EC4899" />
+          <circle cx="10" cy="38" r="5" fill="#8B5CF6" />
+          <circle cx="24" cy="24" r="6" fill="#6366F1" />
+          <circle cx="38" cy="24" r="7" fill="#10B981" />
+        </svg>
+      ),
+      top: "88%",
+      left: "55%",
+      size: "md",
+      glowColor: "rgba(241, 12, 70, 0.5)",
+      delay: 0.35,
+    },
+    {
       name: "Docker",
       badge: (
         <span className="font-extrabold text-[#38bdf8] text-xs flex items-center justify-center">
@@ -164,6 +193,18 @@ export function OrbitalRadar() {
       glowColor: "rgba(56, 189, 248, 0.5)",
       delay: 0.45,
     },
+    {
+      name: "Git",
+      badge: (
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.18.0/icons/git/git-original.svg" alt="Git" width="40" height="40" />
+      ),
+      top: "62%",
+      left: "89%",
+      size: "md",
+      glowColor: "rgba(56, 189, 248, 0.5)",
+      delay: 0.45,
+    },
+
     {
       name: "AWS",
       badge: (

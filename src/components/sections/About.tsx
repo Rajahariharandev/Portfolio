@@ -21,9 +21,9 @@ export function About() {
       <Container>
         <FadeIn>
           <SectionHeading
-            tag="Engineering Story"
+            tag="Developer Story"
             title="Building Reliable Systems with Purpose"
-            description="A pragmatic approach to backend architecture: solving concurrency bottlenecks, guaranteeing data integrity, and engineering software that performs under heavy enterprise load."
+            description="A pragmatic approach to backend architecture: solving concurrency bottlenecks, guaranteeing data integrity, and software that performs under heavy enterprise load."
             align="center"
           />
         </FadeIn>
@@ -45,7 +45,7 @@ export function About() {
               </div>
               <div className="bg-[#0b0626]/70 border border-[#7042f8]/30 px-4 py-2.5 rounded-xl backdrop-blur-md">
                 <span className="text-violet-400 block text-[10px] uppercase font-semibold">Primary Databases</span>
-                Oracle, PostgreSQL, Redis
+                Oracle, PostgreSQL, Redis, Sql
               </div>
               <div className="bg-[#0b0626]/70 border border-[#7042f8]/30 px-4 py-2.5 rounded-xl backdrop-blur-md">
                 <span className="text-violet-400 block text-[10px] uppercase font-semibold">Environment</span>
@@ -78,7 +78,7 @@ export function About() {
         <div>
           <FadeIn className="mb-8 text-center sm:text-left">
             <h3 className="text-xl sm:text-2xl font-bold text-white">
-              Core Engineering Principles
+              Core  Principles
             </h3>
             <p className="text-sm text-[#a3a3c2] mt-1">
               Guidelines that govern architectural decisions, code reviews, and production rollouts.
