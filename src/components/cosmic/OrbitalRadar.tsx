@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { motion } from "motion/react";
 
 interface TechNode {
   name: string;
@@ -47,9 +46,9 @@ export function OrbitalRadar() {
     {
       name: "Node",
       badge: (
-        <span className="font-bold text-[#4ade80] font-serif text-sm tracking-tighter">
-          Node
-        </span>
+        <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+          <path fill="#339933" d="M128 0L0 73.9v147.8L128 295.6l128-73.9V73.9L128 0zm49.3 185.6c-15.6 9-36.9 9.5-53.5 1.3-4.6-2.3-7.6-5.4-7.6-10.4 0-3.1 2.5-5.6 5.6-5.6 2.2 0 4.1 1.2 5.1 3.1 2.4 4.1 7.6 6.8 14.8 7.5 11.4 1.1 23.4-1.8 25.1-9.8 1.5-7.3-5.2-10.7-21.6-14.2-17.8-3.8-33.5-8.9-33.5-26.5 0-16.8 14.3-27.7 35.8-27.7 19.3 0 32.3 7.5 35.1 21.6.6 3.1-1.7 6-4.9 6-2.5 0-4.7-1.7-5.3-4.1-2.1-8.2-10.5-12.5-24.9-12.5-14.6 0-24.3 6.2-24.3 16.2 0 9.1 7.6 12.1 24.1 15.6 19.2 4.1 31.6 10.1 31.6 26.2 0 10.6-5.2 18.6-13.6 23.3zM99.8 164.4c0 16.5-12.1 25.7-29.4 25.7-11.1 0-21.3-3.9-27.9-10.2-2.2-2.1-2.3-5.6-.2-7.8 2.1-2.2 5.6-2.3 7.8-.2 4.7 4.5 12.2 7.2 20.3 7.2 11.2 0 18.3-5.1 18.3-14.7V109c0-3.1 2.5-5.6 5.6-5.6s5.6 2.5 5.6 5.6v55.4z" />
+        </svg>
       ),
       top: "44%",
       left: "18%",
@@ -57,7 +56,6 @@ export function OrbitalRadar() {
       glowColor: "rgba(74, 222, 128, 0.5)",
       delay: 0.3,
     },
-    
     {
       name: "Next",
       badge: (
@@ -71,7 +69,6 @@ export function OrbitalRadar() {
       glowColor: "rgba(1, 7, 3, 0.5)",
       delay: 0.3,
     },
-
     {
       name: "Golang (Go)",
       badge: (
@@ -168,129 +165,120 @@ export function OrbitalRadar() {
       delay: 0.45,
     },
     {
-      name: "AWS Cloud",
+      name: "AWS",
       badge: (
         <span className="font-extrabold text-[#f59e0b] text-[10px] font-mono">
           aws
         </span>
       ),
-      top: "58%",
-      left: "88%",
+      top: "50%",
+      left: "58%",
       size: "sm",
       glowColor: "rgba(245, 158, 11, 0.5)",
-      delay: 0.6,
+      delay: 0.25,
     },
     {
-      name: "Linux CLI",
+      name: "Linux / Bash",
       badge: (
-        <span className="font-extrabold text-[#e2e8f0] text-xs font-mono">
+        <span className="font-mono font-bold text-violet-300 text-xs">
           &gt;_
         </span>
       ),
-      top: "86%",
-      left: "48%",
+      top: "68%",
+      left: "32%",
       size: "sm",
-      glowColor: "rgba(226, 232, 240, 0.4)",
-      delay: 0.5,
+      glowColor: "rgba(168, 85, 247, 0.5)",
+      delay: 0.1,
     },
   ];
 
   return (
-    <div className="relative w-full max-w-[560px] aspect-square mx-auto flex items-center justify-center select-none">
-      {/* 1. Deep Celestial Nebula Radial Glow Behind Radar */}
-      <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-[#7042f8]/30 via-[#2A0E61]/45 to-[#00f0ff]/10 blur-3xl pointer-events-none" />
+    <div
+      className="relative w-[340px] h-[340px] sm:w-[420px] sm:h-[420px] lg:w-[460px] lg:h-[460px] flex items-center justify-center select-none"
+      aria-label="Interactive Orbital Technology Radar"
+    >
+      {/* 1. Deep Celestial Nebula Glow Behind Radar */}
+      <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-[#7042f8]/25 via-[#2A0E61]/35 to-[#00f0ff]/10 blur-2xl pointer-events-none" />
 
-      {/* 2. Expanding Sonar Ping Wave Animation */}
-      <motion.div
-        animate={{ scale: [0.3, 1.05], opacity: [0.7, 0] }}
-        transition={{ duration: 4, repeat: Infinity, ease: "easeOut" }}
-        className="absolute w-full h-full rounded-full border border-cyan-400/40 pointer-events-none"
-      />
-      <motion.div
-        animate={{ scale: [0.2, 0.8], opacity: [0.8, 0] }}
-        transition={{ duration: 4, delay: 2, repeat: Infinity, ease: "easeOut" }}
-        className="absolute w-full h-full rounded-full border border-violet-400/40 pointer-events-none"
-      />
+      {/* 2. Expanding Sonar Ping Wave Animation (Pure CSS GPU keyframes) */}
+      <div className="absolute w-full h-full rounded-full border border-cyan-400/40 pointer-events-none animate-ping opacity-25" />
 
-      {/* 3. Rotating Conical Radar Beam */}
-      <motion.div
-        animate={{ rotate: 360 }}
-        transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-        className="absolute w-[94%] h-[94%] rounded-full pointer-events-none"
+      {/* 3. Rotating Conical Radar Beam (Pure CSS compositor thread) */}
+      <div
+        className="absolute w-[94%] h-[94%] rounded-full pointer-events-none animate-[spin_10s_linear_infinite] will-change-transform"
         style={{
           background:
-            "conic-gradient(from 0deg, rgba(0, 240, 255, 0.22) 0deg, rgba(112, 66, 248, 0.12) 35deg, transparent 70deg, transparent 360deg)",
+            "conic-gradient(from 0deg, rgba(0, 240, 255, 0.2) 0deg, rgba(112, 66, 248, 0.1) 35deg, transparent 70deg, transparent 360deg)",
         }}
       />
 
       {/* 4. Concentric Orbital Rings */}
       {/* Outer Orbit */}
-      <div className="absolute w-[94%] h-[94%] rounded-full border border-violet-500/25 shadow-[0_0_20px_rgba(112,66,248,0.15)]" />
+      <div className="absolute w-[94%] h-[94%] rounded-full border border-violet-500/25 shadow-[0_0_15px_rgba(112,66,248,0.15)]" />
 
       {/* Middle Orbit (Slow Counter-rotating dashed ring) */}
-      <motion.div
-        animate={{ rotate: -360 }}
-        transition={{ duration: 70, repeat: Infinity, ease: "linear" }}
-        className="absolute w-[72%] h-[72%] rounded-full border border-violet-400/35 border-dashed"
-      />
+      <div className="absolute w-[72%] h-[72%] rounded-full border border-violet-400/35 border-dashed animate-[spin_60s_linear_infinite_reverse] will-change-transform" />
 
       {/* Inner Orbit */}
       <div className="absolute w-[48%] h-[48%] rounded-full border border-violet-400/40 shadow-[inset_0_0_15px_rgba(112,66,248,0.2)]" />
 
       {/* Center Core Radar Hub */}
-      <div className="absolute w-[22%] h-[22%] rounded-full border border-cyan-400/50 bg-[#0e0730]/90 backdrop-blur-md flex items-center justify-center shadow-[0_0_35px_rgba(0,240,255,0.4),inset_0_0_15px_rgba(112,66,248,0.4)]">
-        <div className="w-3 h-3 rounded-full bg-cyan-400 shadow-[0_0_15px_#00f0ff] animate-ping" />
-        <div className="absolute w-2 h-2 rounded-full bg-white shadow-[0_0_8px_#ffffff]" />
+      <div className="absolute w-[20%] h-[20%] rounded-full border border-cyan-400/50 bg-[#0e0730]/90 backdrop-blur-md flex items-center justify-center shadow-[0_0_25px_rgba(0,240,255,0.4),inset_0_0_15px_rgba(112,66,248,0.4)]">
+        <div className="w-2.5 h-2.5 rounded-full bg-cyan-400 shadow-[0_0_12px_#00f0ff] animate-ping" />
+        <div className="absolute w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_6px_#ffffff]" />
       </div>
 
       {/* Crosshair Radar Axes with Glowing Center Gradients */}
-      <div className="absolute w-full h-[1px] bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent" />
-      <div className="absolute h-full w-[1px] bg-gradient-to-b from-transparent via-cyan-400/30 to-transparent" />
-      <div className="absolute w-[90%] h-[1px] rotate-45 bg-gradient-to-r from-transparent via-violet-500/20 to-transparent" />
-      <div className="absolute w-[90%] h-[1px] -rotate-45 bg-gradient-to-r from-transparent via-violet-500/20 to-transparent" />
+      <div className="absolute w-full h-[1px] bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent pointer-events-none" />
+      <div className="absolute h-full w-[1px] bg-gradient-to-b from-transparent via-cyan-400/30 to-transparent pointer-events-none" />
 
-      {/* 5. Floating Orbital Tech Cards */}
-      {nodes.map((node) => {
+      {/* 5. Floating Orbital Tech Cards (GPU-accelerated pure CSS hover & float) */}
+      {nodes.map((node, idx) => {
         const sizeClasses = {
-          sm: "w-10 h-10",
-          md: "w-13 h-13",
-          lg: "w-15 h-15",
+          sm: "w-9 h-9",
+          md: "w-12 h-12",
+          lg: "w-14 h-14",
         }[node.size || "md"];
 
         return (
-          <motion.div
+          <div
             key={node.name}
-            className="absolute -translate-x-1/2 -translate-y-1/2 cursor-pointer group"
-            style={{ top: node.top, left: node.left }}
-            animate={{
-              y: [0, -8, 0],
-              rotate: [0, 1.5, -1.5, 0],
+            className="absolute -translate-x-1/2 -translate-y-1/2 cursor-pointer group will-change-transform transition-transform duration-200 hover:scale-125 hover:z-50"
+            style={{
+              top: node.top,
+              left: node.left,
+              animation: `gentleFloat 3.5s ease-in-out infinite`,
+              animationDelay: `${idx * 0.25}s`,
             }}
-            transition={{
-              duration: 3.2 + (node.delay || 0) * 2,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: node.delay || 0,
-            }}
-            whileHover={{ scale: 1.3, zIndex: 50 }}
-            whileTap={{ scale: 0.95 }}
           >
             <div
-              className={`${sizeClasses} rounded-2xl bg-[#09051f]/90 border border-[#7042f8]/50 backdrop-blur-xl flex items-center justify-center shadow-xl transition-all duration-300 group-hover:border-cyan-400 group-hover:scale-105`}
+              className={`${sizeClasses} rounded-2xl bg-[#09051f]/90 border border-[#7042f8]/50 backdrop-blur-md flex items-center justify-center shadow-lg transition-all duration-200 group-hover:border-cyan-400`}
               style={{
-                boxShadow: `0 0 16px ${node.glowColor}, inset 0 0 8px rgba(255,255,255,0.05)`,
+                boxShadow: `0 0 14px ${node.glowColor}, inset 0 0 6px rgba(255,255,255,0.05)`,
               }}
             >
               {node.badge}
             </div>
 
-            {/* Glowing Tooltip Card on Hover */}
-            <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-3 py-1 rounded-full bg-[#030014]/95 border border-cyan-400/60 text-[11px] font-sans font-semibold text-cyan-200 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50 shadow-[0_0_15px_rgba(0,240,255,0.4)]">
+            {/* Tooltip Card on Hover */}
+            <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1.5 px-2.5 py-0.5 rounded-full bg-[#030014]/95 border border-cyan-400/60 text-[10px] font-sans font-semibold text-cyan-200 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50 shadow-md">
               {node.name}
             </div>
-          </motion.div>
+          </div>
         );
       })}
+
+      <style jsx>{`
+        @keyframes gentleFloat {
+          0%,
+          100% {
+            transform: translate3d(-50%, -50%, 0) translateY(0);
+          }
+          50% {
+            transform: translate3d(-50%, -50%, 0) translateY(-6px);
+          }
+        }
+      `}</style>
     </div>
   );
 }

@@ -6,130 +6,100 @@ import { motion } from "motion/react";
 export function BlackHole() {
   return (
     <div
-      className="absolute top-0 left-0 right-0 w-full h-[360px] pointer-events-none overflow-visible z-10 flex flex-col items-center select-none"
+      className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1600px] h-[340px] pointer-events-none overflow-hidden z-10 flex flex-col items-center select-none"
       aria-hidden="true"
     >
-      {/* 1. Deep Atmospheric Nebula Bloom (Full-width, zero-clipping ambient glow) */}
-      <div className="absolute -top-[160px] left-1/2 -translate-x-1/2 w-[1200px] h-[360px] bg-gradient-to-b from-[#7042f8]/40 via-[#4c1d95]/20 to-transparent blur-[140px] rounded-full pointer-events-none" />
-      <div className="absolute -top-[100px] left-1/2 -translate-x-1/2 w-[700px] h-[240px] bg-gradient-to-b from-[#c084fc]/30 via-[#3b0764]/20 to-transparent blur-[90px] rounded-full pointer-events-none" />
-      <div className="absolute top-[10px] left-1/2 -translate-x-1/2 w-[460px] h-[140px] bg-cyan-400/15 blur-[75px] rounded-full pointer-events-none" />
+      {/* 1. Deep Celestial Nebula Atmospheric Glows (Velvety violet & electric cyan) */}
+      <div className="absolute -top-[140px] left-1/2 -translate-x-1/2 w-[1000px] h-[300px] bg-gradient-to-b from-[#7042f8]/50 via-[#4c1d95]/25 to-transparent blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute -top-[80px] left-1/2 -translate-x-1/2 w-[650px] h-[220px] bg-gradient-to-b from-[#c084fc]/40 via-[#581c87]/20 to-transparent blur-[85px] rounded-full pointer-events-none" />
+      <div className="absolute top-[8px] left-1/2 -translate-x-1/2 w-[420px] h-[130px] bg-cyan-400/18 blur-[65px] rounded-full pointer-events-none" />
 
-      {/* 2. Soft Celestial Crown Light (Illuminating the navbar from behind, NOT cutting through it) */}
-      <div className="absolute top-[15px] left-1/2 -translate-x-1/2 w-[680px] h-[75px] bg-gradient-to-r from-transparent via-[#a855f7]/40 to-transparent blur-[35px] pointer-events-none" />
-      <div className="absolute top-[25px] left-1/2 -translate-x-1/2 w-[480px] h-[40px] bg-gradient-to-r from-transparent via-[#00f0ff]/25 to-transparent blur-[25px] pointer-events-none" />
+      {/* 2. Soft Volumetric God-Rays illuminating hero typography */}
+      <div className="absolute top-[20px] left-1/2 -translate-x-1/2 w-[880px] h-[300px] opacity-25 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-violet-300/30 via-purple-900/10 to-transparent blur-3xl pointer-events-none" />
 
-      {/* 3. New Elegant Celestial Singularity Arc (Wide, Majestic, Flowing Horizon) */}
-      <div className="relative top-0 w-full max-w-[1100px] h-[220px] flex items-center justify-center overflow-visible">
+      {/* 3. Ethereal Horizontal Photon Flare (Softened edges, bright radiant center) */}
+      <div className="absolute top-[38px] left-1/2 -translate-x-1/2 w-[120%] h-[2px] bg-gradient-to-r from-transparent via-[#ffffff] to-transparent opacity-85 shadow-[0_0_15px_#ffffff,0_0_30px_#c084fc,0_0_60px_#7042f8] pointer-events-none" />
+      <div className="absolute top-[36px] left-1/2 -translate-x-1/2 w-[90%] h-[7px] bg-gradient-to-r from-transparent via-[#c084fc] to-transparent blur-[3px] opacity-75 pointer-events-none" />
+      <div className="absolute top-[32px] left-1/2 -translate-x-1/2 w-[70%] h-[20px] bg-gradient-to-r from-transparent via-[#7042f8]/70 to-transparent blur-[12px] pointer-events-none" />
+      <div className="absolute top-[24px] left-1/2 -translate-x-1/2 w-[45%] h-[45px] bg-gradient-to-r from-transparent via-[#38bdf8]/25 to-transparent blur-[22px] pointer-events-none" />
+
+      {/* 4. Majestic Gravitational Lensing U-Arc (640px cradle framing the navbar) */}
+      <div className="relative top-0 w-[640px] h-[210px] flex items-center justify-center overflow-visible">
         <svg
           className="w-full h-full overflow-visible"
-          viewBox="0 0 1000 220"
+          viewBox="0 0 640 210"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          {/* Outermost Celestial Corona Ribbon */}
+          {/* Outer Soft Amethyst Halo */}
           <path
-            d="M 50 0 C 180 160, 340 205, 500 205 C 660 205, 820 160, 950 0"
-            stroke="url(#celestial-corona-grad)"
-            strokeWidth="38"
+            d="M 60 0 C 80 148, 200 188, 320 188 C 440 188, 560 148, 580 0"
+            stroke="#7042f8"
+            strokeWidth="34"
             strokeLinecap="round"
-            className="opacity-50 blur-xl"
+            className="opacity-65 blur-md"
           />
 
-          {/* Middle Radiant Violet Relativistic Arc */}
+          {/* Radiant Violet Lensing Ribbon */}
           <path
-            d="M 120 0 C 230 145, 360 185, 500 185 C 640 185, 770 145, 880 0"
-            stroke="url(#celestial-arc-violet)"
-            strokeWidth="16"
+            d="M 85 0 C 105 134, 210 170, 320 170 C 430 170, 535 134, 555 0"
+            stroke="#a855f7"
+            strokeWidth="18"
             strokeLinecap="round"
-            filter="url(#crown-glow-soft)"
+            filter="url(#wide-violet-glow)"
           />
 
-          {/* Ethereal Magenta Horizon Ring */}
+          {/* Shimmering Ethereal Magenta Ring */}
           <path
-            d="M 180 0 C 280 135, 385 168, 500 168 C 615 168, 720 135, 820 0"
-            stroke="url(#celestial-arc-magenta)"
-            strokeWidth="7"
+            d="M 105 0 C 122 120, 218 152, 320 152 C 422 152, 518 120, 535 0"
+            stroke="#c084fc"
+            strokeWidth="9"
             strokeLinecap="round"
-            filter="url(#crown-glow-core)"
+            filter="url(#wide-magenta-glow)"
           />
 
-          {/* Diamond-White Core Photon Beam */}
+          {/* Diamond-White Relativistic Photon Beam */}
           <path
-            d="M 220 0 C 310 125, 400 155, 500 155 C 600 155, 690 125, 780 0"
-            stroke="url(#celestial-white-filament)"
-            strokeWidth="3"
-            strokeLinecap="round"
-            filter="url(#crown-glow-sharp)"
-          />
-
-          {/* Razor-thin Pure Light Filament */}
-          <path
-            d="M 250 0 C 330 120, 410 148, 500 148 C 590 148, 670 120, 750 0"
+            d="M 120 0 C 135 110, 224 140, 320 140 C 416 140, 505 110, 520 0"
             stroke="#ffffff"
-            strokeWidth="1.2"
+            strokeWidth="4"
+            strokeLinecap="round"
+            filter="url(#wide-white-beam)"
+          />
+
+          {/* Pure Light Filament */}
+          <path
+            d="M 128 0 C 142 104, 226 133, 320 133 C 414 133, 498 104, 512 0"
+            stroke="#f8fafc"
+            strokeWidth="1.5"
             strokeLinecap="round"
             className="opacity-95"
           />
 
           <defs>
-            <linearGradient id="celestial-corona-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#7042f8" stopOpacity="0" />
-              <stop offset="25%" stopColor="#7042f8" stopOpacity="0.8" />
-              <stop offset="50%" stopColor="#a855f7" stopOpacity="1" />
-              <stop offset="75%" stopColor="#7042f8" stopOpacity="0.8" />
-              <stop offset="100%" stopColor="#7042f8" stopOpacity="0" />
-            </linearGradient>
-
-            <linearGradient id="celestial-arc-violet" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#7042f8" stopOpacity="0" />
-              <stop offset="20%" stopColor="#8b5cf6" stopOpacity="0.9" />
-              <stop offset="50%" stopColor="#c084fc" stopOpacity="1" />
-              <stop offset="80%" stopColor="#8b5cf6" stopOpacity="0.9" />
-              <stop offset="100%" stopColor="#7042f8" stopOpacity="0" />
-            </linearGradient>
-
-            <linearGradient id="celestial-arc-magenta" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#a855f7" stopOpacity="0" />
-              <stop offset="25%" stopColor="#d946ef" stopOpacity="0.85" />
-              <stop offset="50%" stopColor="#f0abfc" stopOpacity="1" />
-              <stop offset="75%" stopColor="#d946ef" stopOpacity="0.85" />
-              <stop offset="100%" stopColor="#a855f7" stopOpacity="0" />
-            </linearGradient>
-
-            <linearGradient id="celestial-white-filament" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#ffffff" stopOpacity="0" />
-              <stop offset="20%" stopColor="#ffffff" stopOpacity="0.85" />
-              <stop offset="50%" stopColor="#ffffff" stopOpacity="1" />
-              <stop offset="80%" stopColor="#ffffff" stopOpacity="0.85" />
-              <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
-            </linearGradient>
-
-            <filter id="crown-glow-soft" x="-20%" y="-20%" width="140%" height="140%">
+            <filter id="wide-violet-glow" x="-30%" y="-30%" width="160%" height="160%">
               <feGaussianBlur stdDeviation="14" />
             </filter>
-            <filter id="crown-glow-core" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur stdDeviation="6" />
+            <filter id="wide-magenta-glow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="7" />
             </filter>
-            <filter id="crown-glow-sharp" x="-20%" y="-20%" width="140%" height="140%">
+            <filter id="wide-white-beam" x="-20%" y="-20%" width="140%" height="140%">
               <feGaussianBlur stdDeviation="2.5" />
             </filter>
           </defs>
         </svg>
 
-        {/* Ambient Pulsing Singularity Halo */}
+        {/* Breathing Celestial Accretion Glow */}
         <motion.div
-          animate={{ opacity: [0.6, 0.9, 0.6], scale: [0.98, 1.02, 0.98] }}
+          animate={{ opacity: [0.65, 0.95, 0.65], scale: [0.98, 1.02, 0.98] }}
           transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute -top-12 w-[520px] h-[190px] rounded-full pointer-events-none"
+          className="absolute -top-8 w-[440px] h-[170px] rounded-full pointer-events-none"
           style={{
-            background: "radial-gradient(circle, rgba(168,85,247,0.18) 0%, rgba(0,240,255,0.06) 60%, transparent 100%)",
-            filter: "blur(26px)",
+            background: "radial-gradient(circle, rgba(168,85,247,0.2) 0%, rgba(112,66,248,0.06) 60%, transparent 100%)",
+            filter: "blur(24px)",
           }}
         />
       </div>
-
-      {/* 4. Downward Volumetric God Rays into Hero text */}
-      <div className="absolute top-[40px] left-1/2 -translate-x-1/2 w-[900px] h-[300px] opacity-25 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-violet-300/30 via-purple-900/10 to-transparent blur-3xl pointer-events-none" />
     </div>
   );
 }

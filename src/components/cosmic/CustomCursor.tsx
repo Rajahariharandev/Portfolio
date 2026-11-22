@@ -147,53 +147,34 @@ export function CustomCursor() {
       lastY = e.clientY;
       lastTime = now;
 
-      // Magnetic mode: inspect interactive elements
-      if (modeRef.current === "magnetic") {
-        const interactiveElements = document.querySelectorAll(
+      // Fast O(1) magnetic detection without whole-DOM layout reflow
+      const target = e.target as HTMLElement | null;
+      if (modeRef.current === "magnetic" && target) {
+        const interactive = target.closest<HTMLElement>(
           "button, a, input, textarea, select, [role='button']"
         );
-        let closestDist = 95;
-        let found = false;
-
-        interactiveElements.forEach((el) => {
-          const rect = el.getBoundingClientRect();
-          const cx = rect.left + rect.width / 2;
-          const cy = rect.top + rect.height / 2;
-          const dist = Math.hypot(e.clientX - cx, e.clientY - cy);
-
-          if (dist < closestDist) {
-            closestDist = dist;
-            magneticRef.current = {
-              x: cx,
-              y: cy,
-              width: rect.width,
-              height: rect.height,
-              active: true,
-            };
-            found = true;
-          }
-        });
-
-        if (!found) {
+        if (interactive) {
+          const rect = interactive.getBoundingClientRect();
+          magneticRef.current = {
+            x: rect.left + rect.width / 2,
+            y: rect.top + rect.height / 2,
+            width: rect.width,
+            height: rect.height,
+            active: true,
+          };
+        } else {
           magneticRef.current.active = false;
         }
       } else {
         magneticRef.current.active = false;
       }
 
-      // Check hover on interactive items
-      const target = e.target as HTMLElement | null;
       if (target) {
-        const interactive = Boolean(
-          target.closest("button") ||
-          target.closest("a") ||
-          target.closest("input") ||
-          target.closest("textarea") ||
-          target.closest("[role='button']") ||
-          target.tagName === "BUTTON" ||
-          target.tagName === "A"
+        setIsHovered(
+          Boolean(
+            target.closest("button, a, input, textarea, select, [role='button']")
+          )
         );
-        setIsHovered(interactive);
       }
     };
 
@@ -389,6 +370,11 @@ export function CustomCursor() {
           ctx.stroke();
           ctx.restore();
         }
+      }
+
+      // Hard-cap particles to prevent memory bloat and maintain steady 60/120fps
+      if (particlesRef.current.length > 32) {
+        particlesRef.current.splice(0, particlesRef.current.length - 32);
       }
 
       // 4. Update and Draw Active Particles

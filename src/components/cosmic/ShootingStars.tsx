@@ -1,72 +1,51 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
-
-interface Meteor {
-  id: number;
-  top: number;
-  left: number;
-  length: number;
-  duration: number;
-  delay: number;
-  repeatDelay: number;
-}
+import React from "react";
 
 export function ShootingStars() {
-  const [meteors, setMeteors] = useState<Meteor[]>([]);
-
-  useEffect(() => {
-    const createMeteors = () => {
-      const list: Meteor[] = Array.from({ length: 5 }, (_, i) => ({
-        id: i,
-        top: Math.random() * 45, // upper 45% of screen
-        left: Math.random() * 80 + 10,
-        length: Math.random() * 120 + 80,
-        duration: Math.random() * 1.5 + 1.2,
-        delay: Math.random() * 8,
-        repeatDelay: 9 + Math.random() * 6,
-      }));
-      setMeteors(list);
-    };
-
-    createMeteors();
-    const interval = setInterval(createMeteors, 14000);
-    return () => clearInterval(interval);
-  }, []);
+  const meteors = [
+    { top: "12%", left: "20%", delay: "0s", duration: "3s" },
+    { top: "25%", left: "65%", delay: "4s", duration: "2.8s" },
+    { top: "8%", left: "80%", delay: "7s", duration: "3.2s" },
+  ];
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-[1] overflow-hidden">
-      <AnimatePresence>
-        {meteors.map((m) => (
-          <motion.div
-            key={m.id}
-            initial={{ opacity: 0, x: 0, y: 0, scale: 0.5 }}
-            animate={{
-              opacity: [0, 1, 1, 0],
-              x: [0, 320],
-              y: [0, 320],
-              scale: [0.5, 1, 1, 0.2],
-            }}
-            transition={{
-              duration: m.duration,
-              delay: m.delay,
-              repeat: Infinity,
-              repeatDelay: m.repeatDelay,
-              ease: "easeOut",
-            }}
-            style={{
-              top: `${m.top}%`,
-              left: `${m.left}%`,
-              width: `${m.length}px`,
-            }}
-            className="absolute h-[1.5px] -rotate-45 bg-gradient-to-r from-transparent via-[#c084fc] to-[#00f0ff] shadow-[0_0_15px_#00f0ff]"
-          >
-            {/* Blinding core starhead */}
-            <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_12px_#ffffff,0_0_20px_#00f0ff]" />
-          </motion.div>
-        ))}
-      </AnimatePresence>
+    <div className="fixed inset-0 pointer-events-none z-[1] overflow-hidden select-none">
+      {meteors.map((m, i) => (
+        <div
+          key={i}
+          style={{
+            top: m.top,
+            left: m.left,
+            animation: `shootingStar ${m.duration} cubic-bezier(0.25, 1, 0.5, 1) infinite`,
+            animationDelay: m.delay,
+          }}
+          className="absolute w-[140px] h-[1.5px] -rotate-45 bg-gradient-to-r from-transparent via-[#c084fc] to-[#00f0ff] opacity-0 will-change-transform pointer-events-none"
+        >
+          <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_8px_#ffffff,0_0_15px_#00f0ff]" />
+        </div>
+      ))}
+
+      <style jsx>{`
+        @keyframes shootingStar {
+          0% {
+            opacity: 0;
+            transform: translate3d(0, 0, 0) scale(0.6);
+          }
+          10% {
+            opacity: 1;
+          }
+          35% {
+            opacity: 1;
+            transform: translate3d(240px, 240px, 0) scale(1);
+          }
+          45%,
+          100% {
+            opacity: 0;
+            transform: translate3d(320px, 320px, 0) scale(0.3);
+          }
+        }
+      `}</style>
     </div>
   );
 }

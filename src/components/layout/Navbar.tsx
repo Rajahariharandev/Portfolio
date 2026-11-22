@@ -85,9 +85,9 @@ export function Navbar() {
             <span className="font-bold tracking-tight text-white group-hover:text-cyan-200 transition-colors">
               Rajahariharan K
             </span>
-            {/* <span className="text-[11px] font-mono font-medium text-transparent bg-clip-text bg-gradient-to-r from-violet-300 to-cyan-300 px-2 py-0.5 rounded-full bg-violet-950/50 border border-violet-500/30 shadow-[0_0_10px_rgba(112,66,248,0.25)]">
+            <span className="text-[11px] font-mono font-medium text-transparent bg-clip-text bg-gradient-to-r from-violet-300 to-cyan-300 px-2 py-0.5 rounded-full bg-violet-950/50 border border-violet-500/30 shadow-[0_0_10px_rgba(112,66,248,0.25)]">
               .dev
-            </span> */}
+            </span>
           </div>
         </Link>
 
