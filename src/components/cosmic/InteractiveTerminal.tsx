@@ -15,11 +15,11 @@ export function InteractiveTerminal() {
   const [copied, setCopied] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
 
-  const defaultPresets = [
-    // { label: "python skills.py", cmd: "python skills.py" },
-    { label: "cat status.json", cmd: "cat status.json" },
-    // { label: "run cicd_pipeline", cmd: "run cicd_pipeline" },
-  ];
+  // const defaultPresets = [
+  //   // { label: "python skills.py", cmd: "python skills.py" },
+  //   { label: "cat status.json", cmd: "cat status.json" },
+  //   // { label: "run cicd_pipeline", cmd: "run cicd_pipeline" },
+  // ];
 
   const handleCommand = (cmdStr: string) => {
     const trimmed = cmdStr.trim().toLowerCase();
@@ -120,7 +120,7 @@ export function InteractiveTerminal() {
           command: "python -m rajahariharan.init",
           output: (
             <div className="text-xs font-mono text-slate-300 space-y-1">
-              <p className="text-emerald-400 font-bold">✔ System Online: Python 3.12.2 / FastAPI / Linux x86_64</p>
+              {/* <p className="text-emerald-400 font-bold">✔ System Online: Python 3.12.2 / FastAPI / Linux x86_64</p> */}
               <p className="text-[#a1a1aa]">Type <span className="text-cyan-300 font-semibold">help</span> or click preset buttons below to query live diagnostics.</p>
             </div>
           ),
@@ -181,7 +181,7 @@ export function InteractiveTerminal() {
       </div>
 
       {/* Preset Action Pills */}
-      <div className="px-4 py-2 bg-[#09051d] border-t border-violet-500/15 flex flex-wrap gap-1.5 items-center">
+      {/* <div className="px-4 py-2 bg-[#09051d] border-t border-violet-500/15 flex flex-wrap gap-1.5 items-center">
         <span className="text-[10px] text-violet-400 font-semibold mr-1">RUN:</span>
         {defaultPresets.map((preset, i) => (
           <button
@@ -203,7 +203,7 @@ export function InteractiveTerminal() {
           <RotateCcw className="w-2.5 h-2.5" />
           <span>clear</span>
         </button>
-      </div>
+      </div> */}
 
       {/* Command Input Field */}
       <form

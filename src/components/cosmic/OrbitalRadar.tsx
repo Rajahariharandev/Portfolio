@@ -16,7 +16,7 @@ interface TechNode {
 export function OrbitalRadar() {
   const nodes: TechNode[] = [
     {
-      name: "Python 3.x",
+      name: "Python",
       badge: (
         <span className="font-extrabold text-[#38bdf8] drop-shadow-[0_0_8px_#38bdf8]">
           Py<span className="text-[#facc15]">.</span>
@@ -45,10 +45,10 @@ export function OrbitalRadar() {
       delay: 0.2,
     },
     {
-      name: "Django",
+      name: "Node",
       badge: (
         <span className="font-bold text-[#4ade80] font-serif text-sm tracking-tighter">
-          dj
+          Node
         </span>
       ),
       top: "44%",
@@ -57,6 +57,21 @@ export function OrbitalRadar() {
       glowColor: "rgba(74, 222, 128, 0.5)",
       delay: 0.3,
     },
+    
+    {
+      name: "Next",
+      badge: (
+        <span className="font-bold text-[#cccccc] font-serif text-sm tracking-tighter">
+          Next
+        </span>
+      ),
+      top: "60%",
+      left: "18%",
+      size: "md",
+      glowColor: "rgba(1, 7, 3, 0.5)",
+      delay: 0.3,
+    },
+
     {
       name: "Golang (Go)",
       badge: (
