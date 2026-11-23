@@ -19,8 +19,8 @@ export const skillCategories: SkillCategory[] = [
       { name: "Flask", level: "Core", highlight: true },
       { name: "FastAPI", level: "Core", highlight: true },
       { name: "Automation Scripts", level: "Core", highlight: true },
-      { name: "Shell / Bash Scripting", level: "Advanced", highlight: true },
-      { name: "PHP", level: "Proficient", highlight: true }
+      { name: "Shell / Bash Scripting", level: "Core", highlight: true },
+      { name: "PHP", level: "Core", highlight: true }
     ]
   },
   {
@@ -41,7 +41,7 @@ export const skillCategories: SkillCategory[] = [
     skills: [
       { name: "Oracle Database", level: "Core", highlight: true },
       { name: "PostgreSQL", level: "Core", highlight: true },
-      { name: "MySQL", level: "Advanced", highlight: true },
+      { name: "MySQL", level: "Core", highlight: true },
       { name: "SQL Query Optimization", level: "Core", highlight: true },
       { name: "Schema Design & Migrations", level: "Core", highlight: true },
       { name: "Redis Caching", level: "Core", highlight: true }
@@ -53,7 +53,7 @@ export const skillCategories: SkillCategory[] = [
     skills: [
       { name: "REST API Automation", level: "Core", highlight: true },
       { name: "Automation Frameworks", level: "Core", highlight: true },
-      { name: "Burp Suite", level: "Advanced", highlight: true },
+      { name: "Burp Suite", level: "Core", highlight: true },
       { name: "Structured Code Reviews", level: "Core", highlight: true },
       { name: "Software Dev Best Practices", level: "Core", highlight: true },
       { name: "Postman / API Verification", level: "Core", highlight: true }
@@ -68,7 +68,7 @@ export const skillCategories: SkillCategory[] = [
       { name: "Git & Version Control", level: "Core", highlight: true },
       { name: "Linux CLI & System Admin", level: "Core", highlight: true },
       { name: "Nginx Configurations", level: "Core", highlight: true },
-      { name: "VS Code / Tooling", level: "Advanced", highlight: true }
+      { name: "VS Code / Tooling", level: "Core", highlight: true }
     ]
   },
   {
@@ -80,7 +80,7 @@ export const skillCategories: SkillCategory[] = [
       { name: "Sprint Planning (Agile/Scrum)", level: "Core", highlight: true },
       { name: "Cross-Functional Collaboration", level: "Core", highlight: true },
       { name: "Architectural Standards", level: "Core", highlight: true },
-      { name: "Stakeholder Management", level: "Advanced", highlight: true }
+      { name: "Stakeholder Management", level: "Core", highlight: true }
     ]
   }
 ];

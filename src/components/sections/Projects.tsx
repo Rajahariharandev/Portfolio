@@ -184,11 +184,11 @@ export function Projects() {
                             </div>
                           </div>
 
-                          {/* Key Engineering Decisions */}
+                          {/* Key  Decisions */}
                           <div>
                             <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-violet-400 font-semibold mb-3">
                               <Cpu className="w-4 h-4" />
-                              Key Engineering Decisions &amp; Trade-offs
+                              Key Decisions &amp; Trade-offs
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                               {project.keyDecisions.map((kd, kIdx) => (

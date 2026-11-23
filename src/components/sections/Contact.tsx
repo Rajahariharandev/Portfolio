@@ -21,6 +21,7 @@ export function Contact() {
   });
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
+  const [whatsappLink, setWhatsappLink] = useState("");
 
   const copyEmail = () => {
     navigator.clipboard.writeText(profileData.contact.email);
@@ -58,7 +59,17 @@ export function Contact() {
     setStatus("submitting");
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 800));
+      const cleanPhone = profileData.phone.replace(/\D/g, "");
+      const subjectLine = formState.subject.trim() ? `\n*Subject:* ${formState.subject.trim()}` : "";
+      const textMessage = `*Hi Rajahariharan,*\n\n*Name:* ${formState.name.trim()}\n*Email:* ${formState.email.trim()}${subjectLine}\n\n*Message:*\n${formState.message.trim()}`;
+
+      // Official WhatsApp Click to Chat URL (100% Free)
+      const url = `https://wa.me/91${cleanPhone}?text=${encodeURIComponent(textMessage)}`;
+      setWhatsappLink(url);
+
+      // Open WhatsApp Click to Chat in a new window/tab
+      window.open(url, "_blank", "noopener,noreferrer");
+
       setStatus("success");
       setFormState({
         name: "",
@@ -69,7 +80,7 @@ export function Contact() {
       });
     } catch {
       setStatus("error");
-      setErrorMessage("Failed to send message. Please contact directly via email.");
+      setErrorMessage("Failed to initiate WhatsApp chat. Please contact directly via WhatsApp or email.");
     }
   };
 
@@ -218,18 +229,30 @@ export function Contact() {
                       <CheckCircle2 className="w-6 h-6" />
                     </div>
                     <h4 className="text-lg font-bold text-white">
-                      Message Sent Successfully
+                      Message Sent via WhatsApp!
                     </h4>
                     <p className="text-xs sm:text-sm text-[#a3a3c2] max-w-sm mx-auto">
-                      Thank you for reaching out! I have received your message and will get back to you promptly.
+                      Thank you for reaching out! WhatsApp has been launched with your pre-filled message.
                     </p>
-                    <button
-                      type="button"
-                      onClick={() => setStatus("idle")}
-                      className="px-4 py-2 rounded-xl text-xs font-semibold bg-[#1a0f4a] hover:bg-violet-600 text-white border border-[#7042f8]/40 transition-colors"
-                    >
-                      Send Another Message
-                    </button>
+                    <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+                      {whatsappLink && (
+                        <a
+                          href={whatsappLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-4 py-2 rounded-xl text-xs font-semibold bg-emerald-600 hover:bg-emerald-500 text-white shadow-[0_0_15px_rgba(16,185,129,0.4)] transition-all"
+                        >
+                          Open in WhatsApp
+                        </a>
+                      )}
+                      <button
+                        type="button"
+                        onClick={() => setStatus("idle")}
+                        className="px-4 py-2 rounded-xl text-xs font-semibold bg-[#1a0f4a] hover:bg-violet-600 text-white border border-[#7042f8]/40 transition-colors"
+                      >
+                        Send Another Message
+                      </button>
+                    </div>
                   </motion.div>
                 ) : (
                   <motion.form
@@ -335,7 +358,7 @@ export function Contact() {
                       disabled={status === "submitting"}
                       className="w-full py-3 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-[#7042f8] to-[#581c87] border border-[#a855f7]/50 shadow-[0_0_20px_rgba(112,66,248,0.5)] hover:shadow-[0_0_30px_rgba(112,66,248,0.8)] transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                     >
-                      <span>{status === "submitting" ? "Validating & Sending..." : "Send Message"}</span>
+                      <span>{status === "submitting" ? "Connecting to WhatsApp..." : "Send Message"}</span>
                       <Send className="w-3.5 h-3.5" />
                     </button>
                   </motion.form>

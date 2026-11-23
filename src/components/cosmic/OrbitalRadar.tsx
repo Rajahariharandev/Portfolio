@@ -239,39 +239,39 @@ export function OrbitalRadar() {
       aria-label="Interactive Orbital Technology Radar"
     >
       {/* 1. Deep Celestial Nebula Glow Behind Radar */}
-      <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-[#7042f8]/25 via-[#2A0E61]/35 to-[#00f0ff]/10 blur-2xl pointer-events-none" />
+      <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-[#7042f8]/40 via-[#2A0E61]/50 to-[#00f0ff]/20 blur-3xl pointer-events-none" />
 
       {/* 2. Expanding Sonar Ping Wave Animation (Pure CSS GPU keyframes) */}
-      <div className="absolute w-full h-full rounded-full border border-cyan-400/40 pointer-events-none animate-ping opacity-25" />
+      <div className="absolute w-full h-full rounded-full border border-cyan-400/50 pointer-events-none animate-ping opacity-35" />
 
       {/* 3. Rotating Conical Radar Beam (Pure CSS compositor thread) */}
       <div
         className="absolute w-[94%] h-[94%] rounded-full pointer-events-none animate-[spin_10s_linear_infinite] will-change-transform"
         style={{
           background:
-            "conic-gradient(from 0deg, rgba(0, 240, 255, 0.2) 0deg, rgba(112, 66, 248, 0.1) 35deg, transparent 70deg, transparent 360deg)",
+            "conic-gradient(from 0deg, rgba(0, 240, 255, 0.35) 0deg, rgba(112, 66, 248, 0.2) 35deg, transparent 75deg, transparent 360deg)",
         }}
       />
 
       {/* 4. Concentric Orbital Rings */}
       {/* Outer Orbit */}
-      <div className="absolute w-[94%] h-[94%] rounded-full border border-violet-500/25 shadow-[0_0_15px_rgba(112,66,248,0.15)]" />
+      <div className="absolute w-[94%] h-[94%] rounded-full border border-violet-500/40 shadow-[0_0_20px_rgba(112,66,248,0.25)]" />
 
       {/* Middle Orbit (Slow Counter-rotating dashed ring) */}
-      <div className="absolute w-[72%] h-[72%] rounded-full border border-violet-400/35 border-dashed animate-[spin_60s_linear_infinite_reverse] will-change-transform" />
+      <div className="absolute w-[72%] h-[72%] rounded-full border border-violet-400/50 border-dashed animate-[spin_60s_linear_infinite_reverse] will-change-transform shadow-[0_0_15px_rgba(168,85,247,0.25)]" />
 
       {/* Inner Orbit */}
-      <div className="absolute w-[48%] h-[48%] rounded-full border border-violet-400/40 shadow-[inset_0_0_15px_rgba(112,66,248,0.2)]" />
+      <div className="absolute w-[48%] h-[48%] rounded-full border border-violet-400/60 shadow-[inset_0_0_20px_rgba(112,66,248,0.35)]" />
 
       {/* Center Core Radar Hub */}
-      <div className="absolute w-[20%] h-[20%] rounded-full border border-cyan-400/50 bg-[#0e0730]/90 backdrop-blur-md flex items-center justify-center shadow-[0_0_25px_rgba(0,240,255,0.4),inset_0_0_15px_rgba(112,66,248,0.4)]">
+      <div className="absolute w-[20%] h-[20%] rounded-full border border-cyan-400/70 bg-[#0e0730]/95 backdrop-blur-md flex items-center justify-center shadow-[0_0_30px_rgba(0,240,255,0.5),inset_0_0_15px_rgba(112,66,248,0.5)]">
         <div className="w-2.5 h-2.5 rounded-full bg-cyan-400 shadow-[0_0_12px_#00f0ff] animate-ping" />
         <div className="absolute w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_6px_#ffffff]" />
       </div>
 
       {/* Crosshair Radar Axes with Glowing Center Gradients */}
-      <div className="absolute w-full h-[1px] bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent pointer-events-none" />
-      <div className="absolute h-full w-[1px] bg-gradient-to-b from-transparent via-cyan-400/30 to-transparent pointer-events-none" />
+      <div className="absolute w-full h-[1px] bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent pointer-events-none" />
+      <div className="absolute h-full w-[1px] bg-gradient-to-b from-transparent via-cyan-400/40 to-transparent pointer-events-none" />
 
       {/* 5. Floating Orbital Tech Cards (GPU-accelerated pure CSS hover & float) */}
       {nodes.map((node, idx) => {
@@ -293,9 +293,9 @@ export function OrbitalRadar() {
             }}
           >
             <div
-              className={`${sizeClasses} rounded-2xl bg-[#09051f]/90 border border-[#7042f8]/50 backdrop-blur-md flex items-center justify-center shadow-lg transition-all duration-200 group-hover:border-cyan-400`}
+              className={`${sizeClasses} rounded-2xl bg-[#09051f]/95 border border-[#7042f8]/60 backdrop-blur-md flex items-center justify-center shadow-lg transition-all duration-200 group-hover:border-cyan-400`}
               style={{
-                boxShadow: `0 0 14px ${node.glowColor}, inset 0 0 6px rgba(255,255,255,0.05)`,
+                boxShadow: `0 0 16px ${node.glowColor}, inset 0 0 6px rgba(255,255,255,0.08)`,
               }}
             >
               {node.badge}

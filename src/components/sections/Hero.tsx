@@ -31,8 +31,19 @@ export function Hero() {
   const [designStyle, setDesignStyle] = useState<HeroDesignStyle>("cosmic");
   const [activeRoleIndex, setActiveRoleIndex] = useState(0);
   const [currentTime, setCurrentTime] = useState("");
+  const [isMobile, setIsMobile] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const shouldReduceMotion = useReducedMotion();
+
+  // Detect mobile screen to prevent scroll-based dimming/fading
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   // Scroll animations ("curolling animations")
   const { scrollYProgress } = useScroll({
@@ -42,8 +53,11 @@ export function Hero() {
 
   const yBlackHole = useTransform(scrollYProgress, [0, 1], [0, 100]);
   const yContent = useTransform(scrollYProgress, [0, 1], [0, 45]);
-  const opacityContent = useTransform(scrollYProgress, [0, 0.75], [1, 0.1]);
+  const opacityContent = useTransform(scrollYProgress, [0.85, 1], [1, 0.7]);
   const scaleHero = useTransform(scrollYProgress, [0, 1], [1, 0.96]);
+
+  const contentOpacity = isMobile || shouldReduceMotion ? 1 : opacityContent;
+  const contentY = isMobile || shouldReduceMotion ? 0 : yContent;
 
   const roles = [
     "Assistant Lead - Developer & Automation",
@@ -155,7 +169,7 @@ export function Hero() {
 
       <Container className="relative z-20">
         <motion.div
-          style={{ y: shouldReduceMotion ? 0 : yContent, opacity: shouldReduceMotion ? 1 : opacityContent }}
+          style={{ y: contentY, opacity: contentOpacity }}
           className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center"
         >
           {/* Left Column: Headlines, Dynamic Roles, Bio & Metrics */}
@@ -222,8 +236,7 @@ export function Hero() {
               variants={itemVariants}
               className="text-sm sm:text-base text-slate-400 max-w-xl leading-relaxed mb-6 font-normal"
             >
-              I&apos;m <span className="text-white font-medium">{profileData.name}</span>, an Assistant Lead and Python Developer with 4+ years of experience engineering
-              resilient automation scripts, distributed microservices, and high-performance REST APIs across{" "}
+              I&apos;m <span className="text-white font-medium">{profileData.name}</span>, an Assistant Lead and Python Developer with 4+ years of experience engineering resilient automation scripts, distributed microservices, and high-performance REST APIs across{" "}
               <span className="text-violet-300 font-mono text-xs sm:text-sm font-medium">Python, Node.js</span>,{" "}
               <span className="text-violet-300 font-mono text-xs sm:text-sm font-medium">Golang</span>,{" "}
               <span className="text-violet-300 font-mono text-xs sm:text-sm font-medium">GitLab CI/CD</span>,{" "}

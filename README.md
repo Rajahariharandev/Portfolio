@@ -1,6 +1,6 @@
 # Raja Hariharan — Backend Developer Portfolio
 
-A high-performance, dark-mode engineering portfolio designed for a Backend & Software Engineer. Built with **Next.js 16 (App Router)**, **React 19**, **TypeScript**, and **Tailwind CSS**.
+A high-performance, dark-mode portfolio designed for a Backend & Software Engineer. Built with **Next.js 16 (App Router)**, **React 19**, **TypeScript**, and **Tailwind CSS**.
 
 ---
 
