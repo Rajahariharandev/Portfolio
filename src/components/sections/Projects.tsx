@@ -31,7 +31,7 @@ export function Projects() {
         <FadeIn>
           <SectionHeading
             tag="Case Studies"
-            title="Featured Engineering Projects"
+            title="Featured Projects"
             description="In-depth case studies illustrating real-world architectural design, concurrency optimizations, database tuning, and measurable business outcomes."
             align="center"
           />

@@ -16,11 +16,11 @@ export const skillCategories: SkillCategory[] = [
     description: "Core programming stack for automation scripts, web backends, and microservice APIs.",
     skills: [
       { name: "Python 3.x", level: "Core", highlight: true },
-      { name: "Django", level: "Core", highlight: true },
+      { name: "Flask", level: "Core", highlight: true },
       { name: "FastAPI", level: "Core", highlight: true },
       { name: "Automation Scripts", level: "Core", highlight: true },
       { name: "Shell / Bash Scripting", level: "Advanced", highlight: true },
-      { name: "PHP", level: "Proficient" }
+      { name: "PHP", level: "Proficient", highlight: true }
     ]
   },
   {
@@ -39,24 +39,24 @@ export const skillCategories: SkillCategory[] = [
     title: "Databases & Performance Caching",
     description: "Relational data modeling, query optimization, zero data-loss migration, and in-memory caches.",
     skills: [
-      { name: "PostgreSQL", level: "Core", highlight: true },
       { name: "Oracle Database", level: "Core", highlight: true },
-      { name: "MySQL", level: "Advanced" },
+      { name: "PostgreSQL", level: "Core", highlight: true },
+      { name: "MySQL", level: "Advanced", highlight: true },
       { name: "SQL Query Optimization", level: "Core", highlight: true },
       { name: "Schema Design & Migrations", level: "Core", highlight: true },
       { name: "Redis Caching", level: "Core", highlight: true }
     ]
   },
   {
-    title: "Automation & Quality Engineering",
+    title: "Query Optimization & Testing",
     description: "End-to-end API automation frameworks, code reviews, and testing best practices.",
     skills: [
       { name: "REST API Automation", level: "Core", highlight: true },
       { name: "Automation Frameworks", level: "Core", highlight: true },
-      { name: "pytest Suite", level: "Advanced", highlight: true },
+      { name: "Burp Suite", level: "Advanced", highlight: true },
       { name: "Structured Code Reviews", level: "Core", highlight: true },
-      { name: "Software Dev Best Practices", level: "Core" },
-      { name: "Postman / API Verification", level: "Core" }
+      { name: "Software Dev Best Practices", level: "Core", highlight: true },
+      { name: "Postman / API Verification", level: "Core", highlight: true }
     ]
   },
   {
@@ -65,10 +65,10 @@ export const skillCategories: SkillCategory[] = [
     skills: [
       { name: "GitLab CI/CD Pipelines", level: "Core", highlight: true },
       { name: "Docker & Containerization", level: "Core", highlight: true },
-      { name: "Git & Version Control", level: "Core" },
+      { name: "Git & Version Control", level: "Core", highlight: true },
       { name: "Linux CLI & System Admin", level: "Core", highlight: true },
-      { name: "AWS (S3, SNS, SQS)", level: "Advanced", highlight: true },
-      { name: "VS Code / Tooling", level: "Core" }
+      { name: "Nginx Configurations", level: "Core", highlight: true },
+      { name: "VS Code / Tooling", level: "Advanced", highlight: true }
     ]
   },
   {
@@ -78,9 +78,9 @@ export const skillCategories: SkillCategory[] = [
       { name: "Team Leadership", level: "Core", highlight: true },
       { name: "Technical Mentorship", level: "Core", highlight: true },
       { name: "Sprint Planning (Agile/Scrum)", level: "Core", highlight: true },
-      { name: "Cross-Functional Collaboration", level: "Core" },
+      { name: "Cross-Functional Collaboration", level: "Core", highlight: true },
       { name: "Architectural Standards", level: "Core", highlight: true },
-      { name: "Stakeholder Management", level: "Advanced" }
+      { name: "Stakeholder Management", level: "Advanced", highlight: true }
     ]
   }
 ];

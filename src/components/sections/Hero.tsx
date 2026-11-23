@@ -46,10 +46,10 @@ export function Hero() {
   const scaleHero = useTransform(scrollYProgress, [0, 1], [1, 0.96]);
 
   const roles = [
-    "Assistant Lead – Python Developer & Automation",
+    "Assistant Lead - Developer & Automation",
     "Enterprise Automation & CI/CD Pipeline Architect",
-    "FastAPI, Django & Golang Microservices Specialist",
-    "High-Performance Database & Caching Engineer",
+    "Python, Node.js and Golang Microservices Specialist",
+    "High-Performance Database & Caching",
   ];
 
   // Cycling dynamic roles
@@ -222,9 +222,9 @@ export function Hero() {
               variants={itemVariants}
               className="text-sm sm:text-base text-slate-400 max-w-xl leading-relaxed mb-6 font-normal"
             >
-              I&apos;m <span className="text-white font-medium">{profileData.name}</span>, an Assistant Lead and Python Developer with 3+ years of experience engineering 
+              I&apos;m <span className="text-white font-medium">{profileData.name}</span>, an Assistant Lead and Python Developer with 4+ years of experience engineering
               resilient automation scripts, distributed microservices, and high-performance REST APIs across{" "}
-              <span className="text-violet-300 font-mono text-xs sm:text-sm font-medium">Python (FastAPI / Django)</span>,{" "}
+              <span className="text-violet-300 font-mono text-xs sm:text-sm font-medium">Python, Node.js</span>,{" "}
               <span className="text-violet-300 font-mono text-xs sm:text-sm font-medium">Golang</span>,{" "}
               <span className="text-violet-300 font-mono text-xs sm:text-sm font-medium">GitLab CI/CD</span>,{" "}
               <span className="text-violet-300 font-mono text-xs sm:text-sm font-medium">PostgreSQL</span>,{" "}
@@ -327,11 +327,10 @@ export function Hero() {
               <button
                 type="button"
                 onClick={() => setDesignStyle("cosmic")}
-                className={`px-3 py-1 rounded-full text-xs font-medium transition-all flex items-center gap-1.5 cursor-pointer ${
-                  designStyle === "cosmic"
-                    ? "bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-[0_0_15px_rgba(112,66,248,0.6),inset_0_1px_0_0_rgba(255,255,255,0.25)]"
-                    : "text-slate-400 hover:text-white"
-                }`}
+                className={`px-3 py-1 rounded-full text-xs font-medium transition-all flex items-center gap-1.5 cursor-pointer ${designStyle === "cosmic"
+                  ? "bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-[0_0_15px_rgba(112,66,248,0.6),inset_0_1px_0_0_rgba(255,255,255,0.25)]"
+                  : "text-slate-400 hover:text-white"
+                  }`}
               >
                 <Radio className="w-3 h-3 text-cyan-300" />
                 <span>Cosmic Radar</span>
@@ -340,11 +339,10 @@ export function Hero() {
               <button
                 type="button"
                 onClick={() => setDesignStyle("terminal")}
-                className={`px-3 py-1 rounded-full text-xs font-medium transition-all flex items-center gap-1.5 cursor-pointer ${
-                  designStyle === "terminal"
-                    ? "bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-[0_0_15px_rgba(6,182,212,0.6),inset_0_1px_0_0_rgba(255,255,255,0.25)]"
-                    : "text-slate-400 hover:text-white"
-                }`}
+                className={`px-3 py-1 rounded-full text-xs font-medium transition-all flex items-center gap-1.5 cursor-pointer ${designStyle === "terminal"
+                  ? "bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-[0_0_15px_rgba(6,182,212,0.6),inset_0_1px_0_0_rgba(255,255,255,0.25)]"
+                  : "text-slate-400 hover:text-white"
+                  }`}
               >
                 <TerminalIcon className="w-3 h-3 text-cyan-300" />
                 <span>CLI Terminal</span>
@@ -353,11 +351,10 @@ export function Hero() {
               <button
                 type="button"
                 onClick={() => setDesignStyle("quantum")}
-                className={`px-3 py-1 rounded-full text-xs font-medium transition-all flex items-center gap-1.5 cursor-pointer ${
-                  designStyle === "quantum"
-                    ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-[0_0_15px_rgba(217,70,239,0.6),inset_0_1px_0_0_rgba(255,255,255,0.25)]"
-                    : "text-slate-400 hover:text-white"
-                }`}
+                className={`px-3 py-1 rounded-full text-xs font-medium transition-all flex items-center gap-1.5 cursor-pointer ${designStyle === "quantum"
+                  ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-[0_0_15px_rgba(217,70,239,0.6),inset_0_1px_0_0_rgba(255,255,255,0.25)]"
+                  : "text-slate-400 hover:text-white"
+                  }`}
               >
                 <Cpu className="w-3 h-3 text-pink-300" />
                 <span>Metrics</span>
@@ -416,7 +413,7 @@ export function Hero() {
                       <div className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.06] flex items-center justify-between">
                         <div>
                           <div className="font-semibold text-white">Current Organization</div>
-                          <div className="text-[11px] text-slate-400">The SCM Silk Private Limited</div>
+                          <div className="text-[11px] text-slate-400">Av7 Scm Ho</div>
                         </div>
                         <span className="text-violet-300 font-mono text-[11px]">Feb 2026 – Present</span>
                       </div>

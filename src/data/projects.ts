@@ -36,11 +36,11 @@ export const projectsData: ProjectCaseStudy[] = [
     slug: "soap-to-rest-migration",
     title: "Enterprise SOAP-to-REST Migration",
     subtitle: "Refactoring legacy monolithic SOAP services into high-performance Python & Go REST APIs",
-    role: "Lead Automation & Backend Engineer",
+    role: "Lead Automation & Backend Developer",
     period: "Production Deployment",
     category: "Backend & Microservices",
-    summary: "Refactored a legacy enterprise SOAP XML architecture into a modern Python (FastAPI/Django) and Golang REST API, automating deployment via GitLab CI/CD pipelines to achieve a 5x improvement in system scalability.",
-    technologies: ["Python (FastAPI / Django)", "Golang", "GitLab CI/CD", "Docker", "Linux CLI", "REST APIs", "Postman"],
+    summary: "Refactored a legacy enterprise SOAP XML architecture into a modern Golang REST API, automating deployment via GitLab CI/CD pipelines to achieve a 5x improvement in system scalability.",
+    technologies: ["Golang", "Oracle Client", "GitLab CI/CD", "Docker", "Linux CLI", "REST APIs", "Postman"],
     metrics: [
       { label: "System Scalability", value: "5x Improvement" },
       { label: "Maintenance Overhead", value: "-65% Reduced" },
@@ -51,12 +51,12 @@ export const projectsData: ProjectCaseStudy[] = [
     architecture: {
       description: "Designed a clean RESTful microservices architecture with lightweight JSON contracts, asynchronous request handling, and automated containerized delivery via GitLab CI/CD.",
       flow: [
-        "Incoming client HTTP requests are terminated at Nginx and routed to the Python/Go REST microservice",
-        "FastAPI/Django serialization validates request schemas using typed Pydantic models",
+        "Incoming client HTTP requests are terminated at Nginx and routed to the Go REST microservice",
+        "Singleflight serialization validates request schemas using typed Pydantic models",
         "Business logic executes concurrently with optimized connection pooling to backend datastores",
         "Automated GitLab CI/CD pipeline runs unit/regression suites and deploys Dockerized services with zero downtime"
       ],
-      diagramSnippet: "Client App -> Nginx Reverse Proxy -> Python/Go REST API (GitLab CI/CD) <--> Relational DB"
+      diagramSnippet: "Client App -> Nginx Reverse Proxy -> JWT Token-> Go REST API (GitLab CI/CD) -> Ristretto -> Redis in Memory Caching <--> Oracle DB"
     },
     keyDecisions: [
       {
@@ -65,15 +65,17 @@ export const projectsData: ProjectCaseStudy[] = [
         impact: "Cut network payload transfer sizes by 65% and boosted endpoint throughput by 5x."
       },
       {
-        decision: "Engineered automated GitLab CI/CD containerized deployment pipelines",
+        decision: "Automated GitLab CI/CD containerized deployment pipelines",
         rationale: "Eliminated manual SSH releases and human configuration error during updates.",
         impact: "Accelerated release velocity from monthly batches to multiple verified weekly releases."
       }
     ],
     securityAndReliability: [
       "Strict request validation schemas with automated input sanitization",
-      "GitLab CI/CD automated linting, test suites, and Docker image vulnerability scanning",
-      "Structured JSON error handling with sanitized error codes that prevent leaking backend internals"
+      "Oracle DB connection pooling to prevent connection leaks",
+      "Ristretto In-Memory Caching to reduce latency and database load",
+      "Structured JSON error handling with sanitized error codes that prevent leaking backend internals",
+      "JWT Token for authentication and authorization."
     ],
     challenges: "Maintaining backward compatibility for existing enterprise consumers while shifting core endpoints. Solved by implementing an API translation gateway during the phase-in period.",
     outcomes: [
@@ -81,7 +83,7 @@ export const projectsData: ProjectCaseStudy[] = [
       "Significantly reduced long-term maintenance overhead and bug ticket turnaround",
       "Established standard API design blueprints now adopted across the development organization"
     ],
-    githubUrl: "https://github.com/rajahariharan"
+    githubUrl: "https://github.com/Rajahariharandev/Golang-Service"
   },
   {
     id: "employee-rbac-permission-system",
@@ -91,8 +93,8 @@ export const projectsData: ProjectCaseStudy[] = [
     role: "Backend & Systems Developer",
     period: "Production Deployment",
     category: "Security & Auth",
-    summary: "Engineered a centralized Role-Based Access Control (RBAC) system with JWT authentication and automated permission workflows, cutting manual access provisioning by 70% and securing sensitive enterprise data.",
-    technologies: ["Node.js (Express)", "Python", "PostgreSQL", "Redis", "JWT", "Docker", "REST API"],
+    summary: "Centralized Role-Based Access Control (RBAC) system with JWT authentication and automated permission workflows, cutting manual access provisioning by 70% and securing sensitive enterprise data.",
+    technologies: ["Node.js (Express.js)", "Oracle InstantClient", "Password Vault", 'Bcrypt', "Middleware", "Redis", "JWT", "REST API"],
     metrics: [
       { label: "Access Provisioning Time", value: "-70% Cut" },
       { label: "Evaluation Latency", value: "< 2.8ms" },
@@ -105,10 +107,10 @@ export const projectsData: ProjectCaseStudy[] = [
       flow: [
         "User authenticates and receives an encrypted JWT containing validated claims and role scopes",
         "API Gateway middleware extracts token and checks permission bitmask in Redis cache",
-        "If cache miss, queries hierarchical role graph in PostgreSQL and updates cache with TTL",
+        "If cache miss, queries hierarchical role graph in Oracle and updates cache with TTL",
         "Instant access approval/denial returned with auditable trace context"
       ],
-      diagramSnippet: "Client Request -> JWT Middleware -> Redis Permission Cache <-> PostgreSQL Role Matrix"
+      diagramSnippet: "Client Request -> JWT Middleware -> Redis Permission Cache <-> Oracle Role Matrix"
     },
     keyDecisions: [
       {
@@ -127,113 +129,282 @@ export const projectsData: ProjectCaseStudy[] = [
       "Strict least-privilege role definitions preventing unauthorized access across departments",
       "Comprehensive audit trail for every privilege grant, escalation, or revocation"
     ],
-    challenges: "Handling nested multi-department roles without cyclical inheritance bugs. Resolved by creating a directed acyclic graph (DAG) role validation rule.",
+    challenges: "Resolved complex nested, multi-department role management and cyclical inheritance issues by designing a directed, designation-based hierarchy with function-level access mapping, ensuring consistent role inheritance, controlled permissions, and scalable access management across departments.",
     outcomes: [
       "Cut manual access provisioning effort by 70% across internal operations",
       "Passed internal IT security audits with 100% compliance and zero privilege drift incidents"
     ],
-    githubUrl: "https://github.com/rajahariharan"
+    githubUrl: "https://github.com/rajahariharandev/Employee-RBAC-Permission-System"
   },
+
   {
-    id: "erp-data-sync-automation",
-    slug: "erp-data-sync-automation",
-    title: "ERP Data-Sync & REST Automation Framework",
-    subtitle: "High-throughput automation pipelines connecting legacy ERP systems with modern web frontends",
+    id: "enterprise-master-data-dashboard",
+    slug: "enterprise-master-data-dashboard",
+    title: "Enterprise Master Data Management Dashboard",
+    subtitle: "Centralized ERP master-data management, hierarchical exploration and dynamic Oracle reporting platform",
     role: "Associate Software Developer",
     period: "Production Deployment",
-    category: "Automation & ERP",
-    summary: "Built internal REST automation frameworks (FastAPI / Django / Golang) integrating legacy ERP systems with modern web applications, eliminating ~6 hours/week of manual processing and reducing response time by 30% through Redis caching.",
-    technologies: ["Python (FastAPI / Django)", "Golang", "Redis Caching", "PostgreSQL", "SQL Optimization", "Shell Scripting"],
-    metrics: [
-      { label: "Manual Effort Eliminated", value: "~6 hrs/week" },
-      { label: "Server Response Time", value: "-30% Reduced" },
-      { label: "Backend Throughput", value: "+30% Boost" },
-      { label: "Data-Sync Accuracy", value: "100%" }
+    // category: "Enterprise ERP & Data Management",
+    category: "Database & Migration",
+    summary: "Designed and developed a centralized Enterprise Master Data Management Dashboard for managing and exploring ERP master configurations across multiple business domains. Implemented a three-level hierarchical navigation architecture, metadata-driven dynamic table rendering, Oracle database integration, server-side pagination, multi-column search, sorting and Excel import workflows. Built reusable data-processing functionality to simplify enterprise master-data operations and improve data accessibility.",
+
+    technologies: [
+      "PHP",
+      "Oracle Database",
+      "Oracle SQL",
+      "JavaScript",
+      "AJAX",
+      "Fetch API",
+      "Tailwind CSS",
+      "HTML5",
+      "SheetJS",
+      "JSON",
+      "CSV Export"
     ],
-    problem: "Operational teams had to manually export, transform, and sync ERP inventory and transaction records between disjointed enterprise databases, creating human errors and slow data propagation.",
+
+    metrics: [
+      { label: "Navigation Architecture", value: "3 Levels" },
+      { label: "Business Domains", value: "5 Top Cores" },
+      { label: "Server Pagination", value: "25 / 50 / 100" },
+      { label: "Excel Formats", value: "XLS / XLSX" }
+    ],
+
+    problem:
+      "Enterprise master data was distributed across multiple business domains and database tables. Accessing master configurations and exploring individual records required navigating separate operational modules. This created complexity in data discovery, reporting and master-data administration.",
+
     architecture: {
-      description: "Automated event-driven Python daemon synchronizing ERP records with modern web frontends, backed by Redis cache layers and query-tuned database schemas.",
+      description:
+        "Developed a hierarchical enterprise dashboard using PHP and JavaScript, integrating Oracle database queries through an AJAX-based backend processing layer. Used database metadata and configurable master definitions to dynamically generate table structures and record views.",
+
       flow: [
-        "Python background worker monitors ERP transactional changelogs",
-        "Automated scripts validate, normalize, and transform raw ERP records",
-        "Updates are written to PostgreSQL with batch optimization and cached in Redis",
-        "Frontend web consumers receive instant, cached data with sub-second propagation"
+        "Users navigate five enterprise Top Core business domains",
+        "Master configurations are retrieved from TOPCORE_MASTER_DETAILS",
+        "Frontend dynamically generates master table catalogs and display columns",
+        "AJAX requests retrieve Oracle records with search, sorting and pagination",
+        "Excel import workflows support master configuration uploads",
+        "Filtered records can be exported through CSV generation"
       ],
-      diagramSnippet: "Legacy ERP DB -> Python Automation Daemon -> Redis Cache & PostgreSQL -> Modern Frontend"
+
+      diagramSnippet:
+        "Enterprise Users -> PHP Master Dashboard -> AJAX Processing -> Oracle SQL -> Oracle ERP Database"
     },
+
     keyDecisions: [
       {
-        decision: "Implemented Redis cache-aside with proactive cache warming",
-        rationale: "Prevents direct read spikes from hammering the central ERP database.",
-        impact: "Reduced server response times by 30% while maintaining real-time inventory fidelity."
+        decision:
+          "Implemented a three-level hierarchical navigation architecture",
+
+        rationale:
+          "Separates enterprise business domains, master configurations and individual records into distinct views.",
+
+        impact:
+          "Provides structured navigation across multiple ERP master-data domains."
       },
+
       {
-        decision: "Automated scheduled data-sync batch routines with Python & Shell",
-        rationale: "Eliminated repetitive manual operator intervention for recurring data reconciliation.",
-        impact: "Freed ~6 engineering hours per week and eliminated human copy-paste data corruption."
+        decision:
+          "Developed metadata-driven dynamic table rendering",
+
+        rationale:
+          "Uses TOPCORE_MASTER_DETAILS to retrieve configured database columns and display labels instead of hardcoding every table.",
+
+        impact:
+          "Enables reusable table rendering for different master configurations."
+      },
+
+      {
+        decision:
+          "Implemented Oracle server-side pagination using ROW_NUMBER()",
+
+        rationale:
+          "Retrieves a limited record range instead of loading an entire database table into the browser.",
+
+        impact:
+          "Reduces the amount of record data transferred per request."
+      },
+
+      {
+        decision:
+          "Integrated Excel upload with client-side preview",
+
+        rationale:
+          "Allows users to inspect workbook contents before submitting the import.",
+
+        impact:
+          "Provides a more structured master configuration import workflow."
       }
     ],
+
     securityAndReliability: [
-      "Transactional batch commits ensuring zero partial or corrupted sync states",
-      "Automated alerting triggers if sync delays exceed SLA thresholds",
-      "Encrypted database credentials managed via secure Linux environment variables"
+      "Database table identifier validation",
+      "Server-side configuration verification",
+      "Controlled page-size limits",
+      "JSON-based AJAX response handling",
+      "Oracle database error handling",
+      "Session-based dashboard integration"
     ],
-    challenges: "Dealing with ERP lock contention during heavy daytime updates. Solved by splitting large transactions into non-blocking micro-batches.",
+
+    challenges:
+      "Building a reusable dashboard for multiple enterprise master configurations while handling different physical Oracle tables, configurable display columns and large record sets. Addressed through metadata-driven rendering, dynamic SQL construction, hierarchical navigation and Oracle server-side pagination.",
+
     outcomes: [
-      "Improved overall backend throughput by 30% under peak sales traffic",
-      "Eliminated recurring manual data entry, saving over 300 operational hours annually"
+      "Developed a centralized enterprise master-data dashboard",
+      "Implemented reusable dynamic table and record exploration functionality",
+      "Integrated Oracle database configuration and record retrieval",
+      "Introduced Excel import preview and CSV export workflows",
+      "Improved accessibility of master data across five business domains"
     ],
-    githubUrl: "https://github.com/rajahariharan"
+
+    githubUrl: "https://github.com/rajahariharan/enterprise-master-data-dashboard"
   },
+
   {
-    id: "zero-loss-database-migration",
-    slug: "zero-loss-database-migration",
-    title: "Zero Data-Loss Database Migration Engine",
-    subtitle: "Python-driven data pipeline migrating large-scale Oracle and PostgreSQL schemas",
-    role: "Junior Associate – Software Developer",
+    id: "Audit-dashboard",
+    slug: "Audit-dashboard",
+    title: "Audit Dashboard",
+    subtitle:
+      "Real-time user-activity, clickstream and security-anomaly analytics platform for enterprise SCM systems",
+    role: "Developer",
     period: "Production Deployment",
     category: "Database & Migration",
-    summary: "Designed and executed Python-based migration scripts for Oracle and PostgreSQL database clusters, maintaining zero data-loss integrity across massive datasets while reducing migration effort by ~40%.",
-    technologies: ["Python", "Oracle Database", "PostgreSQL", "SQL Optimization", "Schema Design", "Shell Scripting"],
-    metrics: [
-      { label: "Migration Effort", value: "-40% Reduced" },
-      { label: "Data-Loss Rate", value: "0.00% (Zero)" },
-      { label: "Schema Validation", value: "100% Integrity" },
-      { label: "Downtime Window", value: "Minimal" }
+    summary:
+      "Designed and developed an enterprise audit analytics dashboard that ingests raw user_audit_log records and surfaces KPIs, clickstream behaviour, security anomalies and exportable reports. Implemented a modular vanilla-JS frontend on a PHP backend with a REST-style api.php layer, AG Grid infinite-scroll for large datasets, Chart.js visualisations, and a multi-detector security engine. Built a dual data-source architecture (live API + deterministic synthetic dataset) and custom design-token UI with dark/light theming.",
+
+    technologies: [
+      "PHP",
+      "JavaScript",
+      "Chart.js",
+      "AG Grid Community",
+      "SheetJS",
+      "jsPDF",
+      "AJAX",
+      "Fetch API",
+      "HTML5",
+      "CSS3",
+      "jQuery",
+      "JSON",
+      "CSV / XLSX / PDF Export"
     ],
-    problem: "Migrating enterprise datasets across disparate database engines (Oracle and PostgreSQL) risked data truncation, type mismatch corruption, and lengthy maintenance downtime windows.",
+
+    metrics: [
+      { label: "KPI Cards", value: "10 Live" },
+      { label: "Security Detectors", value: "6 Automated" },
+      { label: "Grid Export Cap", value: "50,000 Rows" },
+      { label: "Dashboard Charts", value: "8 Visualisations" }
+    ],
+
+    problem:
+      "Enterprise user activity was captured in a raw user_audit_log table but offered no consolidated visibility. Analysing employee behaviour, detecting suspicious access patterns, monitoring live sessions and producing audit reports required manual querying across distributed tables. This created gaps in security oversight, operational monitoring and audit reporting.",
+
     architecture: {
-      description: "Python-orchestrated ETL migration pipeline featuring chunked stream reading, automated schema type translation, and multi-stage verification checksums.",
+      description:
+        "Built a modular single-page dashboard using vanilla JavaScript namespaced into IIFEs (App.config, App.state, App.api, App.grid, App.charts, App.security, App.utils) on a PHP backend. The api layer exposes REST-style actions for filter options, bulk logs, grid pagination, live sessions, security analysis and exports. AG Grid uses the Infinite Row Model to page Oracle/Postgres audit records server-side, while a deterministic seeded-PRNG synthetic dataset powers demo mode.",
+
       flow: [
-        "Python extractor streams source records in buffered chunks using cursor pagination",
-        "Data transformation layer maps proprietary Oracle data types to standard PostgreSQL types",
-        "Bulk insertion pipeline writes to target database within transactional savepoints",
-        "Automated verification worker compares SHA-256 record hashes to certify 100% integrity"
+        "Users navigate dashboard, audit logs, live sessions, employee analytics, page analytics, security and reports",
+        "Global filter state (date range, employee, role, page, method, server, IP, query) drives all views",
+        "AG Grid Infinite Row Model streams pages into the browser without loading full tables",
+        "Chart.js renders trend, top-employee, top-page, server, method and heatmap visualisations",
+        "App.security.runAll executes six anomaly detectors over the filtered dataset",
+        "CSV / Excel / PDF exports generated client-side or server-side up to 50,000 rows"
       ],
-      diagramSnippet: "Source Oracle DB -> Python ETL Streaming Engine -> Checksum Validator -> Target PostgreSQL"
+
+      diagramSnippet:
+        "Enterprise Users -> PHP Dashboard -> App.api Fetch Layer -> REST API -> Postgres Audit DB -> Chart.js / AG Grid / Security Engine"
     },
+
     keyDecisions: [
       {
-        decision: "Engineered automated schema mapping and type translation scripts",
-        rationale: "Manual SQL table recreation across hundreds of tables is error-prone.",
-        impact: "Reduced migration preparation effort by approximately 40%."
+        decision:
+          "Implemented a modular IIFE-based frontend architecture without a bundler",
+
+        rationale:
+          "Enables clean separation of concerns (config, state, API, grid, charts, security, utils) while remaining dependency-free and deployable as static assets.",
+
+        impact:
+          "Maintainable modular codebase without build tooling or framework overhead."
       },
+
       {
-        decision: "Automated cryptographic checksum validation between source and destination",
-        rationale: "Guaranteed absolute proof that no rows were dropped or mutated.",
-        impact: "Achieved verified 0% data loss across all historical datasets."
+        decision:
+          "Used AG Grid Infinite Row Model with server-side pagination",
+
+        rationale:
+          "Retrieves limited record ranges instead of loading entire audit tables into the browser.",
+
+        impact:
+          "Supports 50,000+ row datasets without browser memory pressure."
+      },
+
+      {
+        decision:
+          "Implemented dual data-source mode (live API + synthetic dataset)",
+
+        rationale:
+          "A seeded PRNG generator (seededRandom(20260805)) produces deterministic, reproducible datasets with injected anomalies for QA and demos.",
+
+        impact:
+          "Security features are demoable out-of-the-box and QA screenshots are reproducible."
+      },
+
+      {
+        decision:
+          "Built a six-detector security anomaly engine",
+
+        rationale:
+          "Automates detection of multi-IP users, shared IPs, request spikes, unknown pages, unauthorized access and high-frequency sessions.",
+
+        impact:
+          "Surfaces suspicious activity without manual SQL querying."
+      },
+
+      {
+        decision:
+          "Applied generic-page normalisation via effectivePage()",
+
+        rationale:
+          "Real-world audit tables bucket background/API calls under 'AJAX'/'API' page names, which would dominate 'most visited pages' rankings.",
+
+        impact:
+          "Page analytics reflect genuine user-facing page traffic instead of API noise."
+      },
+
+      {
+        decision:
+          "Implemented custom design-token CSS system with dark/light theming",
+
+        rationale:
+          "CSS custom properties (--navy-950, --primary, --accent, etc.) drive all styling; theme switches via data-theme attribute on <html>.",
+
+        impact:
+          "Consistent theming across ~2000 lines of CSS with a single attribute toggle."
       }
     ],
+
     securityAndReliability: [
-      "Rollback checkpoints allowing instant recovery in the event of network disruption",
-      "Parametric SQL bindings preventing data-escape injection flaws during data transfer",
-      "Zero plain-text logging of sensitive customer records during processing"
+      "Session-based authentication integration",
+      "Server-side filter validation via api.php",
+      "Controlled page-size limits on grid pagination",
+      "JSON-based AJAX response handling",
+      "Six automated anomaly detectors",
+      "Role-aware sensitive-page access detection",
+      "Graceful degradation when CDN libraries fail"
     ],
-    challenges: "Handling foreign key constraint dependencies during bulk imports. Solved by writing a topological sort dependency resolver in Python.",
+
+    challenges:
+      "Building a real-time analytics platform that handles large audit datasets while delivering eight simultaneous visualisations, security anomaly detection and export workflows — all without a frontend framework. Addressed through AG Grid infinite-scroll server-side pagination, date-gap-filling trend charts, generic-page normalisation for real-world dirty data, and a modular IIFE architecture that keeps each concern isolated and testable.",
+
     outcomes: [
-      "Successfully migrated large-scale enterprise datasets without any production data loss",
-      "Decreased overall project migration timeline from estimated months to 3 automated weeks"
+      "Delivered a centralized enterprise audit analytics dashboard",
+      "Implemented 10 live KPI cards and 8 interactive Chart.js visualisations",
+      "Built a 6-detector automated security anomaly engine",
+      "Integrated AG Grid infinite-scroll for 50,000+ row datasets",
+      "Added CSV, Excel and PDF export workflows",
+      "Created a real-time live-sessions monitor with 5-second auto-refresh",
+      "Implemented dark/light theming with custom design-token CSS system",
+      "Built a deterministic synthetic data generator for reproducible demos"
     ],
-    githubUrl: "https://github.com/rajahariharan"
+
+    githubUrl: "https://github.com/rajahariharan/Enterprise-audit-dashboard"
   }
 ];
